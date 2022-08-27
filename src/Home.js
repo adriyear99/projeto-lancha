@@ -1,8 +1,10 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { View,Text } from 'react-native';
 
 
 export default function Home() {
     return (
-        <Text>Primeiro Componente</Text>
+        <View>
+            <Text>você caiu no phishing</Text>
+        </View>
     );
 }
