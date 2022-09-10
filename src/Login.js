@@ -1,29 +1,57 @@
 import { View,Text,TextInput,StyleSheet,TouchableOpacity } from 'react-native'
 import { useForm,Controller } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
+import { useState } from 'react'
 import * as yup from 'yup'
 
 
-const schema = yup.object({
-    username: yup.string().required("Informe seu nome de usuário"),
-    email: yup.string().required("Informe seu E-mail"),
-    password: yup.string().min(6,"A senha deve ter pelo menos 6 dígitos").required("Informe sua senha")
-})
+// const schema = yup.object({
+//     username: yup.string().required("Informe seu nome de usuário"),
+//     email: yup.string().required("Informe seu E-mail"),
+//     password: yup.string().min(6,"A senha deve ter pelo menos 6 dígitos").required("Informe sua senha")
+// })
 
 export default function Login() {
 
-    const { control, handleSubmit, formState: {errors} } = useForm({
-        resolver: yupResolver(schema)
-    })
+    // const { control, handleSubmit, formState: {errors} } = useForm({
+    //     resolver: yupResolver(schema)
+    // })
 
-    function handleLogin(data){
-        console.log(data)
+    // function handleLogin(data){
+    //     console.log("teste")
+    //     console.log(data)
+    // }
+
+    const [username,setUsername] = useState("")
+    const [password,setPassword] = useState("")
+
+    function teste(){
+        console.log("aaaa")
     }
 
 
     return <>
         <Text style={styles.title}>Rolancha</Text>
-        <Controller
+
+        <TextInput
+        style={styles.input}
+        onChangeText={setUsername}
+        value={username}
+        placeholder="Nome de usuário ou e-mail"
+        />
+
+        <TextInput
+        style={styles.input}
+        onChangeText={setPassword}
+        value={password}
+        placeholder="Senha"
+        />
+
+
+        <TouchableOpacity style={styles.button} onPress={teste}>
+            <Text style={styles.buttonText}>Fazer Login</Text>
+        </TouchableOpacity>    
+        {/* <Controller
             control={control}
             name="username"
             render={({ field: {onChange,onBlur,value} }) => (
@@ -39,27 +67,9 @@ export default function Login() {
                 />
             )}
         />
-        {errors.username && <Text style={styles.labelError}>{errors.username?.message}</Text>}
+        {errors.username && <Text style={styles.labelError}>{errors.username?.message}</Text>} */}
 
-        <Controller
-            control={control}
-            name="email"
-            render={({ field: {onChange,onBlur,value} }) => (
-                <TextInput
-                    style={[styles.input,{
-                        borderWidth:errors.password && 1, 
-                        borderColor:errors.password && '#ff375b'
-                    }]}
-                    onChangeText={onChange}
-                    onBlur={onBlur}
-                    value={value}
-                    placeholder="Seu E-mail"
-                />
-            )}
-        />
-        {errors.email && <Text style={styles.labelError}>{errors.email?.message}</Text>}
-
-        <Controller
+        {/* <Controller
             control={control}
             name="password"
             render={({ field: {onChange,onBlur,value} }) => (
@@ -75,11 +85,7 @@ export default function Login() {
                 />
             )}
         />
-        {errors.password && <Text style={styles.labelError}>{errors.password?.message}</Text>}
-
-        <TouchableOpacity style={styles.button} onPress={handleSubmit(handleLogin)}>
-            <Text style={styles.buttonText}>Fazer Login</Text>
-        </TouchableOpacity>    
+        {errors.password && <Text style={styles.labelError}>{errors.password?.message}</Text>} */}
     </>
 }
 
