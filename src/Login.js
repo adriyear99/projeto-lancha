@@ -1,31 +1,18 @@
 import { View,Text,TextInput,StyleSheet,TouchableOpacity } from 'react-native'
 import { useForm,Controller } from 'react-hook-form'
-import { yupResolver } from '@hookform/resolvers/yup'
 import { useState } from 'react'
-import * as yup from 'yup'
-
-
-// const schema = yup.object({
-//     username: yup.string().required("Informe seu nome de usuário"),
-//     email: yup.string().required("Informe seu E-mail"),
-//     password: yup.string().min(6,"A senha deve ter pelo menos 6 dígitos").required("Informe sua senha")
-// })
 
 export default function Login() {
 
-    // const { control, handleSubmit, formState: {errors} } = useForm({
-    //     resolver: yupResolver(schema)
-    // })
-
-    // function handleLogin(data){
-    //     console.log("teste")
-    //     console.log(data)
-    // }
+    const errors = {
+        username: "Informe seu nome de usuário",
+        email: "Informe seu E-mail"
+    }
 
     const [username,setUsername] = useState("")
     const [password,setPassword] = useState("")
 
-    function teste(){
+    function handleSubmit(){
         console.log("aaaa")
     }
 
@@ -39,6 +26,7 @@ export default function Login() {
         value={username}
         placeholder="Nome de usuário ou e-mail"
         />
+        {errors.username && <Text style={styles.labelError}>{errors.username?.message}</Text>}
 
         <TextInput
         style={styles.input}
@@ -46,46 +34,12 @@ export default function Login() {
         value={password}
         placeholder="Senha"
         />
+        {errors.password && <Text style={styles.labelError}>{errors.password?.message}</Text>}
 
-
-        <TouchableOpacity style={styles.button} onPress={teste}>
+        <TouchableOpacity style={styles.button} onPress={handleSubmit}>
             <Text style={styles.buttonText}>Fazer Login</Text>
-        </TouchableOpacity>    
-        {/* <Controller
-            control={control}
-            name="username"
-            render={({ field: {onChange,onBlur,value} }) => (
-                <TextInput
-                    style={[styles.input,{
-                        borderWidth:errors.password && 1, 
-                        borderColor:errors.password && '#ff375b'
-                    }]}
-                    onChangeText={onChange}
-                    onBlur={onBlur}
-                    value={value}
-                    placeholder="Seu nome de usuário"
-                />
-            )}
-        />
-        {errors.username && <Text style={styles.labelError}>{errors.username?.message}</Text>} */}
+        </TouchableOpacity>
 
-        {/* <Controller
-            control={control}
-            name="password"
-            render={({ field: {onChange,onBlur,value} }) => (
-                <TextInput
-                    style={[styles.input,{
-                        borderWidth:errors.password && 1, 
-                        borderColor:errors.password && '#ff375b'
-                    }]}
-                    onChangeText={onChange}
-                    onBlur={onBlur}
-                    value={value}
-                    placeholder="Sua senha"
-                />
-            )}
-        />
-        {errors.password && <Text style={styles.labelError}>{errors.password?.message}</Text>} */}
     </>
 }
 
@@ -114,7 +68,8 @@ const styles = StyleSheet.create({
         backgroundColor: '#45d800',
         borderRadius: 4,
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        marginTop: 10
     },
 
     buttonText: {
