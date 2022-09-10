@@ -6,13 +6,23 @@ export default function Login() {
 
     const errors = {
         username: "Informe seu nome de usuário",
-        email: "Informe seu E-mail"
+        password: "Informe sua senha"
     }
 
     const [username,setUsername] = useState("")
     const [password,setPassword] = useState("")
 
+    const [invalidUsername,setInvalidUsername] = useState(false)
+    const [invalidPassword,setInvalidPassword] = useState(false)
+
     function handleSubmit(){
+        if(username.length < 6){
+            setInvalidUsername(true)
+        }
+        if(password.length < 6){
+            setInvalidPassword(true)
+        }
+
         console.log("aaaa")
     }
 
@@ -26,7 +36,7 @@ export default function Login() {
         value={username}
         placeholder="Nome de usuário ou e-mail"
         />
-        {username.length < 6 && <Text style={styles.labelError}>{errors.username}</Text>}
+        {invalidUsername && <Text style={styles.labelError}>{errors.username}</Text>}
 
         <TextInput
         style={styles.input}
@@ -34,7 +44,7 @@ export default function Login() {
         value={password}
         placeholder="Senha"
         />
-        {password.length < 6 && <Text style={styles.labelError}>{errors.password}</Text>}
+        {invalidPassword && <Text style={styles.labelError}>{errors.password}</Text>}
 
         <TouchableOpacity style={styles.button} onPress={handleSubmit}>
             <Text style={styles.buttonText}>Fazer Login</Text>
