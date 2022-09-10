@@ -26,7 +26,7 @@ export default function Login() {
         value={username}
         placeholder="Nome de usuário ou e-mail"
         />
-        {errors.username && <Text style={styles.labelError}>{errors.username?.message}</Text>}
+        {username.length < 6 && <Text style={styles.labelError}>{errors.username}</Text>}
 
         <TextInput
         style={styles.input}
@@ -34,7 +34,7 @@ export default function Login() {
         value={password}
         placeholder="Senha"
         />
-        {errors.password && <Text style={styles.labelError}>{errors.password?.message}</Text>}
+        {password.length < 6 && <Text style={styles.labelError}>{errors.password}</Text>}
 
         <TouchableOpacity style={styles.button} onPress={handleSubmit}>
             <Text style={styles.buttonText}>Fazer Login</Text>
