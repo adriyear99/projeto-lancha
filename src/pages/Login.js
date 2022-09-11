@@ -1,5 +1,5 @@
 import { Text,TextInput,StyleSheet,TouchableOpacity } from 'react-native'
-import { useState } from 'react'
+import { useState,useEffect } from 'react'
 import { axios } from 'axios'
 
 export default function Login() {
@@ -13,7 +13,14 @@ export default function Login() {
             "Access-Control-Allow-Origin": "*",
         }
     };
+
     const body = { username, password };
+
+    useEffect(() => {
+        api.get("/api/users").then((response) => {
+            setUsuarios(response.data)
+        })
+    },[])
 
     // Erros de login
     const errors = {
@@ -28,6 +35,8 @@ export default function Login() {
     const [invalidUsername,setInvalidUsername] = useState(false)
     const [invalidPassword,setInvalidPassword] = useState(false)
 
+    const [usuarios,setUsuarios] = useState([])
+
     // Chamada do endpoint ao enviar
     /**
      * Valida o formulário antes de enviar os dados
@@ -35,9 +44,6 @@ export default function Login() {
      */
     const handleSubmit = async (e) => {
         e.preventDefault()
-
-        console.log(username)
-        console.log(password)
 
         if(username.length < 6){
             setInvalidUsername(true)
@@ -55,11 +61,13 @@ export default function Login() {
     /**
      * Envia os dados do usuário para a API
      */
-    const cadastrarUsuario = async () => {
-        await axios.post(`${baseUrl}/api/users`, body, axiosConfig)
-        .then(console.log("Usuário cadastrado com sucesso"))
-        .then(resp => console.log(resp.data))
-        .catch(error => console.log(error.resp));
+    const cadastrarUsuario = () => {
+        // axios.post(`${baseUrl}/api/users`, body, axiosConfig)
+        // .then(console.log("Usuário cadastrado com sucesso"))
+        // .then(resp => console.log(resp.data))
+        // .catch(error => console.log(error.resp));
+
+        api.post("/api/users",body).then(({data}) => console.log(data))
     }
 
 

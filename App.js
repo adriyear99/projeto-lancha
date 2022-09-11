@@ -2,7 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, View } from 'react-native';
 
 // Components
-import Login from './src/Login';
+import Login from './src/pages/Login';
 
 export default function App() {
   return (
