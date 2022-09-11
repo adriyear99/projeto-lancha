@@ -1,21 +1,44 @@
-import { View,Text,TextInput,StyleSheet,TouchableOpacity } from 'react-native'
-import { useForm,Controller } from 'react-hook-form'
+import { Text,TextInput,StyleSheet,TouchableOpacity } from 'react-native'
 import { useState } from 'react'
+import { axios } from 'axios'
 
 export default function Login() {
 
+    // Axios
+    const baseUrl = 'localhost:19006';
+
+    let axiosConfig = {
+        headers: {
+            'Content-Type': 'application/json;charset=UTF-8',
+            "Access-Control-Allow-Origin": "*",
+        }
+    };
+    const body = { username, password };
+
+    // Erros de login
     const errors = {
         username: "Informe seu nome de usuário",
         password: "Informe sua senha"
     }
 
+    // Set State
     const [username,setUsername] = useState("")
     const [password,setPassword] = useState("")
 
     const [invalidUsername,setInvalidUsername] = useState(false)
     const [invalidPassword,setInvalidPassword] = useState(false)
 
-    function handleSubmit(){
+    // Chamada do endpoint ao enviar
+    /**
+     * Valida o formulário antes de enviar os dados
+     * @param {*} e 
+     */
+    const handleSubmit = async (e) => {
+        e.preventDefault()
+
+        console.log(username)
+        console.log(password)
+
         if(username.length < 6){
             setInvalidUsername(true)
         }
@@ -23,7 +46,20 @@ export default function Login() {
             setInvalidPassword(true)
         }
 
-        console.log("aaaa")
+        if(!invalidUsername && !invalidPassword){
+            console.log('entrou aqui')
+            cadastrarUsuario()
+        }
+    }
+
+    /**
+     * Envia os dados do usuário para a API
+     */
+    const cadastrarUsuario = async () => {
+        await axios.post(`${baseUrl}/api/users`, body, axiosConfig)
+        .then(console.log("Usuário cadastrado com sucesso"))
+        .then(resp => console.log(resp.data))
+        .catch(error => console.log(error.resp));
     }
 
 
