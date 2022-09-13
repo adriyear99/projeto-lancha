@@ -1,12 +1,10 @@
 import { Text,TextInput,StyleSheet,TouchableOpacity } from 'react-native'
 import { useState,useEffect } from 'react'
-import { axios } from 'axios'
+import  api  from '../services/api'
 
 export default function Login() {
 
-    // Axios
-    const baseUrl = 'localhost:19006';
-
+    // Axios    
     let axiosConfig = {
         headers: {
             'Content-Type': 'application/json;charset=UTF-8',
@@ -16,11 +14,11 @@ export default function Login() {
 
     const body = { username, password };
 
-    useEffect(() => {
-        api.get("/api/users").then((response) => {
-            setUsuarios(response.data)
-        })
-    },[])
+    // useEffect(() => {
+    //     api.get("/api/users").then((response) => {
+    //         setUsuarios(response.data)
+    //     })
+    // },[])
 
     // Erros de login
     const errors = {
@@ -67,14 +65,14 @@ export default function Login() {
         // .then(resp => console.log(resp.data))
         // .catch(error => console.log(error.resp));
 
-        api.post("/api/users",body).then(({data}) => console.log(data))
+        // api.post("/api/users",body).then(({data}) => console.log(data))
     }
 
 
     return <>
         <Text style={styles.title}>Rolancha</Text>
 
-        <TextInput
+        <TouchableOpacity
         style={styles.input}
         onChangeText={setUsername}
         value={username}
@@ -82,7 +80,7 @@ export default function Login() {
         />
         {invalidUsername && <Text style={styles.labelError}>{errors.username}</Text>}
 
-        <TextInput
+        <TouchableOpacity
         style={styles.input}
         onChangeText={setPassword}
         value={password}
@@ -137,4 +135,4 @@ const styles = StyleSheet.create({
         color: '#ff375b',
         marginBottom: 8
     }
-});
+})

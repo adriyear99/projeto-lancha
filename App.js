@@ -1,15 +1,33 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, View } from 'react-native';
 
-// Components
-import Login from './src/pages/Login';
+// Navegação entre telas
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+
+// Páginas
+import Login from './src/pages/Login'
+import CadastroLogin from './src/pages/CadastroLogin'
+import Home from './src/pages/Home'
+
+
+const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Login/>
+    <NavigationContainer style={styles.container}>
+      <Stack.Navigator initialRouteName="CadastroLogin">
+        <Stack.Screen name="CadastroLogin" component={CadastroLogin}/>
+        <Stack.Screen name="Home" component={Home}/>
+        <Stack.Screen name="Login" component={Login}/>
+      </Stack.Navigator>
       <StatusBar style="auto" />
-    </View>
+    </NavigationContainer>
+    // <View style={styles.container}>
+    //   <CadastroLogin/>
+    //   {/* <Login/> */}
+    //   <StatusBar style="auto" />
+    // </View>
   );
 }
 
