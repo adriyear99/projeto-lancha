@@ -1,4 +1,4 @@
-import { Text,TextInput,StyleSheet,TouchableOpacity } from 'react-native'
+import { Text,TextInput,StyleSheet,TouchableOpacity,View } from 'react-native'
 import { useState,useEffect } from 'react'
 import  api  from '../services/api'
 
@@ -69,32 +69,43 @@ export default function Login() {
 
 
     return <>
-        <Text style={styles.title}>Rolancha</Text>
+        <View style={styles.container}>
+            <Text style={styles.title}>Fazer Login</Text>
 
-        <TouchableOpacity
-        style={styles.input}
-        onChangeText={setUsername}
-        value={username}
-        placeholder="Nome de usuário ou e-mail"
-        />
-        {invalidUsername && <Text style={styles.labelError}>{errors.username}</Text>}
+            <TextInput
+                placeholder={"Nome de usuário ou e-mail"}
+                placeholderTextColor={"#000"}
+                style={styles.input}
+                onChangeText={setUsername}
+                value={username}
+            />
+            {invalidUsername && <Text style={styles.labelError}>{errors.username}</Text>}
 
-        <TouchableOpacity
-        style={styles.input}
-        onChangeText={setPassword}
-        value={password}
-        placeholder="Senha"
-        />
-        {invalidPassword && <Text style={styles.labelError}>{errors.password}</Text>}
+            <TextInput
+                placeholder={"Senha"}
+                placeholderTextColor={"#000"}
+                style={styles.input}
+                onChangeText={setPassword}
+                value={password}
+            />
+            {invalidPassword && <Text style={styles.labelError}>{errors.password}</Text>}
 
-        <TouchableOpacity style={styles.button} onPress={handleSubmit}>
-            <Text style={styles.buttonText}>Fazer Login</Text>
-        </TouchableOpacity>
+            <TouchableOpacity style={styles.button} onPress={handleSubmit}>
+                <Text style={styles.buttonText}>Fazer Login</Text>
+            </TouchableOpacity>
+        </View>
 
     </>
 }
 
 const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor:'#7191c7',
+        padding:20,
+        alignItems:'center',
+        justifyContent:'center',
+    },
 
     title: {
         fontSize:34,

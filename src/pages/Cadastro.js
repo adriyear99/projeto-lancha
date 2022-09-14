@@ -1,7 +1,6 @@
 // Utilidades
-import { StyleSheet,Text,TouchableOpacity } from 'react-native';
+import { StyleSheet,Text,TextInput,TouchableOpacity,View } from 'react-native';
 import { useState } from 'react';
-import { View } from 'react-native-web';
 
 
 export default function Cadastro() {
@@ -37,30 +36,36 @@ export default function Cadastro() {
 
         if(!invalidUsername && !invalidPassword){
             console.log('entrou aqui')
-            cadastrarUsuario()
+            // cadastrarUsuario()
         }
     }
 
     return (
 
         <View style={styles.container}>
-            <Text style={styles.title}>Criar conta</Text>
+            <Text style={styles.title}>Criar Conta</Text>
 
-            <TouchableOpacity
+            <TextInput
+                placeholder={"Nome de usuário ou e-mail"}
+                placeholderTextColor={"#000"}
                 style={styles.input}
                 onChangeText={setUsername}
                 value={username}
-                placeholder="Nome de usuário ou e-mail"
             />
             {invalidUsername && <Text style={styles.labelError}>{errors.username}</Text>}
 
-            <TouchableOpacity
+            <TextInput
+                placeholder={"Senha"}
+                placeholderTextColor={"#000"}
                 style={styles.input}
                 onChangeText={setPassword}
                 value={password}
-                placeholder="Senha"
             />
             {invalidPassword && <Text style={styles.labelError}>{errors.password}</Text>}
+
+            <TouchableOpacity style={styles.button} onPress={handleSubmit}>
+                <Text style={styles.buttonText}>Cadastrar</Text>
+            </TouchableOpacity>
         </View>
     )
 }
@@ -83,7 +88,7 @@ const styles = StyleSheet.create({
     },
 
     input: {
-        width:'60%',
+        width:'100%',
         height:40,
         backgroundColor: '#fff',
         paddingHorizontal:8,
