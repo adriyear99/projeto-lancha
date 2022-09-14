@@ -35,7 +35,6 @@ export default function Login() {
 
     const [usuarios,setUsuarios] = useState([])
 
-    // Chamada do endpoint ao enviar
     /**
      * Valida o formulário antes de enviar os dados
      * @param {*} e 
