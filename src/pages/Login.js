@@ -115,7 +115,7 @@ const styles = StyleSheet.create({
     },
 
     input: {
-        width:'100%',
+        width:'60%',
         height:40,
         backgroundColor: '#fff',
         paddingHorizontal:8,
@@ -125,7 +125,7 @@ const styles = StyleSheet.create({
     },  
 
     button: {
-        width: '100%',
+        width: '40%',
         height: 40,
         backgroundColor: '#45d800',
         borderRadius: 4,

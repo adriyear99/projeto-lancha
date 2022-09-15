@@ -13,7 +13,12 @@ import {
 export default function CadastroLogin({navigation}) {
 
     // Carregar fontes
-    let [fontsLoaded] = useFonts({Montserrat_700Bold})
+    let [fontsLoaded] = useFonts({
+        Montserrat_400Regular,
+        Montserrat_700Bold,
+        "Montserrat_Regular": require('../../assets/fonts/Montserrat-Regular.ttf'),
+        "Montserrat_Bold": require('../../assets/fonts/Montserrat-Bold.ttf')
+    })
     if(!fontsLoaded){
         return null
     }
@@ -61,13 +66,13 @@ const styles = StyleSheet.create({
     title: {
         fontSize:40,
         color:'#121212',
-        fontFamily: 'Montserrat_700Bold'
+        fontFamily: 'Montserrat_Bold'
     },
 
     text: {
         fontSize:34,
         color:'#fff',
-        fontFamily: 'Montserrat_400Regular'
+        fontFamily: 'Montserrat_Regular'
     }
 
 })
