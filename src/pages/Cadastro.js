@@ -75,24 +75,33 @@ export default function Cadastro() {
         <View style={styles.container}>
             <Text style={styles.title}>Criar Conta</Text>
 
-            <TextInput
-                placeholder={"Nome"}
-                placeholderTextColor={!invalidName ? 'black' : 'white'}
-                style={[styles.input,(!invalidName ? styles.right : styles.wrong)]}
-                onChangeText={setName}
-                value={name}
-            />
-            {invalidName && <Text style={styles.labelError}>{errors.name}</Text>}
+            {/* Inputs de nome e sobrenome em linha */}
+            <View style={styles.flexContainer}>
+                <TextInput
+                    placeholder={"Nome"}
+                    placeholderTextColor={!invalidName ? 'black' : 'white'}
+                    style={[styles.input,styles.inputSmaller,(!invalidName ? styles.right : styles.wrong)]}
+                    onChangeText={setName}
+                    value={name}
+                />
+                <TextInput
+                    placeholder={"Sobrenome"}
+                    placeholderTextColor={!invalidSurname ? 'black' : 'white'}
+                    style={[styles.input,styles.inputBigger,(!invalidSurname ? styles.right : styles.wrong)]}                
+                    onChangeText={setSurname}
+                    value={surname}
+                />
+            </View>
+            <View style={styles.errorContainer}>
+                <View style={styles.errorSmallerWidth}>
+                    {invalidName && <Text style={styles.inlineError}>{errors.name}</Text>}
+                </View>
+                <View style={styles.errorBiggerWidth}>
+                    {invalidSurname && <Text style={styles.inlineError}>{errors.surname}</Text>}
+                </View>
+            </View>
 
-            <TextInput
-                placeholder={"Sobrenome"}
-                placeholderTextColor={!invalidSurname ? 'black' : 'white'}
-                style={[styles.input,(!invalidSurname ? styles.right : styles.wrong)]}                
-                onChangeText={setSurname}
-                value={surname}
-            />
-            {invalidSurname && <Text style={styles.labelError}>{errors.surname}</Text>}
-
+            {/* Input de nome de usuário */}
             <TextInput
                 placeholder={"Nome de usuário ou apelido"}
                 placeholderTextColor={!invalidUsername ? 'black' : 'white'}
@@ -102,6 +111,7 @@ export default function Cadastro() {
             />
             {invalidUsername && <Text style={styles.labelError}>{errors.username}</Text>}
 
+            {/* Input de e-mail */}
             <TextInput
                 placeholder={"E-mail"}
                 placeholderTextColor={!invalidEmail ? 'black' : 'white'}
@@ -111,23 +121,31 @@ export default function Cadastro() {
             />
             {invalidEmail && <Text style={styles.labelError}>{errors.email}</Text>}
 
-            <TextInput
-                placeholder={"Senha"}
-                placeholderTextColor={!invalidPassword ? 'black' : 'white'}
-                style={[styles.input,(!invalidPassword ? styles.right : styles.wrong)]}                
-                onChangeText={setPassword}
-                value={password}
-            />
-            {invalidPassword && <Text style={styles.labelError}>{errors.password}</Text>}
-
-            <TextInput
-                placeholder={"Confirmar Senha"}
-                placeholderTextColor={!invalidConfirmPassword ? 'black' : 'white'}
-                style={[styles.input,(!invalidConfirmPassword ? styles.right : styles.wrong)]}                
-                onChangeText={setConfirmPassword}
-                value={confirmPassword}
-            />
-            {invalidConfirmPassword && <Text style={styles.labelError}>{errors.confirmPassword}</Text>}
+            {/* Inputs de senha e confirmar senha em linha */}
+            <View style={styles.flexContainer}>
+                <TextInput
+                    placeholder={"Senha"}
+                    placeholderTextColor={!invalidPassword ? 'black' : 'white'}
+                    style={[styles.input,styles.inputEqual,(!invalidPassword ? styles.right : styles.wrong)]}                
+                    onChangeText={setPassword}
+                    value={password}
+                />
+                <TextInput
+                    placeholder={"Confirmar Senha"}
+                    placeholderTextColor={!invalidConfirmPassword ? 'black' : 'white'}
+                    style={[styles.input,styles.inputEqual,(!invalidConfirmPassword ? styles.right : styles.wrong)]}                
+                    onChangeText={setConfirmPassword}
+                    value={confirmPassword}
+                />
+            </View>
+            <View style={styles.errorContainer}>
+                <View style={styles.errorEqualWidth}>
+                    {invalidPassword && <Text style={styles.inlineError}>{errors.password}</Text>}
+                </View>
+                <View style={styles.errorEqualWidth}>
+                    {invalidConfirmPassword && <Text style={styles.inlineError}>{errors.confirmPassword}</Text>}
+                </View>
+            </View>
             {differentPassword && <Text style={styles.labelError}>{errors.differentPassword}</Text>}
 
             <TouchableOpacity style={styles.button} onPress={handleSubmit}>
@@ -145,6 +163,9 @@ const styles = StyleSheet.create({
         padding:20,
         alignItems:'center',
         justifyContent:'center',
+        borderWidth:'2px',
+        borderColor:'#000',
+        width:'100%'
     },
 
     title: {
@@ -162,7 +183,28 @@ const styles = StyleSheet.create({
         marginBottom:4,
         borderWidth:2,
         borderRadius:4
-    },  
+    },
+
+    flexContainer: {
+        flexDirection:'row',
+        width:'100%',
+        alignItems:'center',
+        justifyContent:'center',
+    },
+
+    inputSmaller: {
+        width:'20%',
+        marginHorizontal:4
+    },
+
+    inputBigger: {
+        width:'40%',
+    },
+
+    inputEqual: {
+        width:'30%',
+        marginHorizontal:3
+    },
 
     right: {
         backgroundColor:'white',
@@ -190,8 +232,35 @@ const styles = StyleSheet.create({
         fontSize: 18
     },  
 
+    errorContainer: {
+        display:'flex',
+        flexDirection:'row',
+        width:'60%',
+        alignItems:'left',
+        justifyContent:'left',
+    },
+
+    errorSmallerWidth: {
+        width:'35%'
+    },
+
+    errorEqualWidth: {
+        width:'50%'
+    },
+
+    errorBiggerWidth: {
+        width:'65%'
+    },
+
     labelError: {
         alignSelf: 'center',
+        color: '#ff375b',
+        fontFamily:'Montserrat_700Bold',
+        marginBottom: 8,
+    },
+
+    inlineError: {
+        alignSelf: 'flex-start',
         color: '#ff375b',
         fontFamily:'Montserrat_700Bold',
         marginBottom: 8,
