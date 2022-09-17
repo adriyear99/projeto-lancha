@@ -212,7 +212,7 @@ const styles = StyleSheet.create({
     },
 
     wrong: {
-        backgroundColor:'red',
+        backgroundColor:'#ed5c5c',
         borderColor: 'white'
     },
 

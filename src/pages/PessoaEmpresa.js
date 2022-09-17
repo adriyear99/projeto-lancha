@@ -10,7 +10,7 @@ import {
 } from '@expo-google-fonts/montserrat'
 
 
-export default function CadastroLogin({navigation}) {
+export default function PessoaEmpresa({navigation}) {
 
     // Carregar fontes
     let [fontsLoaded] = useFonts({
@@ -26,14 +26,12 @@ export default function CadastroLogin({navigation}) {
     // Renderizar componente
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>Rolancha</Text>
-
-            <TouchableOpacity style={styles.button} onPress={() => navigation.navigate("Pessoa ou Empresa")}>
-                <Text style={styles.text}>Novo usuário</Text>
+            <TouchableOpacity style={styles.button} onPress={() => navigation.navigate("Cadastro")}>
+                <Text style={styles.text}>Pessoa</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity style={styles.button} onPress={() => navigation.navigate("Login")}>
-                <Text style={styles.text}>Já tenho conta</Text>
+            <TouchableOpacity style={styles.button}>
+                <Text style={styles.text}>Empresa</Text>
             </TouchableOpacity>
         </View>
     );
@@ -61,12 +59,6 @@ const styles = StyleSheet.create({
         padding:40,
         border:'solid',
         borderRadius: 50
-    },
-
-    title: {
-        fontSize:40,
-        color:'#121212',
-        fontFamily: 'Montserrat_Bold'
     },
 
     text: {
