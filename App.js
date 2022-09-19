@@ -1,9 +1,9 @@
 // Utilidades
 import { StatusBar } from 'expo-status-bar'
-import { StyleSheet,View,Text } from 'react-native'
+import { StyleSheet } from 'react-native'
 
 // Navegação entre telas
-import { useRoute,NavigationContainer } from '@react-navigation/native'
+import { NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 
 // Páginas
@@ -23,8 +23,8 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Tela Inicial">
-        <Stack.Screen name="Tela Inicial" component={CadastroLogin} options={{headerShown: false}}/>
-        <Stack.Screen name="Pessoa ou Empresa" component={PessoaEmpresa}/>
+        <Stack.Screen name="Tela Inicial" component={CadastroLogin} options={styles.hideHeader}/>
+        <Stack.Screen name="Pessoa ou Empresa" component={PessoaEmpresa} options={styles.hideLabel}/>
         <Stack.Screen name="Home" component={Home}/>
         <Stack.Screen name="Login" component={Login}/>
         <Stack.Screen name="Cadastro" component={Cadastro} options={{headerShown: false}}/>
@@ -33,3 +33,15 @@ export default function App() {
     </NavigationContainer>
   );
 }
+
+const styles = StyleSheet.create({
+
+  hideHeader: {
+    headerShown: false
+  },
+
+  hideLabel: {
+    showLabel: false
+  }
+
+})

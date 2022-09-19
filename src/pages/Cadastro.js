@@ -41,24 +41,12 @@ export default function Cadastro({navigation}) {
             setInvalidName(true)
         }
 
-        if(surname.length < 6){
-            setInvalidSurname(true)
-        }
-
-        if(username.length < 6){
-            setInvalidUsername(true)
-        }
-
         if(email.length < 6){
             setInvalidEmail(true)
         }
 
         if(password.length < 6){
             setInvalidPassword(true)
-        }
-
-        if(confirmPassword.length < 6){
-            setInvalidConfirmPassword(true)
         }
 
         if(password != confirmPassword){
@@ -151,28 +139,14 @@ const styles = StyleSheet.create({
         justifyContent:'space-between'
     },
 
-    inputSmaller: {
-        width:'20%',
-        marginHorizontal:4
-    },
-
-    inputBigger: {
-        width:'40%',
-    },
-
-    inputEqual: {
-        width:'30%',
-        marginHorizontal:3
-    },
-
     right: {
         backgroundColor:'white',
         borderColor:'black'
     },
 
     wrong: {
-        backgroundColor:'#ed5c5c',
-        borderColor: 'white'
+        backgroundColor:'#9bb9c7',
+        borderColor: '#4B7E94'
     },
 
     button: {

@@ -1,5 +1,5 @@
 import { Text,TextInput,StyleSheet,TouchableOpacity,View } from 'react-native'
-import { useState,useEffect } from 'react'
+import { useState } from 'react'
 import  api  from '../services/api'
 
 export default function Login() {
@@ -12,7 +12,7 @@ export default function Login() {
         }
     };
 
-    const body = { username, password };
+    const body = { user, password };
 
     // useEffect(() => {
     //     api.get("/api/users").then((response) => {
@@ -22,16 +22,17 @@ export default function Login() {
 
     // Erros de login
     const errors = {
-        username: "Informe seu nome de usuário",
+        user: "Informe seu nome de usuário",
         password: "Informe sua senha"
     }
 
     // Set State
-    const [username,setUsername] = useState("")
+    const [user,setUser] = useState("")
     const [password,setPassword] = useState("")
 
-    const [invalidUsername,setInvalidUsername] = useState(false)
+    const [invalidUser,setInvalidUser] = useState(false)
     const [invalidPassword,setInvalidPassword] = useState(false)
+    
 
     const [usuarios,setUsuarios] = useState([])
 
@@ -42,14 +43,14 @@ export default function Login() {
     const handleSubmit = async (e) => {
         e.preventDefault()
 
-        if(username.length < 6){
-            setInvalidUsername(true)
+        if(user.length < 6){
+            setInvalidUser(true)
         }
         if(password.length < 6){
             setInvalidPassword(true)
         }
 
-        if(!invalidUsername && !invalidPassword){
+        if(!invalidUser && !invalidPassword){
             console.log('entrou aqui')
             cadastrarUsuario()
         }
@@ -74,24 +75,24 @@ export default function Login() {
 
             <TextInput
                 placeholder={"Nome de usuário ou e-mail"}
-                placeholderTextColor={"#000"}
-                style={styles.input}
-                onChangeText={setUsername}
-                value={username}
+                placeholderTextColor={!invalidUser ? 'black' : 'white'}
+                style={[styles.input,(!invalidUser ? styles.right : styles.wrong)]}
+                onChangeText={setUser}
+                value={user}
             />
-            {invalidUsername && <Text style={styles.labelError}>{errors.username}</Text>}
+            {invalidUser && <Text style={styles.labelError}>{errors.user}</Text>}
 
             <TextInput
                 placeholder={"Senha"}
-                placeholderTextColor={"#000"}
-                style={styles.input}
+                placeholderTextColor={!invalidPassword ? 'black' : 'white'}
+                style={[styles.input,(!invalidPassword ? styles.right : styles.wrong)]}
                 onChangeText={setPassword}
                 value={password}
             />
             {invalidPassword && <Text style={styles.labelError}>{errors.password}</Text>}
 
             <TouchableOpacity style={styles.button} onPress={handleSubmit}>
-                <Text style={styles.buttonText}>Fazer Login</Text>
+                <Text style={styles.buttonText}>Entrar</Text>
             </TouchableOpacity>
         </View>
 
@@ -101,7 +102,7 @@ export default function Login() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor:'#7191c7',
+        backgroundColor:'#fff',
         padding:20,
         alignItems:'center',
         justifyContent:'center',
@@ -109,7 +110,7 @@ const styles = StyleSheet.create({
 
     title: {
         fontSize:34,
-        marginBottom:34,
+        marginBottom:20,
         color:'#121212',
         fontWeight:'bold'
     },
@@ -120,18 +121,29 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         paddingHorizontal:8,
         marginBottom:8,
-        borderRadius:4,
-        color:'#121212'
+        borderWidth:2,
+        borderRadius:6
     },  
+
+    right: {
+        backgroundColor:'white',
+        borderColor:'black'
+    },
+
+    wrong: {
+        backgroundColor:'#9bb9c7',
+        borderColor: '#4B7E94'
+    },
 
     button: {
         width: '40%',
-        height: 40,
-        backgroundColor: '#45d800',
+        height: 60,
+        backgroundColor: '#4B7E94',
         borderRadius: 4,
         justifyContent: 'center',
         alignItems: 'center',
-        marginTop: 10
+        marginTop: 10,
+        borderRadius: 50
     },
 
     buttonText: {

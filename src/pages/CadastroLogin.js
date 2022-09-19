@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
 
     container: {
         flex: 1,
-        backgroundColor:'#7191c7',
+        backgroundColor:'#fff',
         padding:20,
         alignItems:'center',
         justifyContent:'center',
@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
     button: {
         width: '50%',
         height: 60,
-        backgroundColor: '#45d800',
+        backgroundColor: '#4B7E94',
         borderRadius: 4,
         justifyContent: 'center',
         alignItems: 'center',
