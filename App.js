@@ -27,7 +27,7 @@ export default function App() {
         <Stack.Screen name="Pessoa ou Empresa" component={PessoaEmpresa}/>
         <Stack.Screen name="Home" component={Home}/>
         <Stack.Screen name="Login" component={Login}/>
-        <Stack.Screen name="Cadastro" component={Cadastro}/>
+        <Stack.Screen name="Cadastro" component={Cadastro} options={{headerShown: false}}/>
       </Stack.Navigator>
       <StatusBar style="auto" />
     </NavigationContainer>

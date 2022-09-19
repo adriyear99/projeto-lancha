@@ -2,8 +2,11 @@
 import { StyleSheet,Text,TextInput,TouchableOpacity,View } from 'react-native';
 import { useState } from 'react';
 
+// Expo Icons
+import { AntDesign } from '@expo/vector-icons';
 
-export default function Cadastro() {
+
+export default function Cadastro({navigation}) {
 
     // Erros de login
     const errors = {
@@ -17,19 +20,13 @@ export default function Cadastro() {
 
     // Set State
     const [name,setName] = useState("")
-    const [surname,setSurname] = useState("")
-    const [username,setUsername] = useState("")
     const [email,setEmail] = useState("")
     const [password,setPassword] = useState("")
     const [confirmPassword,setConfirmPassword] = useState("")
     
     const [invalidName,setInvalidName] = useState(false)
-    const [invalidSurname,setInvalidSurname] = useState(false)
-    const [invalidUsername,setInvalidUsername] = useState(false)
     const [invalidEmail,setInvalidEmail] = useState(false)
     const [invalidPassword,setInvalidPassword] = useState(false)
-    const [invalidConfirmPassword,setInvalidConfirmPassword] = useState(false)
-    const [differentPassword,setDifferentPassword] = useState(false)
     
     const [usuarios,setUsuarios] = useState([])
 
@@ -73,45 +70,23 @@ export default function Cadastro() {
     return (
 
         <View style={styles.container}>
-            <Text style={styles.title}>Criar Conta</Text>
-
-            {/* Inputs de nome e sobrenome em linha */}
             <View style={styles.flexContainer}>
-                <TextInput
+                <TouchableOpacity activeOpacity={0.5} onPress={() => navigation.navigate("Pessoa ou Empresa")}>
+                    <AntDesign name="close" size={24} color="black"/>
+                </TouchableOpacity>
+                <Text style={styles.title}>Criar Conta</Text>
+                <Text style={styles.link}>Login</Text>
+            </View>
+
+            <TextInput
                     placeholder={"Nome"}
                     placeholderTextColor={!invalidName ? 'black' : 'white'}
-                    style={[styles.input,styles.inputSmaller,(!invalidName ? styles.right : styles.wrong)]}
+                    style={[styles.input,(!invalidName ? styles.right : styles.wrong)]}
                     onChangeText={setName}
                     value={name}
                 />
-                <TextInput
-                    placeholder={"Sobrenome"}
-                    placeholderTextColor={!invalidSurname ? 'black' : 'white'}
-                    style={[styles.input,styles.inputBigger,(!invalidSurname ? styles.right : styles.wrong)]}                
-                    onChangeText={setSurname}
-                    value={surname}
-                />
-            </View>
-            <View style={styles.errorContainer}>
-                <View style={styles.errorSmallerWidth}>
-                    {invalidName && <Text style={styles.inlineError}>{errors.name}</Text>}
-                </View>
-                <View style={styles.errorBiggerWidth}>
-                    {invalidSurname && <Text style={styles.inlineError}>{errors.surname}</Text>}
-                </View>
-            </View>
+            {invalidName && <Text style={styles.labelError}>{errors.name}</Text>}
 
-            {/* Input de nome de usuário */}
-            <TextInput
-                placeholder={"Nome de usuário ou apelido"}
-                placeholderTextColor={!invalidUsername ? 'black' : 'white'}
-                style={[styles.input,(!invalidUsername ? styles.right : styles.wrong)]}                
-                onChangeText={setUsername}
-                value={username}
-            />
-            {invalidUsername && <Text style={styles.labelError}>{errors.username}</Text>}
-
-            {/* Input de e-mail */}
             <TextInput
                 placeholder={"E-mail"}
                 placeholderTextColor={!invalidEmail ? 'black' : 'white'}
@@ -121,32 +96,14 @@ export default function Cadastro() {
             />
             {invalidEmail && <Text style={styles.labelError}>{errors.email}</Text>}
 
-            {/* Inputs de senha e confirmar senha em linha */}
-            <View style={styles.flexContainer}>
-                <TextInput
-                    placeholder={"Senha"}
-                    placeholderTextColor={!invalidPassword ? 'black' : 'white'}
-                    style={[styles.input,styles.inputEqual,(!invalidPassword ? styles.right : styles.wrong)]}                
-                    onChangeText={setPassword}
-                    value={password}
-                />
-                <TextInput
-                    placeholder={"Confirmar Senha"}
-                    placeholderTextColor={!invalidConfirmPassword ? 'black' : 'white'}
-                    style={[styles.input,styles.inputEqual,(!invalidConfirmPassword ? styles.right : styles.wrong)]}                
-                    onChangeText={setConfirmPassword}
-                    value={confirmPassword}
-                />
-            </View>
-            <View style={styles.errorContainer}>
-                <View style={styles.errorEqualWidth}>
-                    {invalidPassword && <Text style={styles.inlineError}>{errors.password}</Text>}
-                </View>
-                <View style={styles.errorEqualWidth}>
-                    {invalidConfirmPassword && <Text style={styles.inlineError}>{errors.confirmPassword}</Text>}
-                </View>
-            </View>
-            {differentPassword && <Text style={styles.labelError}>{errors.differentPassword}</Text>}
+            <TextInput
+                placeholder={"Senha"}
+                placeholderTextColor={!invalidPassword ? 'black' : 'white'}
+                style={[styles.input,(!invalidPassword ? styles.right : styles.wrong)]}                
+                onChangeText={setPassword}
+                value={password}
+            />
+            {invalidPassword && <Text style={styles.labelError}>{errors.password}</Text>}
 
             <TouchableOpacity style={styles.button} onPress={handleSubmit}>
                 <Text style={styles.buttonText}>Cadastrar</Text>
@@ -159,13 +116,11 @@ const styles = StyleSheet.create({
 
     container: {
         flex: 1,
-        backgroundColor:'#7191c7',
+        // backgroundColor:'#7191c7',
+        backgroundColor:'#fff',
         padding:20,
         alignItems:'center',
         justifyContent:'center',
-        borderWidth:'2px',
-        borderColor:'#000',
-        width:'100%'
     },
 
     title: {
@@ -175,21 +130,25 @@ const styles = StyleSheet.create({
         fontWeight:'bold'
     },
 
+    link: {
+        color: 'blue',
+    },
+
     input: {
         width:'60%',
-        height:30,
+        height:40,
         backgroundColor: '#fff',
         paddingHorizontal:8,
         marginBottom:4,
         borderWidth:2,
-        borderRadius:4
+        borderRadius:6
     },
 
     flexContainer: {
         flexDirection:'row',
-        width:'100%',
+        width:'60%',
         alignItems:'center',
-        justifyContent:'center',
+        justifyContent:'space-between'
     },
 
     inputSmaller: {
@@ -218,12 +177,13 @@ const styles = StyleSheet.create({
 
     button: {
         width: '40%',
-        height: 40,
-        backgroundColor: '#45d800',
+        height: 60,
+        backgroundColor: '#4B7E94',
         borderRadius: 4,
         justifyContent: 'center',
         alignItems: 'center',
-        marginTop: 10
+        marginTop: 10,
+        borderRadius: 50
     },
 
     buttonText: {
