@@ -94,6 +94,16 @@ export default function Login() {
             <TouchableOpacity style={styles.button} onPress={handleSubmit}>
                 <Text style={styles.buttonText}>Entrar</Text>
             </TouchableOpacity>
+            <TouchableOpacity style={[styles.button,styles.button2]} onPress={handleSubmit}>
+                <Text style={styles.buttonText}>Criar Conta</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity 
+                activeOpacity={0.5} 
+                onPress={() => navigation.navigate("Pessoa ou Empresa")}
+                style={{marginTop:10}}>
+                <Text style={styles.textLink}>Esqueceu a senha?</Text>
+            </TouchableOpacity>
         </View>
 
     </>
@@ -117,7 +127,7 @@ const styles = StyleSheet.create({
 
     input: {
         width:'60%',
-        height:40,
+        height:50,
         backgroundColor: '#fff',
         paddingHorizontal:8,
         marginBottom:8,
@@ -146,6 +156,10 @@ const styles = StyleSheet.create({
         borderRadius: 50
     },
 
+    button2: {
+        backgroundColor: '#BDBDBD'
+    },
+
     buttonText: {
         color: '#fff',
         fontWeight: 'bold',
@@ -156,5 +170,10 @@ const styles = StyleSheet.create({
         alignSelf: 'flex-start',
         color: '#ff375b',
         marginBottom: 8
+    },
+
+    textLink: {
+        fontSize:20,
+        color: '#4B7E94'
     }
 })
