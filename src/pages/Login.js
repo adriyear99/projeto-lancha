@@ -2,7 +2,7 @@ import { Text,TextInput,StyleSheet,TouchableOpacity,View } from 'react-native'
 import { useState } from 'react'
 import  api  from '../services/api'
 
-export default function Login() {
+export default function Login({navigation}) {
 
     // Axios    
     let axiosConfig = {
@@ -100,8 +100,8 @@ export default function Login() {
 
             <TouchableOpacity 
                 activeOpacity={0.5} 
-                onPress={() => navigation.navigate("Pessoa ou Empresa")}
-                style={{marginTop:10}}>
+                onPress={() => navigation.navigate("Esqueci minha senha")}
+                style={{marginTop:16}}>
                 <Text style={styles.textLink}>Esqueceu a senha?</Text>
             </TouchableOpacity>
         </View>
@@ -126,8 +126,8 @@ const styles = StyleSheet.create({
     },
 
     input: {
-        width:'60%',
-        height:50,
+        width:'90%',
+        height:40,
         backgroundColor: '#fff',
         paddingHorizontal:8,
         marginBottom:8,
@@ -146,8 +146,8 @@ const styles = StyleSheet.create({
     },
 
     button: {
-        width: '40%',
-        height: 60,
+        width: '60%',
+        height: 40,
         backgroundColor: '#4B7E94',
         borderRadius: 4,
         justifyContent: 'center',
@@ -173,7 +173,7 @@ const styles = StyleSheet.create({
     },
 
     textLink: {
-        fontSize:20,
+        fontSize:18,
         color: '#4B7E94'
     }
 })

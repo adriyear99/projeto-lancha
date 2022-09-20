@@ -12,6 +12,7 @@ import Cadastro from './src/pages/Cadastro'
 import CadastroLogin from './src/pages/CadastroLogin'
 import PessoaEmpresa from './src/pages/PessoaEmpresa'
 import Home from './src/pages/Home'
+import EsqueciMinhaSenha from './src/pages/EsqueciMinhaSenha'
 
 
 export default function App() {
@@ -28,6 +29,7 @@ export default function App() {
         <Stack.Screen name="Home" component={Home}/>
         <Stack.Screen name="Login" component={Login}/>
         <Stack.Screen name="Cadastro" component={Cadastro} options={{headerShown: false}}/>
+        <Stack.Screen name="Esqueci minha senha" component={EsqueciMinhaSenha}/>
       </Stack.Navigator>
       <StatusBar style="auto" />
     </NavigationContainer>

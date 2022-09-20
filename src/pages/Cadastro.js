@@ -104,7 +104,6 @@ const styles = StyleSheet.create({
 
     container: {
         flex: 1,
-        // backgroundColor:'#7191c7',
         backgroundColor:'#fff',
         padding:20,
         alignItems:'center',
@@ -123,20 +122,23 @@ const styles = StyleSheet.create({
     },
 
     input: {
-        width:'60%',
+        width:'90%',
         height:40,
         backgroundColor: '#fff',
         paddingHorizontal:8,
-        marginBottom:4,
+        marginBottom:8,
         borderWidth:2,
         borderRadius:6
     },
 
     flexContainer: {
         flexDirection:'row',
-        width:'60%',
+        width:'90%',
         alignItems:'center',
-        justifyContent:'space-between'
+        justifyContent:'space-between',
+        marginBottom:10
+        // borderWidth:2,
+        // borderColor:'blue'
     },
 
     right: {
@@ -150,8 +152,8 @@ const styles = StyleSheet.create({
     },
 
     button: {
-        width: '40%',
-        height: 60,
+        width: '60%',
+        height: 50,
         backgroundColor: '#4B7E94',
         borderRadius: 4,
         justifyContent: 'center',
@@ -174,27 +176,8 @@ const styles = StyleSheet.create({
         justifyContent:'left',
     },
 
-    errorSmallerWidth: {
-        width:'35%'
-    },
-
-    errorEqualWidth: {
-        width:'50%'
-    },
-
-    errorBiggerWidth: {
-        width:'65%'
-    },
-
     labelError: {
         alignSelf: 'center',
-        color: '#ff375b',
-        fontFamily:'Montserrat_700Bold',
-        marginBottom: 8,
-    },
-
-    inlineError: {
-        alignSelf: 'flex-start',
         color: '#ff375b',
         fontFamily:'Montserrat_700Bold',
         marginBottom: 8,

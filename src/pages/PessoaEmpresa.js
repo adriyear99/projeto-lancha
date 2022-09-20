@@ -1,21 +1,15 @@
 // Utilidades
-import { View,Text,StyleSheet,TouchableOpacity } from 'react-native';
+import { View,StyleSheet } from 'react-native';
+import CustomButton from '../components/CustomButton';
 
 // Fontes
-import {
-    useFonts, 
-    Montserrat_400Regular, 
-    Montserrat_700Bold, 
-    Montserrat_400Regular_Italic
-} from '@expo-google-fonts/montserrat'
+import { useFonts } from '@expo-google-fonts/montserrat'
 
 
 export default function PessoaEmpresa({navigation}) {
 
     // Carregar fontes
     let [fontsLoaded] = useFonts({
-        Montserrat_400Regular,
-        Montserrat_700Bold,
         "Montserrat_Regular": require('../../assets/fonts/Montserrat-Regular.ttf'),
         "Montserrat_Bold": require('../../assets/fonts/Montserrat-Bold.ttf')
     })
@@ -26,46 +20,19 @@ export default function PessoaEmpresa({navigation}) {
     // Renderizar componente
     return (
         <View style={styles.container}>
-            <TouchableOpacity style={styles.button} onPress={() => navigation.navigate("Cadastro")}>
-                <Text style={styles.text}>Pessoa</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity style={styles.button}>
-                <Text style={styles.text}>Empresa</Text>
-            </TouchableOpacity>
+            <CustomButton text='Pessoa' onPress={()=> navigation.navigate("Cadastro")}/>
+            <CustomButton text='Empresa' onPress={()=> navigation.navigate("Cadastro")}/>
         </View>
     );
 }
 
 
 const styles = StyleSheet.create({
-
     container: {
         flex: 1,
-        // backgroundColor:'#7191c7',
         backgroundColor:'#fff',
         padding:20,
         alignItems:'center',
         justifyContent:'center',
-    },
-
-    button: {
-        width: '50%',
-        height: 60,
-        backgroundColor: '#4B7E94',
-        borderRadius: 4,
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginTop: 10,
-        padding:40,
-        border:'solid',
-        borderRadius: 50
-    },
-
-    text: {
-        fontSize:34,
-        color:'#fff',
-        fontFamily: 'Montserrat_Regular'
     }
-
 })
