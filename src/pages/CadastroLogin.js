@@ -21,8 +21,16 @@ export default function CadastroLogin({navigation}) {
     return (
         <View style={styles.container}>
             <Text style={styles.title}>Rolancha</Text>
-            <CustomButton text='Novo usuário' onPress={()=> navigation.navigate("Pessoa ou Empresa")}/>
-            <CustomButton text='Já tenho conta' onPress={()=> navigation.navigate("Login")}/>
+            <CustomButton 
+                text='Novo usuário' 
+                onPress={()=> navigation.navigate("Pessoa ou Empresa")}
+                style={{ height:60, width:300, backgroundColor:'#4B7E94' }}
+            />
+            <CustomButton 
+                text='Já tenho conta' 
+                onPress={()=> navigation.navigate("Login")}
+                style={{ height:60, width:300, backgroundColor:'#4B7E94' }}
+            />
         </View>
     );
 }
@@ -43,5 +51,10 @@ const styles = StyleSheet.create({
         color:'#121212',
         fontFamily: 'Montserrat_Bold'
     },
+
+    extra: {
+        backgroundColor:'green',
+        width:100
+    }
 
 })

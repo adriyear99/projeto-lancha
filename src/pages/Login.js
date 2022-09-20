@@ -1,6 +1,7 @@
 import { Text,TextInput,StyleSheet,TouchableOpacity,View } from 'react-native'
 import { useState } from 'react'
 import  api  from '../services/api'
+import CustomButton from '../components/CustomButton'
 
 export default function Login({navigation}) {
 
@@ -91,12 +92,16 @@ export default function Login({navigation}) {
             />
             {invalidPassword && <Text style={styles.labelError}>{errors.password}</Text>}
 
-            <TouchableOpacity style={styles.button} onPress={handleSubmit}>
-                <Text style={styles.buttonText}>Entrar</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={[styles.button,styles.button2]} onPress={handleSubmit}>
-                <Text style={styles.buttonText}>Criar Conta</Text>
-            </TouchableOpacity>
+            <CustomButton 
+                text='Entrar' 
+                onPress={handleSubmit}
+                style={{ height:60, width:300, backgroundColor:'#4B7E94' }}
+            />
+            <CustomButton 
+                text='Criar Conta' 
+                onPress={handleSubmit}
+                style={{ height:60, width:300, backgroundColor:'#BDBDBD' }}
+            />
 
             <TouchableOpacity 
                 activeOpacity={0.5} 
@@ -175,5 +180,10 @@ const styles = StyleSheet.create({
     textLink: {
         fontSize:18,
         color: '#4B7E94'
+    },
+
+    extra: {
+        backgroundColor:'green',
+        width:100
     }
 })

@@ -1,9 +1,10 @@
 // Utilidades
-import { StyleSheet,Text,TextInput,TouchableOpacity,View } from 'react-native';
+import { StyleSheet,Text,TextInput,TouchableOpacity,View } from 'react-native'
 import { useState } from 'react';
+import CustomButton from '../components/CustomButton';
 
 // Expo Icons
-import { AntDesign } from '@expo/vector-icons';
+import { AntDesign } from '@expo/vector-icons'
 
 
 export default function Cadastro({navigation}) {
@@ -67,12 +68,12 @@ export default function Cadastro({navigation}) {
             </View>
 
             <TextInput
-                    placeholder={"Nome"}
-                    placeholderTextColor={!invalidName ? 'black' : 'white'}
-                    style={[styles.input,(!invalidName ? styles.right : styles.wrong)]}
-                    onChangeText={setName}
-                    value={name}
-                />
+                placeholder={"Nome"}
+                placeholderTextColor={!invalidName ? 'black' : 'white'}
+                style={[styles.input,(!invalidName ? styles.right : styles.wrong)]}
+                onChangeText={setName}
+                value={name}
+            />
             {invalidName && <Text style={styles.labelError}>{errors.name}</Text>}
 
             <TextInput
@@ -93,9 +94,12 @@ export default function Cadastro({navigation}) {
             />
             {invalidPassword && <Text style={styles.labelError}>{errors.password}</Text>}
 
-            <TouchableOpacity style={styles.button} onPress={handleSubmit}>
-                <Text style={styles.buttonText}>Cadastrar</Text>
-            </TouchableOpacity>
+            <CustomButton 
+                text='Cadastrar' 
+                onPress={handleSubmit}
+                style={{ height:60, width:300, backgroundColor:'#4B7E94' }}
+            />
+
         </View>
     )
 }

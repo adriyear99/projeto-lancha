@@ -20,8 +20,16 @@ export default function PessoaEmpresa({navigation}) {
     // Renderizar componente
     return (
         <View style={styles.container}>
-            <CustomButton text='Pessoa' onPress={()=> navigation.navigate("Cadastro")}/>
-            <CustomButton text='Empresa' onPress={()=> navigation.navigate("Cadastro")}/>
+            <CustomButton 
+                text='Pessoa' 
+                onPress={()=> navigation.navigate("Cadastro")}
+                style={{ height:60, width:300, backgroundColor:'#4B7E94' }}
+            />
+            <CustomButton 
+                text='Empresa' 
+                onPress={()=> navigation.navigate("Cadastro")}
+                style={{ height:60, width:300, backgroundColor:'#4B7E94' }}
+            />
         </View>
     );
 }
