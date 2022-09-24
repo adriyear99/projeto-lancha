@@ -5,6 +5,7 @@ import { useState } from 'react'
 // Expo Icons
 import { EvilIcons } from '@expo/vector-icons'
 import { Ionicons } from '@expo/vector-icons'
+import { AntDesign } from '@expo/vector-icons'
 
 
 export default function Home() {
@@ -27,16 +28,22 @@ export default function Home() {
                 <Text style={styles.title}>Perfil</Text>
                 <Text style={styles.link}>Logout</Text>
             </View>
-            <View style={styles.flexContainer2}>
+            <View style={styles.iconContainer}>
+                <AntDesign 
+                    name="calendar" 
+                    style={styles.calendar}
+                    size={100} 
+                    color="white" 
+                />
                 <Ionicons 
                     name="chatbubble-ellipses-outline" 
-                    style={styles.slideLeft} 
+                    style={styles.bubble} 
                     size={100} 
                     color="white" 
                 />
             </View>
         </View>
-        <View style={styles.container2}>
+        <View style={styles.profilePicContainer}>
             <Image style={styles.profilePicture} source={require('../../assets/img/sad-cat.jpg')}/>
         </View>
     </>
@@ -51,13 +58,24 @@ const styles = StyleSheet.create({
         alignItems:'center',
     },
 
-    container2: {
+    profilePicContainer: {
         flex: 1,
         backgroundColor:'#fff',
         height:'70%',
         padding:20,
         alignItems:'center',
         justifyContent:'center',
+    },
+
+    profilePicture: {
+        width:300,
+        height:300,
+        borderRadius:150,
+        // textAlign:'center',
+        // margin:'auto'
+        position:'absolute',
+        margin:'auto',
+        bottom:'60%'
     },
 
     flexContainer: {
@@ -71,15 +89,25 @@ const styles = StyleSheet.create({
         position:'relative'
     },
 
-    flexContainer2: {
+    iconContainer: {
         flexDirection:'row',
-        width:'80%',
-        height:80,
+        width:'40%',
+        height:120,
         alignItems:'flex-end',
         justifyContent:'flex-end',
         marginBottom:10,
         // borderWidth:2,
         // borderColor:'red'
+    },
+
+    bubble: {
+        alignSelf:'flex-start',
+        flex:0
+    },
+
+    calendar: {
+        alignSelf:'flex-start',
+        flex:1
     },
 
     title: {
@@ -103,25 +131,10 @@ const styles = StyleSheet.create({
         alignItems:'left'
     },
 
-    profilePicture: {
-        width:250,
-        height:250,
-        borderRadius:125,
-        // textAlign:'center',
-        // margin:'auto'
-        position:'absolute',
-        margin:'auto',
-        top:'30%'
-    },
-
     // center: {
     //     textAlign:'center',
     //     margin:'auto'
     // },
-
-    slideLeft: {
-        alignSelf:'flex-start'
-    },
 
     input: {
         width:'60%',
