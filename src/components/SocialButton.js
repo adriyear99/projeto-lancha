@@ -3,14 +3,22 @@ import {Text, TouchableOpacity, View, StyleSheet} from 'react-native';
 
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
-const SocialButton = ({
-    buttonTitle,
-    btnType,
-    color,
-    backgroundColor,
-    ...rest
-}) => {
+// Fontes
+import { useFonts } from '@expo-google-fonts/montserrat'
+
+const SocialButton = ({buttonTitle,btnType,color,backgroundColor,...rest}) => {
+
     let bgColor = backgroundColor;
+
+    // Carregar fontes
+    let [fontsLoaded] = useFonts({
+        "Montserrat_Regular": require('../../assets/fonts/Montserrat-Regular.ttf'),
+        "Montserrat_Bold": require('../../assets/fonts/Montserrat-Bold.ttf')
+    })
+    if(!fontsLoaded){
+        return null
+    }
+
     return (
         <TouchableOpacity style={[styles.buttonContainer, {backgroundColor: bgColor}]} {...rest}>
             <View style={styles.iconWrapper}>
@@ -28,7 +36,7 @@ export default SocialButton;
 const styles = StyleSheet.create({
     buttonContainer: {
         marginTop: 20,
-        width: '30%',
+        width: '80%',
         height: 60,
         padding: 10,
         flexDirection: 'row',
@@ -54,7 +62,7 @@ const styles = StyleSheet.create({
     buttonText: {
         fontSize: 18,
         fontWeight: 'bold',
-        fontFamily: 'Lato-Regular',
+        fontFamily: 'Montserrat_Regular',
     }
 
 });
