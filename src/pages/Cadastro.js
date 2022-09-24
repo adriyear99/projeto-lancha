@@ -1,7 +1,11 @@
 // Utilidades
 import { StyleSheet,Text,TextInput,TouchableOpacity,View } from 'react-native'
-import { useState } from 'react';
-import CustomButton from '../components/CustomButton';
+import { useState } from 'react'
+import { CheckBox } from 'react-native-elements'
+
+// Componentes
+import CustomButton from '../components/CustomButton'
+import SocialButton from '../components/SocialButton'
 
 // Expo Icons
 import { AntDesign } from '@expo/vector-icons'
@@ -28,6 +32,8 @@ export default function Cadastro({navigation}) {
     const [invalidName,setInvalidName] = useState(false)
     const [invalidEmail,setInvalidEmail] = useState(false)
     const [invalidPassword,setInvalidPassword] = useState(false)
+
+    const [receiveNewsletter,setReceiveNewsletter] = useState(false);
     
     const [usuarios,setUsuarios] = useState([])
 
@@ -100,6 +106,23 @@ export default function Cadastro({navigation}) {
                 style={{ height:60, width:300, backgroundColor:'#4B7E94' }}
             />
 
+            <SocialButton
+                buttonTitle="Sign In with Google"
+                btnType="google"
+                color="#fff"
+                backgroundColor="#de4d41"
+                onPress={()=> console.log("teste")}
+            />
+
+            <View style={styles.novidadesContainer}>
+                <CheckBox
+                    title="Eu gostaria de receber as novidades via E-mail"
+                    style={styles.checkbox}
+                    checked={receiveNewsletter}
+                    onPress={() => setReceiveNewsletter(!receiveNewsletter)}
+                />
+            </View>
+
         </View>
     )
 }
@@ -128,7 +151,6 @@ const styles = StyleSheet.create({
     input: {
         width:'90%',
         height:40,
-        backgroundColor: '#fff',
         paddingHorizontal:8,
         marginBottom:8,
         borderWidth:2,
@@ -145,8 +167,21 @@ const styles = StyleSheet.create({
         // borderColor:'blue'
     },
 
+    novidadesContainer: {
+        flexDirection:'row',
+        marginTop:10,
+        padding:5,
+        alignItems:'center',
+        justifyContent:'center',
+    },
+
+    checkbox: {
+        backgroundColor:'green',
+        color:'red'
+    },
+
     right: {
-        backgroundColor:'white',
+        backgroundColor:'#efeff5',
         borderColor:'black'
     },
 

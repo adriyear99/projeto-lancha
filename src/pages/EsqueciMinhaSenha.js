@@ -3,7 +3,7 @@ import { StyleSheet,Text,View,TextInput } from 'react-native'
 import { useState } from 'react'
 import CustomButton from '../components/CustomButton'
 
-export default function EsqueciMinhaSenha() {
+export default function EsqueciMinhaSenha({navigation}) {
 
     // Erros de login
     const errors = {
@@ -46,7 +46,11 @@ export default function EsqueciMinhaSenha() {
             />
             {invalidEmail && <Text style={styles.labelError}>{errors.email}</Text>}
 
-            <CustomButton text='Recuperar senha' onPress={()=> navigation.navigate("Login")}/>
+            <CustomButton 
+                text='Recuperar Senha' 
+                onPress={()=> navigation.navigate("Login")}
+                style={{ height:60, width:200, borderRadius: 50, backgroundColor:'#4B7E94' }}
+            />
         </View>
     )
 }

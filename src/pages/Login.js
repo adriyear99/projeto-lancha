@@ -1,7 +1,16 @@
+// Utilidades
 import { Text,TextInput,StyleSheet,TouchableOpacity,View } from 'react-native'
 import { useState } from 'react'
-import  api  from '../services/api'
+
+// Componentes
 import CustomButton from '../components/CustomButton'
+import SocialButton from '../components/SocialButton'
+
+// Expo Icons
+import { Feather } from '@expo/vector-icons'
+
+// API
+import  api  from '../services/api'
 
 export default function Login({navigation}) {
 
@@ -31,11 +40,17 @@ export default function Login({navigation}) {
     const [user,setUser] = useState("")
     const [password,setPassword] = useState("")
 
+    const [show,toggleIcon] = useState(false)
+
     const [invalidUser,setInvalidUser] = useState(false)
     const [invalidPassword,setInvalidPassword] = useState(false)
     
 
     const [usuarios,setUsuarios] = useState([])
+
+    const showPassword = () => {
+        toggleIcon(!show)
+    }
 
     /**
      * Valida o formulário antes de enviar os dados
@@ -83,13 +98,23 @@ export default function Login({navigation}) {
             />
             {invalidUser && <Text style={styles.labelError}>{errors.user}</Text>}
 
-            <TextInput
-                placeholder={"Senha"}
-                placeholderTextColor={!invalidPassword ? 'black' : 'white'}
-                style={[styles.input,(!invalidPassword ? styles.right : styles.wrong)]}
-                onChangeText={setPassword}
-                value={password}
-            />
+            <View style={[styles.input,styles.flexContainer]}>
+                <TextInput
+                    placeholder={"Senha"}
+                    placeholderTextColor={!invalidPassword ? 'black' : 'white'}
+                    style={(!invalidPassword ? styles.right : styles.wrong)}
+                    onChangeText={setPassword}
+                    value={password}
+                />
+                <TouchableOpacity 
+                    activeOpacity={0.5} 
+                    style={styles.icon} 
+                    onPress={showPassword}
+                >
+                    {show ? <Feather name="eye" size={24} color="black"/> : 
+                            <Feather name="eye-off" size={24} color="black" />}
+                </TouchableOpacity>
+            </View>
             {invalidPassword && <Text style={styles.labelError}>{errors.password}</Text>}
 
             <CustomButton 
@@ -101,6 +126,14 @@ export default function Login({navigation}) {
                 text='Criar Conta' 
                 onPress={handleSubmit}
                 style={{ height:60, width:300, backgroundColor:'#BDBDBD' }}
+            />
+
+            <SocialButton
+                buttonTitle="Sign In with Google"
+                btnType="google"
+                color="#fff"
+                backgroundColor="#de4d41"
+                onPress={()=> console.log("teste")}
             />
 
             <TouchableOpacity 
@@ -120,7 +153,17 @@ const styles = StyleSheet.create({
         backgroundColor:'#fff',
         padding:20,
         alignItems:'center',
-        justifyContent:'center',
+        justifyContent:'center'
+    },
+
+    flexContainer: {
+        flexDirection:'row',
+        justifyContent:'space-between',
+        alignItems:'center',
+    },
+
+    icon: {
+        alignSelf:'center'
     },
 
     title: {
