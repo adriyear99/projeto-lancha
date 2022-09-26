@@ -8,6 +8,8 @@ import { useFonts } from '@expo-google-fonts/montserrat'
 
 export default function PessoaEmpresa({navigation}) {
 
+    global.tipoUsuario = undefined
+
     // Carregar fontes
     let [fontsLoaded] = useFonts({
         "Montserrat_Regular": require('../../assets/fonts/Montserrat-Regular.ttf'),
@@ -17,17 +19,30 @@ export default function PessoaEmpresa({navigation}) {
         return null
     }
 
+    const pessoa = () => {
+        global.tipoUsuario = "pessoa"
+        console.log(global.tipoUsuario)
+        navigation.navigate("Cadastro")
+    }
+    
+    const empresa = () => {
+        global.tipoUsuario = "empresa"
+        console.log(global.tipoUsuario)
+        navigation.navigate("Cadastro")
+    }
+
+
     // Renderizar componente
     return (
         <View style={styles.container}>
             <CustomButton 
                 text='Pessoa' 
-                onPress={()=> navigation.navigate("Cadastro")}
+                onPress={pessoa}
                 style={{ height:60, width:300, backgroundColor:'#4B7E94' }}
             />
             <CustomButton 
                 text='Empresa' 
-                onPress={()=> navigation.navigate("Cadastro")}
+                onPress={empresa}
                 style={{ height:60, width:300, backgroundColor:'#4B7E94' }}
             />
         </View>

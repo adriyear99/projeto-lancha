@@ -31,12 +31,13 @@ export default function Home({navigation}) {
                 </TouchableOpacity>
             </View>
             <View style={styles.iconContainer}>
-                <AntDesign 
-                    name="calendar" 
-                    style={styles.calendar}
-                    size={100} 
-                    color="white" 
-                />
+                <TouchableOpacity activeOpacity={0.5} style={styles.calendar} onPress={() => navigation.navigate("Agendar")}>
+                    <AntDesign 
+                        name="calendar" 
+                        size={100} 
+                        color="white" 
+                    />
+                </TouchableOpacity>
                 <Ionicons 
                     name="chatbubble-ellipses-outline" 
                     style={styles.bubble} 
