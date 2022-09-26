@@ -8,7 +8,7 @@ import { Ionicons } from '@expo/vector-icons'
 import { AntDesign } from '@expo/vector-icons'
 
 
-export default function Home() {
+export default function Home({navigation}) {
 
     // Set State
     const [username,setUsername] = useState("")
@@ -26,7 +26,9 @@ export default function Home() {
                     <EvilIcons name="gear" size={60} color="white"/>
                 </TouchableOpacity>
                 <Text style={styles.title}>Perfil</Text>
-                <Text style={styles.link}>Logout</Text>
+                <TouchableOpacity activeOpacity={0.5} style={styles.icon} onPress={() => navigation.navigate("Tela Inicial")}>
+                    <Text style={styles.link}>Logout</Text>
+                </TouchableOpacity>
             </View>
             <View style={styles.iconContainer}>
                 <AntDesign 

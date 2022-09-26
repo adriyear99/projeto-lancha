@@ -44,33 +44,36 @@ export default function Cadastro({navigation}) {
     const handleSubmit = async (e) => {
         e.preventDefault()
 
-        if(name.length < 6){
-            setInvalidName(true)
-        }
+        // if(name.length < 6){
+        //     setInvalidName(true)
+        // }
 
-        if(email.length < 6){
-            setInvalidEmail(true)
-        }
+        // if(email.length < 6){
+        //     setInvalidEmail(true)
+        // }
 
-        if(password.length < 6){
-            setInvalidPassword(true)
-        }
+        // if(password.length < 6){
+        //     setInvalidPassword(true)
+        // }
 
-        if(password != confirmPassword){
-            setDifferentPassword(true)
-        }
+        // if(password != confirmPassword){
+        //     setDifferentPassword(true)
+        // }
 
+        navigation.navigate("Home")
     }
 
     return (
 
         <View style={styles.container}>
             <View style={styles.flexContainer}>
-                <TouchableOpacity activeOpacity={0.5} onPress={() => navigation.navigate("Pessoa ou Empresa")}>
+                <TouchableOpacity activeOpacity={0.5} onPress={() => navigation.navigate("Tela Inicial")}>
                     <AntDesign name="close" size={24} color="black"/>
                 </TouchableOpacity>
                 <Text style={styles.title}>Criar Conta</Text>
-                <Text style={styles.link}>Login</Text>
+                <TouchableOpacity activeOpacity={0.5} onPress={() => navigation.navigate("Login")}>
+                    <Text style={styles.link}>Login</Text>                
+                </TouchableOpacity>
             </View>
 
             <TextInput

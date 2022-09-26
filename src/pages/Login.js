@@ -59,17 +59,19 @@ export default function Login({navigation}) {
     const handleSubmit = async (e) => {
         e.preventDefault()
 
-        if(user.length < 6){
-            setInvalidUser(true)
-        }
-        if(password.length < 6){
-            setInvalidPassword(true)
-        }
+        // if(user.length < 6){
+        //     setInvalidUser(true)
+        // }
+        // if(password.length < 6){
+        //     setInvalidPassword(true)
+        // }
 
-        if(!invalidUser && !invalidPassword){
-            console.log('entrou aqui')
-            cadastrarUsuario()
-        }
+        // if(!invalidUser && !invalidPassword){
+        //     console.log('entrou aqui')
+        //     cadastrarUsuario()
+        // }
+
+        navigation.navigate("Home")
     }
 
     /**
@@ -124,7 +126,7 @@ export default function Login({navigation}) {
             />
             <CustomButton 
                 text='Criar Conta' 
-                onPress={handleSubmit}
+                onPress={() => navigation.navigate("Cadastro")}
                 style={{ height:60, width:300, backgroundColor:'#BDBDBD' }}
             />
 
