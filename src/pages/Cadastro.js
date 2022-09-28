@@ -1,6 +1,6 @@
 // Utilidades
 import { StyleSheet,Text,TextInput,TouchableOpacity,View } from 'react-native'
-import { useState } from 'react'
+import { useState,useContext } from 'react'
 import { CheckBox } from 'react-native-elements'
 
 // Componentes
@@ -10,8 +10,14 @@ import SocialButton from '../components/SocialButton'
 // Expo Icons
 import { AntDesign } from '@expo/vector-icons'
 
+// Variáveis globais
+import AppContext from '../components/AppContext'
+
 
 export default function Cadastro({navigation}) {
+
+    // Variáveis e métodos globais
+    const global = useContext(AppContext);
 
     // Erros de login
     const errors = {

@@ -1,6 +1,8 @@
 // Utilidades
 import { StatusBar } from 'expo-status-bar'
+import { useState } from 'react'
 import { StyleSheet } from 'react-native'
+import AppContext from './src/components/AppContext'
 
 // Navegação entre telas
 import { NavigationContainer } from '@react-navigation/native'
@@ -19,24 +21,35 @@ import Agendar from './src/pages/Agendar'
 
 export default function App() {
 
+  // Variáveis globais
+  const [tipoUsuario, setTipoUsuario] = useState('')
+
+  // Dados do usuário logado
+  const user = {
+    tipoUsuario: tipoUsuario,
+    setTipoUsuario
+  }
+
   // Navegador de páginas
   const Stack = createNativeStackNavigator()
 
   // Renderização dos componentes
   return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName="Tela Inicial">
-        <Stack.Screen name="Tela Inicial" component={CadastroLogin} options={styles.hideHeader}/>
-        <Stack.Screen name="Pessoa ou Empresa" component={PessoaEmpresa} options={styles.hideLabel}/>
-        <Stack.Screen name="Home" component={Home} options={styles.hideHeader}/>
-        <Stack.Screen name="Login" component={Login}/>
-        <Stack.Screen name="Cadastro" component={Cadastro} options={{headerShown: false}}/>
-        <Stack.Screen name="Esqueci minha senha" component={EsqueciMinhaSenha}/>
-        <Stack.Screen name="Configurações" component={Settings}/>
-        <Stack.Screen name="Agendar" component={Agendar}/>
-      </Stack.Navigator>
-      <StatusBar style="auto" />
-    </NavigationContainer>
+    <AppContext.Provider value={user}>
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName="Tela Inicial">
+          <Stack.Screen name="Tela Inicial" component={CadastroLogin} options={styles.hideHeader}/>
+          <Stack.Screen name="Pessoa ou Empresa" component={PessoaEmpresa} options={styles.hideLabel}/>
+          <Stack.Screen name="Home" component={Home} options={styles.hideHeader}/>
+          <Stack.Screen name="Login" component={Login}/>
+          <Stack.Screen name="Cadastro" component={Cadastro} options={{headerShown: false}}/>
+          <Stack.Screen name="Esqueci minha senha" component={EsqueciMinhaSenha}/>
+          <Stack.Screen name="Configurações" component={Settings}/>
+          <Stack.Screen name="Agendar" component={Agendar}/>
+        </Stack.Navigator>
+        <StatusBar style="auto" />
+      </NavigationContainer>
+    </AppContext.Provider>
   );
 }
 

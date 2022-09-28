@@ -1,14 +1,20 @@
 // Utilidades
 import { StyleSheet,Text,TouchableOpacity,View,Image } from 'react-native'
-import { useState } from 'react'
+import { useState,useContext } from 'react'
 
 // Expo Icons
 import { EvilIcons } from '@expo/vector-icons'
 import { Ionicons } from '@expo/vector-icons'
 import { AntDesign } from '@expo/vector-icons'
 
+// Variáveis globais
+import AppContext from '../components/AppContext'
+
 
 export default function Home({navigation}) {
+
+    // Variáveis e métodos globais
+    const global = useContext(AppContext);
 
     // Set State
     const [username,setUsername] = useState("")
@@ -31,13 +37,15 @@ export default function Home({navigation}) {
                 </TouchableOpacity>
             </View>
             <View style={styles.iconContainer}>
-                <TouchableOpacity activeOpacity={0.5} style={styles.calendar} onPress={() => navigation.navigate("Agendar")}>
-                    <AntDesign 
-                        name="calendar" 
-                        size={100} 
-                        color="white" 
-                    />
-                </TouchableOpacity>
+                {global.tipoUsuario == "empresa" &&
+                    <TouchableOpacity activeOpacity={0.5} style={styles.calendar} onPress={() => navigation.navigate("Agendar")}>
+                        <AntDesign 
+                            name="calendar" 
+                            size={100} 
+                            color="white" 
+                        />
+                    </TouchableOpacity>
+                }
                 <Ionicons 
                     name="chatbubble-ellipses-outline" 
                     style={styles.bubble} 

@@ -1,14 +1,19 @@
 // Utilidades
+import { useContext } from 'react'
 import { View,StyleSheet } from 'react-native';
 import CustomButton from '../components/CustomButton';
 
 // Fontes
 import { useFonts } from '@expo-google-fonts/montserrat'
 
+// Variáveis globais
+import AppContext from '../components/AppContext'
+
 
 export default function PessoaEmpresa({navigation}) {
 
-    global.tipoUsuario = undefined
+    // Variáveis e métodos globais
+    const global = useContext(AppContext);
 
     // Carregar fontes
     let [fontsLoaded] = useFonts({
@@ -20,14 +25,12 @@ export default function PessoaEmpresa({navigation}) {
     }
 
     const pessoa = () => {
-        global.tipoUsuario = "pessoa"
-        console.log(global.tipoUsuario)
+        global.setTipoUsuario("pessoa")
         navigation.navigate("Cadastro")
     }
     
     const empresa = () => {
-        global.tipoUsuario = "empresa"
-        console.log(global.tipoUsuario)
+        global.setTipoUsuario("empresa")
         navigation.navigate("Cadastro")
     }
 
