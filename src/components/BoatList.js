@@ -6,11 +6,11 @@ import { StyleSheet,Text,View } from 'react-native'
 // Expo Icons
 
 
-export default function Settings({navigation}) {
+export default function BoatList({navigation}) {
 
     return (
         <View style={styles.container}>
-            <Text>Settings</Text>
+            <Text>Lista de Barcos</Text>
         </View>
     )
 }

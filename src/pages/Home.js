@@ -1,6 +1,7 @@
 // Utilidades
 import { StyleSheet,Text,TouchableOpacity,View,Image } from 'react-native'
 import { useState,useContext } from 'react'
+import SwitchSelector from "react-native-switch-selector";
 
 // Expo Icons
 import { EvilIcons } from '@expo/vector-icons'
@@ -9,6 +10,9 @@ import { AntDesign } from '@expo/vector-icons'
 
 // Variáveis globais
 import AppContext from '../components/AppContext'
+
+// Componentes Customizados
+import BoatList from '../components/BoatList';
 
 
 export default function Home({navigation}) {
@@ -25,19 +29,29 @@ export default function Home({navigation}) {
     
     const [usuarios,setUsuarios] = useState([])
 
-    return <>
+    // Switch
+    const options = [
+        { label: "Embarcações", value: 1 },
+        { label: "Reservas", value: 2 }
+    ];
+
+    return (
         <View style={styles.container}>
-            <View style={styles.flexContainer}>
-                <TouchableOpacity activeOpacity={0.5} style={styles.icon} onPress={() => navigation.navigate("Configurações")}>
-                    <EvilIcons name="gear" size={60} color="white"/>
-                </TouchableOpacity>
-                <Text style={styles.title}>Perfil</Text>
-                <TouchableOpacity activeOpacity={0.5} style={styles.icon} onPress={() => navigation.navigate("Tela Inicial")}>
-                    <Text style={styles.link}>Logout</Text>
-                </TouchableOpacity>
-            </View>
-            <View style={styles.iconContainer}>
-                {global.tipoUsuario == "empresa" &&
+            <View style={styles.blueContainer}>
+
+                {/* Header */}
+                <View style={styles.flexContainer}>
+                    <TouchableOpacity activeOpacity={0.5} style={styles.icon} onPress={() => navigation.navigate("Configurações")}>
+                        <EvilIcons name="gear" size={60} color="white"/>
+                    </TouchableOpacity>
+                    <Text style={styles.title}>Perfil</Text>
+                    <TouchableOpacity activeOpacity={0.5} style={styles.icon} onPress={() => navigation.navigate("Tela Inicial")}>
+                        <Text style={styles.link}>Logout</Text>
+                    </TouchableOpacity>
+                </View>
+                {/* Icones */}
+                <View style={styles.iconContainer}>
+                    {/* {global.tipoUsuario == "empresa" && */}
                     <TouchableOpacity activeOpacity={0.5} style={styles.calendar} onPress={() => navigation.navigate("Agendar")}>
                         <AntDesign 
                             name="calendar" 
@@ -45,22 +59,59 @@ export default function Home({navigation}) {
                             color="white" 
                         />
                     </TouchableOpacity>
-                }
-                <Ionicons 
-                    name="chatbubble-ellipses-outline" 
-                    style={styles.bubble} 
-                    size={100} 
-                    color="white" 
+                    <TouchableOpacity activeOpacity={0.5} style={styles.bubble} onPress={() => navigation.navigate("Agendar")}>
+                        <Ionicons 
+                            name="chatbubble-ellipses-outline" 
+                            style={styles.bubble} 
+                            size={100} 
+                            color="white" 
+                        />
+                    </TouchableOpacity>
+                </View>
+                {/* Foto */}
+                <View style={styles.profilePicContainer}>
+                    <Image style={styles.profilePicture} source={require('../../assets/img/sad-cat.jpg')}/>
+                </View>
+            </View>
+
+            <View style={styles.whiteContainer}>
+                <SwitchSelector
+                    options={options}
+                    initial={1}
+                    textColor={'#4B7E94'}
+                    selectedColor={'#4B7E94'}
+                    buttonColor={'lightgray'}
+                    borderColor={'lightgray'}
+                    hasPadding
+                    style={styles.switch}
+                    onPress={value => console.log(`Call onPress with value: ${value}`)}
                 />
+
+                <View style={styles.boatContainer}>
+                    <BoatList/>
+
+                </View>
+
+
             </View>
         </View>
-        <View style={styles.profilePicContainer}>
-            <Image style={styles.profilePicture} source={require('../../assets/img/sad-cat.jpg')}/>
-        </View>
-    </>
+
+    )
 }
 
 const styles = StyleSheet.create({
+
+    blueContainer: {
+        width:'100%',
+        height:'60%',
+        backgroundColor:'#4B7E94'
+    },
+
+    whiteContainer: {
+        width:'100%',
+        height:'70%',
+        backgroundColor:'#fff'
+    },
 
     container: {
         flex: 1,
@@ -70,12 +121,14 @@ const styles = StyleSheet.create({
     },
 
     profilePicContainer: {
-        flex: 1,
-        backgroundColor:'#fff',
-        height:'70%',
+        width:'undefined',
+        alignSelf:'center',
         padding:20,
         alignItems:'center',
         justifyContent:'center',
+        borderWidth:2,
+        borderColor:'green',
+        height:'undefined',
     },
 
     profilePicture: {
@@ -84,41 +137,39 @@ const styles = StyleSheet.create({
         borderRadius:150,
         // textAlign:'center',
         // margin:'auto'
-        position:'absolute',
         margin:'auto',
-        bottom:'60%'
     },
 
     flexContainer: {
         flexDirection:'row',
         width:'90%',
         alignItems:'center',
+        alignSelf:'center',
         justifyContent:'space-between',
         marginBottom:10,
         // borderWidth:2,
         // borderColor:'red',
-        position:'relative'
     },
 
     iconContainer: {
         flexDirection:'row',
-        width:'40%',
+        width:'80%',
         height:120,
-        alignItems:'flex-end',
-        justifyContent:'flex-end',
+        alignSelf:'center',
+        justifyContent:'space-between',
         marginBottom:10,
-        // borderWidth:2,
-        // borderColor:'red'
+        borderWidth:2,
+        borderColor:'red'
     },
 
     bubble: {
         alignSelf:'flex-start',
-        flex:0
+
     },
 
     calendar: {
         alignSelf:'flex-start',
-        flex:1
+
     },
 
     title: {
@@ -177,5 +228,22 @@ const styles = StyleSheet.create({
         alignSelf: 'flex-start',
         color: '#ff375b',
         marginBottom: 8
+    },
+
+    switch: {
+        width:'50%',
+        alignSelf:'center',
+        marginTop:100
+    },
+
+    boatContainer: {
+        flexDirection:'row',
+        width:'50%',
+        height:'40%',
+        alignSelf:'center',
+        backgroundColor:'lightgray',
+        marginTop:10,
+        borderWidth:2,
+        borderColor:'red'
     }
 })
