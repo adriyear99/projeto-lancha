@@ -28,9 +28,6 @@ export default function Login({navigation}) {
         webClientId: '192988181548-40l8e2h22lc3fsog7augfocd5mnc8c06.apps.googleusercontent.com',
       });
 
-    const authentication = response;
-    const token = response?.accessToken;
-
     async function loadProfile(){
         const authentication = response?.authentication;
         const token = authentication?.accessToken;
@@ -55,14 +52,6 @@ export default function Login({navigation}) {
         }
         }, [response]);
 
-
-    // Axios    
-    let axiosConfig = {
-        headers: {
-            'Content-Type': 'application/json;charset=UTF-8',
-            "Access-Control-Allow-Origin": "*",
-        }
-    };
 
     const body = { user, password };
 
