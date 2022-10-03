@@ -18,9 +18,6 @@ import EsqueciMinhaSenha from './src/pages/EsqueciMinhaSenha'
 import Settings from './src/pages/Settings'
 import Agendar from './src/pages/Agendar'
 
-// Components
-import Login from './src/components/Login';
-import Logout from './src/components/Logout';
 
 export default function App() {
 
