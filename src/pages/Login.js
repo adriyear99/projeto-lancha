@@ -25,23 +25,36 @@ export default function Login({navigation}) {
 
     //Autenticacao
     const [request, response, promptAsync] = Google.useAuthRequest({
-        expoClientId: 'GOOGLE_GUID.apps.googleusercontent.com',
-        iosClientId: 'GOOGLE_GUID.apps.googleusercontent.com',
-        androidClientId: 'GOOGLE_GUID.apps.googleusercontent.com',
         webClientId: '192988181548-40l8e2h22lc3fsog7augfocd5mnc8c06.apps.googleusercontent.com',
       });
 
-    React.useEffect(() => {
-    if (response?.type === 'success') {
-        console.log(response);
-        const { authentication } = response;
+    const authentication = response;
+    const token = response?.accessToken;
+
+    async function loadProfile(){
+        const authentication = response?.authentication;
+        const token = authentication?.accessToken;
+        console.log(token);
+        const data_01 = await fetch(`https://www.googleapis.com/oauth2/v2/userinfo?alt=json&access_token=${token}`);
+        const userInfo = await data_01.json();
+
+        console.log('###User data###');
+        console.log(userInfo);
     }
-    else{
-        console.log('Falha');
-    }
-    }, [response]);
 
     
+    React.useEffect(() => {
+        if (response?.type === 'success') {
+            console.log(response);
+            const { authentication } = response;
+            console.log(authentication?.accessToken);
+            loadProfile();
+        }
+        else{
+            console.log('Falha');
+        }
+        }, [response]);
+
 
     // Axios    
     let axiosConfig = {
