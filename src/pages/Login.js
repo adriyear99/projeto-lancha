@@ -2,6 +2,7 @@
 import { Text,TextInput,StyleSheet,TouchableOpacity,View } from 'react-native'
 import { useState } from 'react'
 
+
 // Componentes
 import CustomButton from '../components/CustomButton'
 import SocialButton from '../components/SocialButton'
