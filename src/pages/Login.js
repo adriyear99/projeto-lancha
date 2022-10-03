@@ -1,6 +1,10 @@
 // Utilidades
 import { Text,TextInput,StyleSheet,TouchableOpacity,View } from 'react-native'
 import { useState } from 'react'
+import * as React from 'react';
+import * as WebBrowser from 'expo-web-browser';
+import * as Google from 'expo-auth-session/providers/google';
+import { Button } from 'react-native';
 
 
 // Componentes
@@ -15,15 +19,42 @@ import { Feather } from '@expo/vector-icons'
 // API
 import  api  from '../services/api'
 
+// Autenticacao
+
+WebBrowser.maybeCompleteAuthSession();
+
+
 export default function Login({navigation}) {
 
-    // Axios    
-    let axiosConfig = {
-        headers: {
-            'Content-Type': 'application/json;charset=UTF-8',
-            "Access-Control-Allow-Origin": "*",
+    //Autenticacao
+    const [request, response, promptAsync] = Google.useAuthRequest({
+        webClientId: '192988181548-40l8e2h22lc3fsog7augfocd5mnc8c06.apps.googleusercontent.com',
+      });
+
+    async function loadProfile(){
+        const authentication = response?.authentication;
+        const token = authentication?.accessToken;
+        console.log(token);
+        const data_01 = await fetch(`https://www.googleapis.com/oauth2/v2/userinfo?alt=json&access_token=${token}`);
+        const userInfo = await data_01.json();
+
+        console.log('###User data###');
+        console.log(userInfo);
+    }
+
+    
+    React.useEffect(() => {
+        if (response?.type === 'success') {
+            console.log(response);
+            const { authentication } = response;
+            console.log(authentication?.accessToken);
+            loadProfile();
         }
-    };
+        else{
+            console.log('Falha');
+        }
+        }, [response]);
+
 
     const body = { user, password };
 
@@ -140,6 +171,15 @@ export default function Login({navigation}) {
                 backgroundColor="#de4d41"
                 onPress={()=> console.log("teste")}
             />
+
+            <Button
+                disabled={!request}
+                title="Login"
+                onPress={() => {
+                    promptAsync();
+                }}
+            />
+
 
             <TouchableOpacity 
                 activeOpacity={0.5} 
