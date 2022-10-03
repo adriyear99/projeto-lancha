@@ -1,6 +1,10 @@
 // Utilidades
 import { Text,TextInput,StyleSheet,TouchableOpacity,View } from 'react-native'
 import { useState } from 'react'
+import * as React from 'react';
+import * as WebBrowser from 'expo-web-browser';
+import * as Google from 'expo-auth-session/providers/google';
+import { Button } from 'react-native';
 
 // Componentes
 import CustomButton from '../components/CustomButton'
@@ -12,7 +16,32 @@ import { Feather } from '@expo/vector-icons'
 // API
 import  api  from '../services/api'
 
+// Autenticacao
+
+WebBrowser.maybeCompleteAuthSession();
+
+
 export default function Login({navigation}) {
+
+    //Autenticacao
+    const [request, response, promptAsync] = Google.useAuthRequest({
+        expoClientId: 'GOOGLE_GUID.apps.googleusercontent.com',
+        iosClientId: 'GOOGLE_GUID.apps.googleusercontent.com',
+        androidClientId: 'GOOGLE_GUID.apps.googleusercontent.com',
+        webClientId: '192988181548-40l8e2h22lc3fsog7augfocd5mnc8c06.apps.googleusercontent.com',
+      });
+
+    React.useEffect(() => {
+    if (response?.type === 'success') {
+        console.log(response);
+        const { authentication } = response;
+    }
+    else{
+        console.log('Falha');
+    }
+    }, [response]);
+
+    
 
     // Axios    
     let axiosConfig = {
@@ -137,6 +166,15 @@ export default function Login({navigation}) {
                 backgroundColor="#de4d41"
                 onPress={()=> console.log("teste")}
             />
+
+            <Button
+                disabled={!request}
+                title="Login"
+                onPress={() => {
+                    promptAsync();
+                }}
+            />
+
 
             <TouchableOpacity 
                 activeOpacity={0.5} 
