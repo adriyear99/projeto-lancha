@@ -1,10 +1,11 @@
 // Utilidades
-import { Text,TextInput,StyleSheet,TouchableOpacity,View } from 'react-native'
+import { Text, TextInput, StyleSheet, TouchableOpacity, View } from 'react-native'
 import { useState } from 'react'
 import * as React from 'react';
 import * as WebBrowser from 'expo-web-browser';
 import * as Google from 'expo-auth-session/providers/google';
 import { Button } from 'react-native';
+import GoogleButton from 'react-google-button'
 
 // Componentes
 import CustomButton from '../components/CustomButton'
@@ -14,21 +15,21 @@ import SocialButton from '../components/SocialButton'
 import { Feather } from '@expo/vector-icons'
 
 // API
-import  api  from '../services/api'
+import api from '../services/api'
 
 // Autenticacao
 
 WebBrowser.maybeCompleteAuthSession();
 
 
-export default function Login({navigation}) {
+export default function Login({ navigation }) {
 
     //Autenticacao
     const [request, response, promptAsync] = Google.useAuthRequest({
         webClientId: '192988181548-40l8e2h22lc3fsog7augfocd5mnc8c06.apps.googleusercontent.com',
-      });
+    });
 
-    async function loadProfile(){
+    async function loadProfile() {
         const authentication = response?.authentication;
         const token = authentication?.accessToken;
         console.log(token);
@@ -39,7 +40,7 @@ export default function Login({navigation}) {
         console.log(userInfo);
     }
 
-    
+
     React.useEffect(() => {
         if (response?.type === 'success') {
             console.log(response);
@@ -47,10 +48,10 @@ export default function Login({navigation}) {
             console.log(authentication?.accessToken);
             loadProfile();
         }
-        else{
+        else {
             console.log('Falha');
         }
-        }, [response]);
+    }, [response]);
 
 
     const body = { user, password };
@@ -68,16 +69,16 @@ export default function Login({navigation}) {
     }
 
     // Set State
-    const [user,setUser] = useState("")
-    const [password,setPassword] = useState("")
+    const [user, setUser] = useState("")
+    const [password, setPassword] = useState("")
 
-    const [show,toggleIcon] = useState(false)
+    const [show, toggleIcon] = useState(false)
 
-    const [invalidUser,setInvalidUser] = useState(false)
-    const [invalidPassword,setInvalidPassword] = useState(false)
-    
+    const [invalidUser, setInvalidUser] = useState(false)
+    const [invalidPassword, setInvalidPassword] = useState(false)
 
-    const [usuarios,setUsuarios] = useState([])
+
+    const [usuarios, setUsuarios] = useState([])
 
     const showPassword = () => {
         toggleIcon(!show)
@@ -85,7 +86,7 @@ export default function Login({navigation}) {
 
     /**
      * Valida o formulário antes de enviar os dados
-     * @param {*} e 
+     * 
      */
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -120,18 +121,18 @@ export default function Login({navigation}) {
 
     return <>
         <View style={styles.container}>
-            <Text style={styles.title}>Fazer Login</Text>
-
-            <TextInput
+            {/* <Text style={styles.title}>Fazer Login</Text> */}
+            <Text onPress={handleSubmit} style={styles.title}>TROLHANCHA</Text>
+{/*              <TextInput
                 placeholder={"Nome de usuário ou e-mail"}
                 placeholderTextColor={!invalidUser ? 'black' : 'white'}
-                style={[styles.input,(!invalidUser ? styles.right : styles.wrong)]}
+                style={[styles.input, (!invalidUser ? styles.right : styles.wrong)]}
                 onChangeText={setUser}
                 value={user}
             />
             {invalidUser && <Text style={styles.labelError}>{errors.user}</Text>}
 
-            <View style={[styles.input,styles.flexContainer]}>
+            <View style={[styles.input, styles.flexContainer]}>
                 <TextInput
                     placeholder={"Senha"}
                     placeholderTextColor={!invalidPassword ? 'black' : 'white'}
@@ -139,34 +140,27 @@ export default function Login({navigation}) {
                     onChangeText={setPassword}
                     value={password}
                 />
-                <TouchableOpacity 
-                    activeOpacity={0.5} 
-                    style={styles.icon} 
+                <TouchableOpacity
+                    activeOpacity={0.5}
+                    style={styles.icon}
                     onPress={showPassword}
                 >
-                    {show ? <Feather name="eye" size={24} color="black"/> : 
-                            <Feather name="eye-off" size={24} color="black" />}
+                    {show ? <Feather name="eye" size={24} color="black" /> :
+                        <Feather name="eye-off" size={24} color="black" />}
                 </TouchableOpacity>
             </View>
             {invalidPassword && <Text style={styles.labelError}>{errors.password}</Text>}
 
-            <CustomButton 
-                text='Entrar' 
+            <CustomButton
+                text='Entrar'
                 onPress={handleSubmit}
-                style={{ height:60, width:300, backgroundColor:'#4B7E94' }}
-            />
-            <CustomButton 
-                text='Criar Conta' 
-                onPress={() => navigation.navigate("Cadastro")}
-                style={{ height:60, width:300, backgroundColor:'#BDBDBD' }}
+                style={{ height: 60, width: 300, backgroundColor: '#4B7E94' }}
             />
 
-            <SocialButton
-                buttonTitle="Sign In with Google"
-                btnType="google"
-                color="#fff"
-                backgroundColor="#de4d41"
-                onPress={()=> console.log("teste")}
+            <CustomButton
+                text='Criar Conta'
+                onPress={() => navigation.navigate("Cadastro")}
+                style={{ height: 60, width: 300, backgroundColor: '#BDBDBD' }}
             />
 
             <Button
@@ -175,14 +169,21 @@ export default function Login({navigation}) {
                 onPress={() => {
                     promptAsync();
                 }}
+            /> */}
+
+            <GoogleButton
+                type="light"
+                onClick={() => {
+                    promptAsync();
+                }
+                }
             />
 
-
-            <TouchableOpacity 
-                activeOpacity={0.5} 
+            <TouchableOpacity
+                activeOpacity={0.5}
                 onPress={() => navigation.navigate("Esqueci minha senha")}
-                style={{marginTop:16}}>
-                <Text style={styles.textLink}>Esqueceu a senha?</Text>
+                style={{ marginTop: 16 }}>
+{/*                 <Text style={styles.textLink}>Esqueceu a senha?</Text> */}
             </TouchableOpacity>
         </View>
 
@@ -192,46 +193,46 @@ export default function Login({navigation}) {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor:'#fff',
-        padding:20,
-        alignItems:'center',
-        justifyContent:'center'
+        backgroundColor: '#4B7E94',
+        padding: 20,
+        alignItems: 'center',
+        justifyContent: 'center'
     },
 
     flexContainer: {
-        flexDirection:'row',
-        justifyContent:'space-between',
-        alignItems:'center',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
     },
 
     icon: {
-        alignSelf:'center'
+        alignSelf: 'center'
     },
 
     title: {
-        fontSize:34,
-        marginBottom:20,
-        color:'#121212',
-        fontWeight:'bold'
+        fontSize: 34,
+        marginBottom: 20,
+        color: 'white',
+        fontWeight: 'bold'
     },
 
     input: {
-        width:'90%',
-        height:40,
+        width: '90%',
+        height: 40,
         backgroundColor: '#fff',
-        paddingHorizontal:8,
-        marginBottom:8,
-        borderWidth:2,
-        borderRadius:6
-    },  
+        paddingHorizontal: 8,
+        marginBottom: 8,
+        borderWidth: 2,
+        borderRadius: 6
+    },
 
     right: {
-        backgroundColor:'white',
-        borderColor:'black'
+        backgroundColor: 'white',
+        borderColor: 'black'
     },
 
     wrong: {
-        backgroundColor:'#9bb9c7',
+        backgroundColor: '#9bb9c7',
         borderColor: '#4B7E94'
     },
 
@@ -254,7 +255,7 @@ const styles = StyleSheet.create({
         color: '#fff',
         fontWeight: 'bold',
         fontSize: 18
-    },  
+    },
 
     labelError: {
         alignSelf: 'flex-start',
@@ -263,12 +264,12 @@ const styles = StyleSheet.create({
     },
 
     textLink: {
-        fontSize:18,
+        fontSize: 18,
         color: '#4B7E94'
     },
 
     extra: {
-        backgroundColor:'green',
-        width:100
+        backgroundColor: 'green',
+        width: 100
     }
 })
