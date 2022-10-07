@@ -44,9 +44,9 @@ export default function Home({navigation}) {
                     <TouchableOpacity activeOpacity={0.5} style={styles.icon} onPress={() => navigation.navigate("Configurações")}>
                         <EvilIcons name="gear" size={60} color="white"/>
                     </TouchableOpacity>
-                    <Text style={styles.title}>Perfil</Text>
+                    <Text style={styles.title}>Meu Perfil</Text>
                     <TouchableOpacity activeOpacity={0.5} style={styles.icon} onPress={() => navigation.navigate("Tela Inicial")}>
-                        <Text style={styles.link}>Logout</Text>
+                        <Text style={styles.link}>logout</Text>
                     </TouchableOpacity>
                 </View>
                 {/* Icones */}
@@ -70,7 +70,8 @@ export default function Home({navigation}) {
                 </View>
                 {/* Foto */}
                 <View style={styles.profilePicContainer}>
-                    <Image style={styles.profilePicture} source={require('../../assets/img/sad-cat.jpg')}/>
+                    <Image style={styles.profilePicture} source={require('../../assets/img/foto-de-perfil.jpg')}/>
+                    
                 </View>
             </View>
 
