@@ -35,6 +35,8 @@ export default function Home({navigation}) {
         { label: "Reservas", value: 2 }
     ];
 
+    const userPicture = UserInfo.USERPICTURE;
+
     return (
         <View style={styles.container}>
             <View style={styles.blueContainer}>
@@ -70,7 +72,7 @@ export default function Home({navigation}) {
                 </View>
                 {/* Foto */}
                 <View style={styles.profilePicContainer}>
-                    <Image style={styles.profilePicture} source={require('../../assets/img/foto-de-perfil.jpg')}/>
+                    <Image style={styles.profilePicture} source={userPicture}/>
                     
                 </View>
             </View>
@@ -127,10 +129,10 @@ const styles = StyleSheet.create({
         padding:20,
         alignItems:'center',
         justifyContent:'center',
-        borderWidth:2,
-        borderColor:'green',
+        borderWidth:0,
+        borderColor:'white',
         height:'undefined',
-        opacity: 0,
+        opacity: 1,
     },
 
     profilePicture: {
@@ -160,9 +162,9 @@ const styles = StyleSheet.create({
         alignSelf:'center',
         justifyContent:'space-between',
         marginBottom:10,
-        borderWidth:2,
-        borderColor:'red',
-        opacity: 0,
+        borderWidth:0,
+        borderColor:'white',
+        opacity: 1,
     },
 
     bubble: {
@@ -246,8 +248,8 @@ const styles = StyleSheet.create({
         alignSelf:'center',
         backgroundColor:'lightgray',
         marginTop:10,
-        borderWidth:2,
-        borderColor:'red',
-        opacity: 0,
+        borderWidth:0,
+        borderColor:'white',
+        opacity: 1,
     }
 })
