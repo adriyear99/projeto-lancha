@@ -39,10 +39,10 @@ export default function Login({ navigation }) {
 
         console.log('###User data###');
         console.log(userInfo);
-        REACT_APP_USER_NAME = userInfo?.given_name;
-        REACT_APP_USER_PICTURE = userInfo?.picture;
-        console.log(REACT_APP_USER_NAME);
-        console.log(REACT_APP_USER_PICTURE);
+        userInfo.USERNAME = userInfo?.given_name;
+        userInfo.USERPICTURE = userInfo?.picture;
+        console.log(  userInfo.USERNAME);
+        console.log(userInfo.USERPICTURE);
         navigation.navigate("Home")
     }
 
