@@ -130,6 +130,7 @@ const styles = StyleSheet.create({
         borderWidth:2,
         borderColor:'green',
         height:'undefined',
+        opacity: 0,
     },
 
     profilePicture: {
@@ -160,7 +161,8 @@ const styles = StyleSheet.create({
         justifyContent:'space-between',
         marginBottom:10,
         borderWidth:2,
-        borderColor:'red'
+        borderColor:'red',
+        opacity: 0,
     },
 
     bubble: {
@@ -245,6 +247,7 @@ const styles = StyleSheet.create({
         backgroundColor:'lightgray',
         marginTop:10,
         borderWidth:2,
-        borderColor:'red'
+        borderColor:'red',
+        opacity: 0,
     }
 })
