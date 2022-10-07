@@ -7,7 +7,7 @@ import SwitchSelector from "react-native-switch-selector";
 import { EvilIcons } from '@expo/vector-icons'
 import { Ionicons } from '@expo/vector-icons'
 import { AntDesign } from '@expo/vector-icons'
-
+import {Box} from '../components/Box'
 // Variáveis globais
 import AppContext from '../components/AppContext'
 
@@ -50,7 +50,7 @@ export default function Home({navigation}) {
                         <EvilIcons name="gear" size={60} color="white"/>
                     </TouchableOpacity>
                     <Text style={styles.title}>Meu Perfil</Text>
-                    <TouchableOpacity activeOpacity={0.5} style={styles.icon} onPress={() => navigation.navigate("Tela Inicial")}>
+                    <TouchableOpacity activeOpacity={0.5} style={styles.icon} onPress={() => navigation.navigate("Login")}>
                         <Text style={styles.link}>logout</Text>
                     </TouchableOpacity>
                 </View>
