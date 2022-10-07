@@ -1,0 +1,2 @@
+var USERNAME;
+var USERPICTURE;

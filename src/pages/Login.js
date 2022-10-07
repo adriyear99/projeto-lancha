@@ -39,12 +39,19 @@ export default function Login({ navigation }) {
 
         console.log('###User data###');
         console.log(userInfo);
+<<<<<<< HEAD
         
         global.userName = userInfo?.given_name;
         global.userPicture = userInfo?.picture;
         console.log(global.userName);
         console.log(global.userPicture);
         
+=======
+        userInfo.USERNAME = userInfo?.given_name;
+        userInfo.USERPICTURE = userInfo?.picture;
+        console.log(userInfo.USERNAME);
+        console.log(userInfo.USERPICTURE);
+>>>>>>> 0851d10019128f9b3ebf9e7300215ffad54a1486
         navigation.navigate("Home")
     }
 

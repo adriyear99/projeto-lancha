@@ -34,9 +34,13 @@ export default function Home({navigation}) {
         { label: "Reservas", value: 2 }
     ];
 
+<<<<<<< HEAD
     const userPicture = global.userPicture;
     console.log('tela home');
     console.log(global.userPicture);
+=======
+    const userPicture = UserInfo.USERPICTURE;
+>>>>>>> 0851d10019128f9b3ebf9e7300215ffad54a1486
 
     return (
         <View style={styles.container}>
@@ -73,7 +77,11 @@ export default function Home({navigation}) {
                 </View>
                 {/* Foto */}
                 <View style={styles.profilePicContainer}>
+<<<<<<< HEAD
                 <Image style={styles.profilePicture} source={{uri: 'userPicture'}}/>
+=======
+                    <Image style={styles.profilePicture} source={userPicture}/>
+>>>>>>> 0851d10019128f9b3ebf9e7300215ffad54a1486
                     
                 </View>
             </View>
@@ -130,9 +138,10 @@ const styles = StyleSheet.create({
         padding:20,
         alignItems:'center',
         justifyContent:'center',
-        borderWidth:2,
-        borderColor:'green',
+        borderWidth:0,
+        borderColor:'white',
         height:'undefined',
+        opacity: 1,
     },
 
     profilePicture: {
@@ -162,8 +171,9 @@ const styles = StyleSheet.create({
         alignSelf:'center',
         justifyContent:'space-between',
         marginBottom:10,
-        borderWidth:2,
-        borderColor:'red'
+        borderWidth:0,
+        borderColor:'white',
+        opacity: 1,
     },
 
     bubble: {
@@ -247,7 +257,8 @@ const styles = StyleSheet.create({
         alignSelf:'center',
         backgroundColor:'lightgray',
         marginTop:10,
-        borderWidth:2,
-        borderColor:'red'
+        borderWidth:0,
+        borderColor:'white',
+        opacity: 1,
     }
 })
