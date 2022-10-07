@@ -11,8 +11,6 @@ import GoogleButton from 'react-google-button'
 // Componentes
 import CustomButton from '../components/CustomButton'
 import SocialButton from '../components/SocialButton'
-import LoginComp from '../components/LoginComp';
-import Logout from '../components/Logout';
 
 // Expo Icons
 import { Feather } from '@expo/vector-icons'
@@ -41,6 +39,11 @@ export default function Login({ navigation }) {
 
         console.log('###User data###');
         console.log(userInfo);
+        REACT_APP_USER_NAME = userInfo?.given_name;
+        REACT_APP_USER_PICTURE = userInfo?.picture;
+        console.log(REACT_APP_USER_NAME);
+        console.log(REACT_APP_USER_PICTURE);
+        navigation.navigate("Home")
     }
 
 
@@ -105,8 +108,10 @@ export default function Login({ navigation }) {
         //     console.log('entrou aqui')
         //     cadastrarUsuario()
         // }
+        /*if(autenticado) {
+            navigation.navigate("Home")
+        };*/
 
-        navigation.navigate("Home")
     }
 
     /**
@@ -125,8 +130,8 @@ export default function Login({ navigation }) {
     return <>
         <View style={styles.container}>
             {/* <Text style={styles.title}>Fazer Login</Text> */}
-            <Text onPress={handleSubmit} style={styles.title}>TROLHANCHA</Text>
-{/*              <TextInput
+            <Text onPress={handleSubmit} style={styles.title}>Projeto Lancha</Text>
+            {/*              <TextInput
                 placeholder={"Nome de usuário ou e-mail"}
                 placeholderTextColor={!invalidUser ? 'black' : 'white'}
                 style={[styles.input, (!invalidUser ? styles.right : styles.wrong)]}
@@ -186,11 +191,8 @@ export default function Login({ navigation }) {
                 activeOpacity={0.5}
                 onPress={() => navigation.navigate("Esqueci minha senha")}
                 style={{ marginTop: 16 }}>
-{/*                 <Text style={styles.textLink}>Esqueceu a senha?</Text> */}
+                {/*                 <Text style={styles.textLink}>Esqueceu a senha?</Text> */}
             </TouchableOpacity>
-
-            <LoginComp/>
-            <Logout/>
         </View>
 
     </>
