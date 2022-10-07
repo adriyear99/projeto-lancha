@@ -14,7 +14,6 @@ import AppContext from '../components/AppContext'
 // Componentes Customizados
 import BoatList from '../components/BoatList';
 
-
 export default function Home({navigation}) {
 
     // Variáveis e métodos globais
@@ -34,6 +33,10 @@ export default function Home({navigation}) {
         { label: "Embarcações", value: 1 },
         { label: "Reservas", value: 2 }
     ];
+
+    const userPicture = global.userPicture;
+    console.log('tela home');
+    console.log(global.userPicture);
 
     return (
         <View style={styles.container}>
@@ -70,7 +73,7 @@ export default function Home({navigation}) {
                 </View>
                 {/* Foto */}
                 <View style={styles.profilePicContainer}>
-                    <Image style={styles.profilePicture} source={require('../../assets/img/foto-de-perfil.jpg')}/>
+                <Image style={styles.profilePicture} source={{uri: 'userPicture'}}/>
                     
                 </View>
             </View>

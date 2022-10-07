@@ -1,6 +1,6 @@
 // Utilidades
 import { Text, TextInput, StyleSheet, TouchableOpacity, View } from 'react-native'
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import * as React from 'react';
 import * as WebBrowser from 'expo-web-browser';
 import * as Google from 'expo-auth-session/providers/google';
@@ -39,10 +39,12 @@ export default function Login({ navigation }) {
 
         console.log('###User data###');
         console.log(userInfo);
-        userInfo.USERNAME = userInfo?.given_name;
-        userInfo.USERPICTURE = userInfo?.picture;
-        console.log(  userInfo.USERNAME);
-        console.log(userInfo.USERPICTURE);
+        
+        global.userName = userInfo?.given_name;
+        global.userPicture = userInfo?.picture;
+        console.log(global.userName);
+        console.log(global.userPicture);
+        
         navigation.navigate("Home")
     }
 
