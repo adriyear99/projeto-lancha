@@ -1,6 +1,7 @@
 // Utilidades
 import { Text, TextInput, StyleSheet, TouchableOpacity, View } from 'react-native'
-import { useState, useRef } from 'react'
+import { useState, useRef,   useContext  } from 'react'
+
 import * as React from 'react';
 import * as WebBrowser from 'expo-web-browser';
 import * as Google from 'expo-auth-session/providers/google';
@@ -18,12 +19,18 @@ import { Feather } from '@expo/vector-icons'
 // API
 import api from '../services/api'
 
-// Autenticacao
+// Variáveis globais
+import AppContext from '../components/AppContext'
 
+// Autenticacao
 WebBrowser.maybeCompleteAuthSession();
 
 
 export default function Login({ navigation }) {
+
+    // Variáveis e métodos globais
+    const global = useContext(AppContext);
+
 
     //Autenticacao
     const [request, response, promptAsync] = Google.useAuthRequest({
@@ -39,19 +46,10 @@ export default function Login({ navigation }) {
 
         console.log('###User data###');
         console.log(userInfo);
-<<<<<<< HEAD
         
-        global.userName = userInfo?.given_name;
-        global.userPicture = userInfo?.picture;
-        console.log(global.userName);
-        console.log(global.userPicture);
+        global.setUserName(userInfo?.given_name);
+        global.setUserPicture(userInfo?.picture);
         
-=======
-        userInfo.USERNAME = userInfo?.given_name;
-        userInfo.USERPICTURE = userInfo?.picture;
-        console.log(userInfo.USERNAME);
-        console.log(userInfo.USERPICTURE);
->>>>>>> 0851d10019128f9b3ebf9e7300215ffad54a1486
         navigation.navigate("Home")
     }
 
