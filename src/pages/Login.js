@@ -7,9 +7,12 @@ import * as Google from 'expo-auth-session/providers/google';
 import { Button } from 'react-native';
 import GoogleButton from 'react-google-button'
 
+
 // Componentes
 import CustomButton from '../components/CustomButton'
 import SocialButton from '../components/SocialButton'
+import LoginComp from '../components/LoginComp';
+import Logout from '../components/Logout';
 
 // Expo Icons
 import { Feather } from '@expo/vector-icons'
@@ -185,6 +188,9 @@ export default function Login({ navigation }) {
                 style={{ marginTop: 16 }}>
 {/*                 <Text style={styles.textLink}>Esqueceu a senha?</Text> */}
             </TouchableOpacity>
+
+            <LoginComp/>
+            <Logout/>
         </View>
 
     </>
