@@ -34,6 +34,9 @@ export default function Login({ navigation }) {
 
     //Autenticacao
     const [request, response, promptAsync] = Google.useAuthRequest({
+        expoClientId: '192988181548-40l8e2h22lc3fsog7augfocd5mnc8c06.apps.googleusercontent.com',
+        iosClientId: '192988181548-40l8e2h22lc3fsog7augfocd5mnc8c06.apps.googleusercontent.com',
+        androidClientId: '192988181548-40l8e2h22lc3fsog7augfocd5mnc8c06.apps.googleusercontent.com',
         webClientId: '192988181548-40l8e2h22lc3fsog7augfocd5mnc8c06.apps.googleusercontent.com',
     });
 
