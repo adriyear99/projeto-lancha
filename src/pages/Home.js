@@ -7,12 +7,13 @@ import SwitchSelector from "react-native-switch-selector";
 import { EvilIcons } from '@expo/vector-icons'
 import { Ionicons } from '@expo/vector-icons'
 import { AntDesign } from '@expo/vector-icons'
-import {Box} from '../components/Box'
+
 // Variáveis globais
 import AppContext from '../components/AppContext'
 
 // Componentes Customizados
 import BoatList from '../components/BoatList';
+import Box from '../components/Box';
 
 export default function Home({navigation}) {
 
@@ -83,7 +84,7 @@ export default function Home({navigation}) {
             <View style={styles.whiteContainer}>
                 <SwitchSelector
                     options={options}
-                    initial={1}
+                    initial={0}
                     textColor={'#4B7E94'}
                     selectedColor={'#4B7E94'}
                     buttonColor={'lightgray'}
@@ -93,17 +94,32 @@ export default function Home({navigation}) {
                     onPress={value => console.log(`Call onPress with value: ${value}`)}
                 />
 
-                <View style={styles.boatContainer}>
-                    <BoatList/>
-
+                <View style={styles.boxContainer}>
+                    <Box/>
+                </View>
+                
+                <View style={styles.boxContainer}>
+                    <Box/>
                 </View>
 
+                <View style={styles.boxContainer}>
+                    <Box/>
+                </View>
 
+                <View style={styles.boxContainer}>
+                    <Box/>
+                </View>
+                
             </View>
         </View>
 
     )
 }
+/*
+<View style={styles.boatContainer}>
+<BoatList/>
+</View>
+ */
 
 const styles = StyleSheet.create({
 
@@ -254,5 +270,14 @@ const styles = StyleSheet.create({
         borderWidth:0,
         borderColor:'white',
         opacity: 1,
+    },
+
+    boxContainer: {
+        borderWidth: 4,
+        borderRadius: 4,
+        borderColor: 'lightgray',
+        width: '50%',
+        height: '10%',
+        alignSelf: 'center'
     }
 })
