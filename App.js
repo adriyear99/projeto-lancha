@@ -23,11 +23,17 @@ export default function App() {
 
   // Variáveis globais
   const [tipoUsuario, setTipoUsuario] = useState('')
+  const [userName, setUserName] = useState('')
+  const [userPicture, setUserPicture] = useState('')
 
   // Dados do usuário logado
   const user = {
     tipoUsuario: tipoUsuario,
-    setTipoUsuario
+    setTipoUsuario, 
+    userName: userName,
+    setUserName,
+    userPicture: userPicture,
+    setUserPicture
   }
 
   // Navegador de páginas

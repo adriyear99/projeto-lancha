@@ -13,7 +13,7 @@ import AppContext from '../components/AppContext'
 
 // Componentes Customizados
 import BoatList from '../components/BoatList';
-
+import Box from '../components/Box';
 
 export default function Home({navigation}) {
 
@@ -35,6 +35,12 @@ export default function Home({navigation}) {
         { label: "Reservas", value: 2 }
     ];
 
+    const userPicture = global.userPicture;
+    const userName = global.userName;
+    console.log('tela home');
+    console.log(userPicture);
+    console.log(userName);
+
     return (
         <View style={styles.container}>
             <View style={styles.blueContainer}>
@@ -45,7 +51,7 @@ export default function Home({navigation}) {
                         <EvilIcons name="gear" size={60} color="white"/>
                     </TouchableOpacity>
                     <Text style={styles.title}>Meu Perfil</Text>
-                    <TouchableOpacity activeOpacity={0.5} style={styles.icon} onPress={() => navigation.navigate("Tela Inicial")}>
+                    <TouchableOpacity activeOpacity={0.5} style={styles.icon} onPress={() => navigation.navigate("Login")}>
                         <Text style={styles.link}>logout</Text>
                     </TouchableOpacity>
                 </View>
@@ -70,7 +76,7 @@ export default function Home({navigation}) {
                 </View>
                 {/* Foto */}
                 <View style={styles.profilePicContainer}>
-                    <Image style={styles.profilePicture} source={require('../../assets/img/foto-de-perfil.jpg')}/>
+                    <Image style={styles.profilePicture} source={{uri:userPicture}}/>
                     
                 </View>
             </View>
@@ -78,7 +84,7 @@ export default function Home({navigation}) {
             <View style={styles.whiteContainer}>
                 <SwitchSelector
                     options={options}
-                    initial={1}
+                    initial={0}
                     textColor={'#4B7E94'}
                     selectedColor={'#4B7E94'}
                     buttonColor={'lightgray'}
@@ -88,17 +94,32 @@ export default function Home({navigation}) {
                     onPress={value => console.log(`Call onPress with value: ${value}`)}
                 />
 
-                <View style={styles.boatContainer}>
-                    <BoatList/>
-
+                <View style={styles.boxContainer}>
+                    <Box/>
+                </View>
+                
+                <View style={styles.boxContainer}>
+                    <Box/>
                 </View>
 
+                <View style={styles.boxContainer}>
+                    <Box/>
+                </View>
 
+                <View style={styles.boxContainer}>
+                    <Box/>
+                </View>
+                
             </View>
         </View>
 
     )
 }
+/*
+<View style={styles.boatContainer}>
+<BoatList/>
+</View>
+ */
 
 const styles = StyleSheet.create({
 
@@ -127,9 +148,10 @@ const styles = StyleSheet.create({
         padding:20,
         alignItems:'center',
         justifyContent:'center',
-        borderWidth:2,
-        borderColor:'green',
+        borderWidth:0,
+        borderColor:'white',
         height:'undefined',
+        opacity: 1,
     },
 
     profilePicture: {
@@ -159,8 +181,9 @@ const styles = StyleSheet.create({
         alignSelf:'center',
         justifyContent:'space-between',
         marginBottom:10,
-        borderWidth:2,
-        borderColor:'red'
+        borderWidth:0,
+        borderColor:'white',
+        opacity: 1,
     },
 
     bubble: {
@@ -244,7 +267,17 @@ const styles = StyleSheet.create({
         alignSelf:'center',
         backgroundColor:'lightgray',
         marginTop:10,
-        borderWidth:2,
-        borderColor:'red'
+        borderWidth:0,
+        borderColor:'white',
+        opacity: 1,
+    },
+
+    boxContainer: {
+        borderWidth: 4,
+        borderRadius: 4,
+        borderColor: 'lightgray',
+        width: '50%',
+        height: '10%',
+        alignSelf: 'center'
     }
 })
