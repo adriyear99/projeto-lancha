@@ -89,12 +89,12 @@ export default function Login({ navigation }) {
             console.log('Falha');
         }
     }
-
+/*
     // Set State
     const [user, setUser] = useState("")
     const [password, setPassword] = useState("")
     const [usuarios, setUsuarios] = useState([])
-
+*/
 
 
 

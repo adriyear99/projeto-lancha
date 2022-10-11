@@ -22,12 +22,12 @@ export default function Settings({navigation}) {
     return (
         <View style={styles.container}>
             <CustomButton 
-                text={userPicture}
+                text='Editar Perfil' 
                 onPress={console.log('teste')}
                 style={{ height:60, width:300, backgroundColor:'#4B7E94' }}
             />
             <CustomButton 
-                text={userName}
+                text='Privacidade e Segurança' 
                 onPress={console.log('teste')}
                 style={{ height:60, width:300, backgroundColor:'#4B7E94' }}
             />
@@ -41,10 +41,6 @@ export default function Settings({navigation}) {
                 onPress={console.log('teste')}
                 style={{ height:60, width:300, backgroundColor:'#4B7E94' }}
             />
-            <View style={styles.profilePicContainer}>
-                    <Image style={styles.profilePicture} source={{uri:userPicture}}/>
-                    
-            </View>
         </View>
     )
 }
@@ -59,7 +55,26 @@ const styles = StyleSheet.create({
         justifyContent:'center',
         // borderWidth:2,
         // borderColor:'red'
+    },profilePicContainer: {
+        width:'30%',
+        alignSelf:'center',
+        padding:20,
+        alignItems:'center',
+        justifyContent:'center',
+        borderWidth:0,
+        borderColor:'white',
+        height:'30%',
+        opacity: 1,
     },
+
+    profilePicture: {
+        width:200,
+        height:200,
+        borderRadius:100,
+        // textAlign:'center',
+        // margin:'auto'
+        margin:'auto',
+    }
 
 })
 

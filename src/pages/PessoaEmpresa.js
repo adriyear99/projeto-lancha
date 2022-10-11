@@ -26,12 +26,12 @@ export default function PessoaEmpresa({navigation}) {
 
     const pessoa = () => {
         global.setTipoUsuario("pessoa")
-        navigation.navigate("Cadastro")
+        navigation.navigate("Login")
     }
     
     const empresa = () => {
         global.setTipoUsuario("empresa")
-        navigation.navigate("Cadastro")
+        navigation.navigate("Login")
     }
 
 

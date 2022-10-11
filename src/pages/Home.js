@@ -15,6 +15,7 @@ import AppContext from '../components/AppContext'
 import BoatList from '../components/BoatList'
 import Reservas from '../components/Reservas'
 import Box from '../components/Box'
+import { SafeAreaView } from 'react-native-safe-area-context'
 
 export default function Home({navigation}) {
 
@@ -24,6 +25,10 @@ export default function Home({navigation}) {
     // Set State
     const [username,setUsername] = useState("")
     const [password,setPassword] = useState("")
+    const userPicture = global.userPicture;
+    const userName = global.userName;
+
+    // Set State
     const [selector,setSelector] = useState(1)
     
     const [invalidUsername,setInvalidUsername] = useState(false)
@@ -37,52 +42,70 @@ export default function Home({navigation}) {
         { label: "Reservas", value: 2 }
     ];
 
+    console.log(userPicture.includes('http'));
+
+    function loadPicture() {
+        if (userPicture.includes('http'))
+        {
+            return (<Image style={styles.profilePicture} source={{uri:userPicture}}/>);
+        }
+        else
+        {
+            return (<Image style={styles.profilePicture} source={require('../../assets/img/sad-cat.jpg')}/>);
+        }
+
+    }
+
     // console.log('tela home');
     // console.log(global);
-    // console.log(global.userPicture);
+     console.log("user pic:" + global.userPicture);
     // console.log(global.userName);
 
     return (
         <View style={styles.container}>
-            <View style={styles.blueContainer}>
+            <SafeAreaView>
+                <View style={styles.blueContainer}>
 
-                {/* Header */}
-                <View style={styles.flexContainer}>
-                    <TouchableOpacity activeOpacity={0.5} style={styles.icon} onPress={() => navigation.navigate("Configurações")}>
-                        <EvilIcons name="gear" size={60} color="white"/>
-                    </TouchableOpacity>
-                    <Text style={styles.title}>Meu Perfil</Text>
-                    <TouchableOpacity activeOpacity={0.5} style={styles.icon} onPress={() => navigation.navigate("Login")}>
-                        <Text style={styles.link}>logout</Text>
-                    </TouchableOpacity>
-                </View>
-                {/* Icones */}
-                <View style={styles.iconContainer}>
-                    {/* {global.tipoUsuario == "empresa" && */}
-                        <TouchableOpacity activeOpacity={0.5} style={styles.calendar} onPress={() => navigation.navigate("Agendar")}>
-                            <AntDesign 
-                                name="calendar" 
+                    {/* Header */}
+                    <View style={styles.flexContainer}>
+                        <TouchableOpacity activeOpacity={0.5} style={styles.icon} onPress={() => navigation.navigate("Configurações")}>
+                            <EvilIcons name="gear" size={60} color="white"/>
+                        </TouchableOpacity>
+                        <Text style={styles.title}>Meu Perfil</Text>
+                        <TouchableOpacity activeOpacity={0.5} style={styles.icon} onPress={() => navigation.navigate("Login")}>
+                            <Text style={styles.link}>logout</Text>
+                        </TouchableOpacity>
+                    </View>
+                    {/* Icones */}
+                    <View style={styles.iconContainer}>
+                        {/* {global.tipoUsuario == "empresa" && */}
+                            <TouchableOpacity activeOpacity={0.5} style={styles.calendar} onPress={() => navigation.navigate("Agendar")}>
+                                <AntDesign 
+                                    name="calendar" 
+                                    size={100} 
+                                    color="white" 
+                                />
+                            </TouchableOpacity>
+                        
+                        <TouchableOpacity activeOpacity={0.5} style={styles.bubble} onPress={() => navigation.navigate("Agendar")}>
+                            <Ionicons 
+                                name="chatbubble-ellipses-outline" 
+                                style={styles.bubble} 
                                 size={100} 
                                 color="white" 
                             />
                         </TouchableOpacity>
-                    {/* } */}
-                    {/* Foto */}
-                    <View style={styles.profilePicContainer}>
-                        {/* <Image style={styles.profilePicture} source={{uri:global.userPicture}}/>  */}
-                        <Image style={styles.profilePicture} source={require('../../assets/img/sad-cat.jpg')}/>      
                     </View>
-                    <TouchableOpacity activeOpacity={0.5} style={styles.bubble} onPress={() => navigation.navigate("Agendar")}>
-                        <Ionicons 
-                            name="chatbubble-ellipses-outline" 
-                            style={styles.bubble} 
-                            size={100} 
-                            color="white" 
-                        />
-                    </TouchableOpacity>
+                    <View style={styles.profilePicContainer}>
+                            {loadPicture()}
+                    </View>
+                    <View style={styles.flexContainer}>
+                        <Text style={styles.nome}>
+                            {userName}
+                        </Text>
+                    </View>
                 </View>
-            </View>
-
+            </SafeAreaView>
             <View style={styles.whiteContainer}>
                 <SwitchSelector
                     options={options}
@@ -158,6 +181,7 @@ const styles = StyleSheet.create({
         width:'30%',
         alignSelf:'center',
         padding:20,
+        paddingTop:'20%',
         alignItems:'center',
         justifyContent:'center',
         borderWidth:0,
@@ -188,7 +212,7 @@ const styles = StyleSheet.create({
 
     iconContainer: {
         flexDirection:'row',
-        width:'80%',
+        width:'70%',
         height:120,
         alignSelf:'center',
         justifyContent:'space-between',
@@ -215,6 +239,11 @@ const styles = StyleSheet.create({
         fontWeight:'bold',
         justifyContent:'center',
         marginBottom:0
+    },
+    nome: {
+        fontSize:40,
+        paddingTop:'25%',
+        alignSelf:'center',
     },
 
     link: {

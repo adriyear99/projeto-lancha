@@ -16,7 +16,7 @@ export default function CadastroLogin({navigation}) {
     if(!fontsLoaded){
         return null
     }
-
+    
     // Renderizar componente
     return (
         <View style={styles.container}>
