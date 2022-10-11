@@ -35,11 +35,10 @@ export default function Home({navigation}) {
         { label: "Reservas", value: 2 }
     ];
 
-    const userPicture = global.userPicture;
-    const userName = global.userName;
     console.log('tela home');
-    console.log(userPicture);
-    console.log(userName);
+    console.log(global);
+    // console.log(global.userPicture);
+    // console.log(global.userName);
 
     return (
         <View style={styles.container}>
@@ -58,13 +57,19 @@ export default function Home({navigation}) {
                 {/* Icones */}
                 <View style={styles.iconContainer}>
                     {/* {global.tipoUsuario == "empresa" && */}
-                    <TouchableOpacity activeOpacity={0.5} style={styles.calendar} onPress={() => navigation.navigate("Agendar")}>
-                        <AntDesign 
-                            name="calendar" 
-                            size={100} 
-                            color="white" 
-                        />
-                    </TouchableOpacity>
+                        <TouchableOpacity activeOpacity={0.5} style={styles.calendar} onPress={() => navigation.navigate("Agendar")}>
+                            <AntDesign 
+                                name="calendar" 
+                                size={100} 
+                                color="white" 
+                            />
+                        </TouchableOpacity>
+                    {/* } */}
+                    {/* Foto */}
+                    <View style={styles.profilePicContainer}>
+                        {/* <Image style={styles.profilePicture} source={{uri:global.userPicture}}/>  */}
+                        <Image style={styles.profilePicture} source={require('../../assets/img/sad-cat.jpg')}/>      
+                    </View>
                     <TouchableOpacity activeOpacity={0.5} style={styles.bubble} onPress={() => navigation.navigate("Agendar")}>
                         <Ionicons 
                             name="chatbubble-ellipses-outline" 
@@ -73,11 +78,6 @@ export default function Home({navigation}) {
                             color="white" 
                         />
                     </TouchableOpacity>
-                </View>
-                {/* Foto */}
-                <View style={styles.profilePicContainer}>
-                    <Image style={styles.profilePicture} source={{uri:userPicture}}/>
-                    
                 </View>
             </View>
 
@@ -144,7 +144,7 @@ const styles = StyleSheet.create({
 
     profilePicContainer: {
         width:'undefined',
-        alignSelf:'center',
+        alignSelf:'flex-start',
         padding:20,
         alignItems:'center',
         justifyContent:'center',
@@ -155,9 +155,9 @@ const styles = StyleSheet.create({
     },
 
     profilePicture: {
-        width:300,
-        height:300,
-        borderRadius:150,
+        width:200,
+        height:200,
+        borderRadius:100,
         // textAlign:'center',
         // margin:'auto'
         margin:'auto',
