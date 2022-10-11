@@ -25,6 +25,7 @@ export default function App() {
   const [tipoUsuario, setTipoUsuario] = useState('')
   const [userName, setUserName] = useState('')
   const [userPicture, setUserPicture] = useState('')
+  const [listaBarcos,setListaBarcos] = useState([])
 
   // Dados do usuário logado
   const user = {
@@ -43,7 +44,7 @@ export default function App() {
   return (
     <AppContext.Provider value={user}>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="Tela Inicial">
+        <Stack.Navigator initialRouteName="Home">
           <Stack.Screen name="Tela Inicial" component={CadastroLogin} options={styles.hideHeader}/>
           <Stack.Screen name="Pessoa ou Empresa" component={PessoaEmpresa} options={styles.hideLabel}/>
           <Stack.Screen name="Home" component={Home} options={styles.hideHeader}/>

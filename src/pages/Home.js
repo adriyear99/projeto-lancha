@@ -1,7 +1,7 @@
 // Utilidades
 import { StyleSheet,Text,TouchableOpacity,View,Image } from 'react-native'
 import { useState,useContext } from 'react'
-import SwitchSelector from "react-native-switch-selector";
+import SwitchSelector from "react-native-switch-selector"
 
 // Expo Icons
 import { EvilIcons } from '@expo/vector-icons'
@@ -12,8 +12,9 @@ import { AntDesign } from '@expo/vector-icons'
 import AppContext from '../components/AppContext'
 
 // Componentes Customizados
-import BoatList from '../components/BoatList';
-import Box from '../components/Box';
+import BoatList from '../components/BoatList'
+import Box from '../components/Box'
+import Reservas from '../components/Reservas'
 
 export default function Home({navigation}) {
 
@@ -23,6 +24,7 @@ export default function Home({navigation}) {
     // Set State
     const [username,setUsername] = useState("")
     const [password,setPassword] = useState("")
+    const [selector,useSelector] = useState(1);
     
     const [invalidUsername,setInvalidUsername] = useState(false)
     const [invalidPassword,setInvalidPassword] = useState(false)
@@ -91,24 +93,34 @@ export default function Home({navigation}) {
                     borderColor={'lightgray'}
                     hasPadding
                     style={styles.switch}
-                    onPress={value => console.log(`Call onPress with value: ${value}`)}
+                    onPress={value => useSelector(value)}
                 />
 
-                <View style={styles.boxContainer}>
-                    <Box/>
-                </View>
+                {selector == 1 ? 
+                    // Renderiza componente de embarcações
+                    <View style={styles.switchContainer}>
+                        <View style={styles.boxContainer}>
+                            <Box/>
+                        </View>
+
+                        <View style={styles.boxContainer}>
+                            <Box/>
+                        </View>
+
+                        <View style={styles.boxContainer}>
+                            <Box/>
+                        </View>
+
+                        <View style={styles.boxContainer}>
+                            <Box/>
+                        </View>
+                    </View>
+                :
+                    // Renderiza componente de reservas
+                    <Reservas/>
                 
-                <View style={styles.boxContainer}>
-                    <Box/>
-                </View>
+                }
 
-                <View style={styles.boxContainer}>
-                    <Box/>
-                </View>
-
-                <View style={styles.boxContainer}>
-                    <Box/>
-                </View>
                 
             </View>
         </View>
@@ -276,8 +288,15 @@ const styles = StyleSheet.create({
         borderWidth: 4,
         borderRadius: 4,
         borderColor: 'lightgray',
-        width: '50%',
-        height: '10%',
-        alignSelf: 'center'
+        alignItems:'center',
+        justifyContent:'center'
+    },
+
+    switchContainer: {
+        borderWidth: 4,
+        borderRadius: 4,
+        borderColor: 'lightgray',
+        alignItems:'center',
+        justifyContent:'center'
     }
 })
