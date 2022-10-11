@@ -1,42 +1,39 @@
 // Utilidades
-import { Text, TextInput, StyleSheet, TouchableOpacity, View } from 'react-native'
+import { Text, TextInput, StyleSheet, TouchableOpacity, View, Button} from 'react-native'
 import { useState, useRef,   useContext  } from 'react'
 
 import * as React from 'react';
+//import * as Google from 'expo-auth-session/providers/google';
+//import GoogleButton from 'react-google-button'
+import * as AuthSession from 'expo-auth-session';
 import * as WebBrowser from 'expo-web-browser';
-import * as Google from 'expo-auth-session/providers/google';
-import { Button } from 'react-native';
-import GoogleButton from 'react-google-button'
 
+// Variáveis globais
+import AppContext from '../components/AppContext'
 
 // Componentes
 import CustomButton from '../components/CustomButton'
 import SocialButton from '../components/SocialButton'
 
-// Expo Icons
-import { Feather } from '@expo/vector-icons'
-
-// API
-import api from '../services/api'
-
-// Variáveis globais
-import AppContext from '../components/AppContext'
-
 // Autenticacao
 WebBrowser.maybeCompleteAuthSession();
 
+type AuthResponse = {
+    type: String;
+    params: {
+        accessToken: String;      
+    }
+}
 
 export default function Login({ navigation }) {
 
     // Variáveis e métodos globais
     const global = useContext(AppContext);
 
-
+    /*
     //Autenticacao
     const [request, response, promptAsync] = Google.useAuthRequest({
         expoClientId: '192988181548-40l8e2h22lc3fsog7augfocd5mnc8c06.apps.googleusercontent.com',
-        iosClientId: '192988181548-40l8e2h22lc3fsog7augfocd5mnc8c06.apps.googleusercontent.com',
-        androidClientId: '192988181548-40l8e2h22lc3fsog7augfocd5mnc8c06.apps.googleusercontent.com',
         webClientId: '192988181548-40l8e2h22lc3fsog7augfocd5mnc8c06.apps.googleusercontent.com',
     });
 
@@ -54,155 +51,47 @@ export default function Login({ navigation }) {
         global.setUserPicture(userInfo?.picture);
         
         navigation.navigate("Home")
-    }
+    }*/
 
+    async function handleSignIn(){
+        const CLIENT_ID = '192988181548-gf4n6icnpf32c5a3ibqdiociu15pq8qv.apps.googleusercontent.com';
+        const REDIRECT_URI = 'https://auth.expo.io/@fabiotepe/projetolancha';
+        const RESPONSE_TYPE = 'token';
+        //const SCOPE = encondeURI(`profile email`);
 
-    React.useEffect(() => {
+        const authUrl = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=${RESPONSE_TYPE}&scope=profile%20email`;
+        const {type, params} = await AuthSession.startAsync({authUrl});
+        //console.log(response);
+
         if (response?.type === 'success') {
             console.log(response);
             const { authentication } = response;
             console.log(authentication?.accessToken);
-            loadProfile();
+            
+            navigation.navigate("Home");
         }
         else {
             console.log('Falha');
         }
-    }, [response]);
-
-
-    const body = { user, password };
-
-    // useEffect(() => {
-    //     api.get("/api/users").then((response) => {
-    //         setUsuarios(response.data)
-    //     })
-    // },[])
-
-    // Erros de login
-    const errors = {
-        user: "Informe seu nome de usuário",
-        password: "Informe sua senha"
     }
 
     // Set State
     const [user, setUser] = useState("")
     const [password, setPassword] = useState("")
-
-    const [show, toggleIcon] = useState(false)
-
-    const [invalidUser, setInvalidUser] = useState(false)
-    const [invalidPassword, setInvalidPassword] = useState(false)
-
-
     const [usuarios, setUsuarios] = useState([])
 
-    const showPassword = () => {
-        toggleIcon(!show)
-    }
 
-    /**
-     * Valida o formulário antes de enviar os dados
-     * 
-     */
-    const handleSubmit = async (e) => {
-        e.preventDefault()
-
-        // if(user.length < 6){
-        //     setInvalidUser(true)
-        // }
-        // if(password.length < 6){
-        //     setInvalidPassword(true)
-        // }
-
-        // if(!invalidUser && !invalidPassword){
-        //     console.log('entrou aqui')
-        //     cadastrarUsuario()
-        // }
-        /*if(autenticado) {
-            navigation.navigate("Home")
-        };*/
-
-    }
-
-    /**
-     * Envia os dados do usuário para a API
-     */
-    const cadastrarUsuario = () => {
-        // axios.post(`${baseUrl}/api/users`, body, axiosConfig)
-        // .then(console.log("Usuário cadastrado com sucesso"))
-        // .then(resp => console.log(resp.data))
-        // .catch(error => console.log(error.resp));
-
-        // api.post("/api/users",body).then(({data}) => console.log(data))
-    }
 
 
     return <>
         <View style={styles.container}>
-            {/* <Text style={styles.title}>Fazer Login</Text> */}
-            <Text onPress={handleSubmit} style={styles.title}>Projeto Lancha</Text>
-            {/*              <TextInput
-                placeholder={"Nome de usuário ou e-mail"}
-                placeholderTextColor={!invalidUser ? 'black' : 'white'}
-                style={[styles.input, (!invalidUser ? styles.right : styles.wrong)]}
-                onChangeText={setUser}
-                value={user}
-            />
-            {invalidUser && <Text style={styles.labelError}>{errors.user}</Text>}
-
-            <View style={[styles.input, styles.flexContainer]}>
-                <TextInput
-                    placeholder={"Senha"}
-                    placeholderTextColor={!invalidPassword ? 'black' : 'white'}
-                    style={(!invalidPassword ? styles.right : styles.wrong)}
-                    onChangeText={setPassword}
-                    value={password}
-                />
-                <TouchableOpacity
-                    activeOpacity={0.5}
-                    style={styles.icon}
-                    onPress={showPassword}
-                >
-                    {show ? <Feather name="eye" size={24} color="black" /> :
-                        <Feather name="eye-off" size={24} color="black" />}
-                </TouchableOpacity>
-            </View>
-            {invalidPassword && <Text style={styles.labelError}>{errors.password}</Text>}
-
+            
             <CustomButton
-                text='Entrar'
-                onPress={handleSubmit}
+                text='Entrar com Google'
+                onPress={handleSignIn}
                 style={{ height: 60, width: 300, backgroundColor: '#4B7E94' }}
             />
 
-            <CustomButton
-                text='Criar Conta'
-                onPress={() => navigation.navigate("Cadastro")}
-                style={{ height: 60, width: 300, backgroundColor: '#BDBDBD' }}
-            />
-
-            <Button
-                disabled={!request}
-                title="Login"
-                onPress={() => {
-                    promptAsync();
-                }}
-            /> */}
-
-            <GoogleButton
-                type="light"
-                onClick={() => {
-                    promptAsync();
-                }
-                }
-            />
-
-            <TouchableOpacity
-                activeOpacity={0.5}
-                onPress={() => navigation.navigate("Esqueci minha senha")}
-                style={{ marginTop: 16 }}>
-                {/*                 <Text style={styles.textLink}>Esqueceu a senha?</Text> */}
-            </TouchableOpacity>
         </View>
 
     </>

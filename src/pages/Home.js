@@ -214,7 +214,7 @@ const styles = StyleSheet.create({
     icon: {
         // alignSelf:'center',
         // textAlign:'left'
-        alignItems:'left'
+        alignItems:'center'
     },
 
     // center: {
