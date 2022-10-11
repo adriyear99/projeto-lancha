@@ -18,12 +18,6 @@ import SocialButton from '../components/SocialButton'
 // Autenticacao
 WebBrowser.maybeCompleteAuthSession();
 
-type AuthResponse = {
-    type: String;
-    params: {
-        accessToken: String;      
-    }
-}
 
 export default function Login({ navigation }) {
 
@@ -36,8 +30,9 @@ export default function Login({ navigation }) {
         expoClientId: '192988181548-40l8e2h22lc3fsog7augfocd5mnc8c06.apps.googleusercontent.com',
         webClientId: '192988181548-40l8e2h22lc3fsog7augfocd5mnc8c06.apps.googleusercontent.com',
     });
-
-    async function loadProfile() {
+*/
+/*
+    async function loadProfile(response) {
         const authentication = response?.authentication;
         const token = authentication?.accessToken;
         console.log(token);
@@ -51,8 +46,8 @@ export default function Login({ navigation }) {
         global.setUserPicture(userInfo?.picture);
         
         navigation.navigate("Home")
-    }*/
-
+    }
+*/
     async function handleSignIn(){
         const CLIENT_ID = '192988181548-gf4n6icnpf32c5a3ibqdiociu15pq8qv.apps.googleusercontent.com';
         const REDIRECT_URI = 'https://auth.expo.io/@fabiotepe/projetolancha';
@@ -60,15 +55,35 @@ export default function Login({ navigation }) {
         //const SCOPE = encondeURI(`profile email`);
 
         const authUrl = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=${RESPONSE_TYPE}&scope=profile%20email`;
-        const {type, params} = await AuthSession.startAsync({authUrl});
+        const response = await AuthSession.startAsync({authUrl});
         //console.log(response);
 
         if (response?.type === 'success') {
+            console.log('response---------------');
             console.log(response);
-            const { authentication } = response;
-            console.log(authentication?.accessToken);
+            //const { authentication } = response;
+            //console.log(authentication?.accessToken);
+            const params = response?.params;
+            console.log('param---------------');
+            console.log(params);
+            //navigation.navigate("Configurações");
+            const authentication = params?.access_token;
+            console.log('authentication---------------');
+            console.log(authentication);
+            const token = authentication;
+            console.log('token---------------');
+            console.log(token);
+            const data_01 = await fetch(`https://www.googleapis.com/oauth2/v2/userinfo?alt=json&access_token=${token}`);
+            const userInfo = await data_01.json();
+            console.log('---------------');
+            console.log('###User data###');
+            console.log(userInfo);
             
-            navigation.navigate("Home");
+            global.setUserName(userInfo?.given_name);
+            global.setUserPicture(userInfo?.picture);
+
+            //navigation.navigate("Configurações")
+            navigation.navigate("Home")
         }
         else {
             console.log('Falha');
