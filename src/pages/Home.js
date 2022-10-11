@@ -143,14 +143,14 @@ const styles = StyleSheet.create({
     },
 
     profilePicContainer: {
-        width:'undefined',
-        alignSelf:'flex-start',
+        width:'30%',
+        alignSelf:'center',
         padding:20,
         alignItems:'center',
         justifyContent:'center',
         borderWidth:0,
         borderColor:'white',
-        height:'undefined',
+        height:'30%',
         opacity: 1,
     },
 
