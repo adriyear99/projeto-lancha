@@ -58,7 +58,7 @@ export default function Home({navigation}) {
 
     // console.log('tela home');
     // console.log(global);
-     console.log("user pic:" + global.userPicture);
+    console.log("user pic:" + global.userPicture);
     // console.log(global.userName);
 
     return (
@@ -73,31 +73,35 @@ export default function Home({navigation}) {
                         </TouchableOpacity>
                         <Text style={styles.title}>Meu Perfil</Text>
                         <TouchableOpacity activeOpacity={0.5} style={styles.icon} onPress={() => navigation.navigate("Login")}>
-                            <Text style={styles.link}>logout</Text>
+                            <Text style={styles.link}>Logout</Text>
                         </TouchableOpacity>
                     </View>
                     {/* Icones */}
-                    <View style={styles.iconContainer}>
-                        {/* {global.tipoUsuario == "empresa" && */}
+                    <View style={global.tipoUsuario == "empresa" ? styles.iconContainer : styles.iconContainer2}>
+                        {global.tipoUsuario == "empresa" &&
                             <TouchableOpacity activeOpacity={0.5} style={styles.calendar} onPress={() => navigation.navigate("Agendar")}>
                                 <AntDesign 
                                     name="calendar" 
-                                    size={100} 
+                                    size={80} 
                                     color="white" 
                                 />
                             </TouchableOpacity>
+                        }
                         
-                        <TouchableOpacity activeOpacity={0.5} style={styles.bubble} onPress={() => navigation.navigate("Agendar")}>
+                        <TouchableOpacity 
+                            activeOpacity={0.5} 
+                            style={global.tipoUsuario == "empresa" ? styles.bubbleEmpresa : styles.bubble} 
+                            onPress={() => navigation.navigate("Agendar")}
+                        >
                             <Ionicons 
                                 name="chatbubble-ellipses-outline" 
-                                style={styles.bubble} 
-                                size={100} 
+                                size={80} 
                                 color="white" 
                             />
                         </TouchableOpacity>
                     </View>
                     <View style={styles.profilePicContainer}>
-                            {loadPicture()}
+                        {loadPicture()}
                     </View>
                     <View style={styles.flexContainer}>
                         <Text style={styles.nome}>
@@ -201,45 +205,57 @@ const styles = StyleSheet.create({
 
     flexContainer: {
         flexDirection:'row',
-        width:'90%',
+        width:'95%',
         alignItems:'center',
         alignSelf:'center',
-        justifyContent:'space-between',
-        marginBottom:10,
-        // borderWidth:2,
-        // borderColor:'red',
+        justifyContent:'space-evenly',
+        marginBottom:16,
     },
 
     iconContainer: {
         flexDirection:'row',
-        width:'70%',
-        height:120,
+        width:'90%',
+        height:100,
         alignSelf:'center',
         justifyContent:'space-between',
-        marginBottom:10,
-        borderWidth:0,
-        borderColor:'white',
-        opacity: 1,
+        alignItems:'center',
+    },
+
+    iconContainer2: {
+        flex:0
     },
 
     bubble: {
-        alignSelf:'flex-start',
+        alignSelf:'flex-end',
+        // justifyContent:'flex-start',
+        flex:0,
+        // borderWidth:2,
+        // borderColor:'red'
+    },
 
+    bubbleEmpresa: {
+        alignSelf:'center',
+        flex:0,
+        // borderWidth:2,
+        // borderColor:'green'
     },
 
     calendar: {
-        alignSelf:'flex-start',
-
+        alignSelf:'center',
+        flex:2,
+        // borderWidth:2,
+        // borderColor:'green'
     },
 
     title: {
-        fontSize:40,
+        fontSize:34,
         marginBottom:34,
         color:'#121212',
         fontWeight:'bold',
         justifyContent:'center',
         marginBottom:0
     },
+
     nome: {
         fontSize:40,
         paddingTop:'25%',
@@ -249,19 +265,12 @@ const styles = StyleSheet.create({
     link: {
         fontSize:18,
         color: 'blue',
-        alignSelf:'center'
+        flex:0
     },
 
     icon: {
-        // alignSelf:'center',
-        // textAlign:'left'
         alignItems:'center'
     },
-
-    // center: {
-    //     textAlign:'center',
-    //     margin:'auto'
-    // },
 
     input: {
         width:'60%',

@@ -22,8 +22,8 @@ import Agendar from './src/pages/Agendar'
 export default function App() {
 
   // Variáveis globais
-  const [tipoUsuario, setTipoUsuario] = useState('')
-  const [userName, setUserName] = useState('')
+  const [tipoUsuario, setTipoUsuario] = useState('empresa')
+  const [userName, setUserName] = useState('Undefined')
   const [userPicture, setUserPicture] = useState('')
 
   // Dados do usuário logado
@@ -43,7 +43,7 @@ export default function App() {
   return (
     <AppContext.Provider value={user}>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="Tela Inicial">
+        <Stack.Navigator initialRouteName="Home">
           <Stack.Screen name="Tela Inicial" component={CadastroLogin} options={styles.hideHeader}/>
           <Stack.Screen name="Pessoa ou Empresa" component={PessoaEmpresa} options={styles.hideLabel}/>
           <Stack.Screen name="Home" component={Home} options={styles.hideHeader}/>

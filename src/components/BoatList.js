@@ -2,16 +2,17 @@
 import { StyleSheet,Text,View } from 'react-native'
 
 // Componentes
+import Boat from './Boat'
 
 // Expo Icons
 
 
-export default function BoatList({navigation}) {
+export default function BoatList() {
 
     return (
         <View style={styles.flexContainer}>
             <View style={styles.boatContainer}>
-                <Text>Lista de Barcos</Text>
+                <Boat/>
             </View>
             <View style={styles.scrollContainer}>
                 <Text>Scroll</Text>
