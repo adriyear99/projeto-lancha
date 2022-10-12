@@ -1,80 +1,82 @@
-// Utilidades
-import { StyleSheet,Text,View,TouchableOpacity,  Image } from 'react-native'
-import { useState,useContext } from 'react'
-// Componentes
-import CustomButton from '../components/CustomButton'
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import React, {useEffect} from 'react';
+import SettingsComponent from '../components/SettingsComponent';
 
+const Settings = () => {
+  const [email, setEmail] = React.useState(null);
+  const [modalVisible, setModalVisible] = React.useState(false);
+  const [sortBy, setSortBy] = React.useState(null);
 
-import AppContext from '../components/AppContext'
+  const saveSetting = (key, value) => {
+    AsyncStorage.setItem(key, value);
+  };
 
-export default function Settings({navigation}) {
-
-    // Variáveis e métodos globais
-    const global = useContext(AppContext);
-
-    // Set State
-    const [username,setUsername] = useState("")
-    const [password,setPassword] = useState("")
-    const userPicture = global.userPicture;
-    const userName = global.userName;
-
-
-    return (
-        <View style={styles.container}>
-            <CustomButton 
-                text='Editar Perfil' 
-                onPress={console.log('teste')}
-                style={{ height:60, width:300, backgroundColor:'#4B7E94' }}
-            />
-            <CustomButton 
-                text='Privacidade e Segurança' 
-                onPress={console.log('teste')}
-                style={{ height:60, width:300, backgroundColor:'#4B7E94' }}
-            />
-            <CustomButton 
-                text='Acessibilidade' 
-                onPress={console.log('teste')}
-                style={{ height:60, width:300, backgroundColor:'#4B7E94' }}
-            />
-            <CustomButton 
-                text='Fazer Logout' 
-                onPress={console.log('teste')}
-                style={{ height:60, width:300, backgroundColor:'#4B7E94' }}
-            />
-        </View>
-    )
-}
-
-const styles = StyleSheet.create({
-
-    container: {
-        flex: 1,
-        backgroundColor:'#fff',
-        padding:20,
-        alignItems:'center',
-        justifyContent:'center',
-        // borderWidth:2,
-        // borderColor:'red'
-    },profilePicContainer: {
-        width:'30%',
-        alignSelf:'center',
-        padding:20,
-        alignItems:'center',
-        justifyContent:'center',
-        borderWidth:0,
-        borderColor:'white',
-        height:'30%',
-        opacity: 1,
+  const settingsOptions = [
+    {title: 'My Info', subTitle: 'Setup your profile', onPress: () => {}},
+    {title: 'Accounts', subTitle: null, onPress: () => {}},
+    {
+      title: 'Default account for new contacts',
+      subTitle: email,
+      onPress: () => {},
     },
+    {title: 'Contacts to display', subTitle: 'All contacts', onPress: () => {}},
+    {
+      title: 'Sort by',
+      subTitle: sortBy,
+      onPress: () => {
+        setModalVisible(true);
+      },
+    },
+    {title: 'Name format', subTitle: 'First name first', onPress: () => {}},
+    {title: 'Import', subTitle: null, onPress: () => {}},
+    {title: 'Export', subTitle: null, onPress: () => {}},
+    {title: 'Blocked numbers', subTitle: null, onPress: () => {}},
+    {title: 'About RNContacts', subTitle: null, onPress: () => {}},
+  ];
 
-    profilePicture: {
-        width:200,
-        height:200,
-        borderRadius:100,
-        // textAlign:'center',
-        // margin:'auto'
-        margin:'auto',
+  const prefArr = [
+    {
+      name: 'First Name',
+      selected: sortBy === 'First Name',
+
+      onPress: () => {
+        saveSetting('sortBy', 'First Name');
+        setSortBy('First Name');
+        setModalVisible(false);
+      },
+    },
+    {
+      name: 'Last Name',
+      selected: sortBy === 'Last Name',
+      onPress: () => {
+        saveSetting('sortBy', 'Last Name');
+        setSortBy('Last Name');
+        setModalVisible(false);
+      },
+    },
+  ];
+
+  const getSettings = async () => {
+    const user = await AsyncStorage.getItem('user');
+    setEmail(JSON.parse(user).email);
+
+    const sortPref = await AsyncStorage.getItem('sortBy');
+    if (sortPref) {
+      setSortBy(sortPref);
     }
+  };
+  useEffect(() => {
+    getSettings();
+  }, []);
 
-})
+  return (
+    <SettingsComponent
+      modalVisible={modalVisible}
+      setModalVisible={setModalVisible}
+      settingsOptions={settingsOptions}
+      prefArr={prefArr}
+    />
+  );
+};
 
+export default Settings;
