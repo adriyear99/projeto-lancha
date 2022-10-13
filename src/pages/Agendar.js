@@ -1,19 +1,46 @@
 // Utilidades
-import { StyleSheet,Text,View } from 'react-native'
+import { StyleSheet,Text } from 'react-native';
+import React, { useState } from "react";
+import { Button, View } from "react-native";
+import DateTimePickerModal from "react-native-modal-datetime-picker";
+
 
 // Componentes
+//import "react-datepicker/dist/react-datepicker.css";
 
 // Expo Icons
 
 
-export default function Agendar({navigation}) {
+const Example = () => {
+  const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
 
-    return (
-        <View style={styles.container}>
-            <Text>Agendar</Text>
-        </View>
-    )
-}
+  const showDatePicker = () => {
+    setDatePickerVisibility(true);
+  };
+
+  const hideDatePicker = () => {
+    setDatePickerVisibility(false);
+  };
+
+  const handleConfirm = (date) => {
+    console.warn("A date has been picked: ", date);
+    hideDatePicker();
+  };
+
+  return (
+    <View>
+      <Button title="Show Date Picker" onPress={showDatePicker} />
+      <DateTimePickerModal
+        isVisible={isDatePickerVisible}
+        mode="date"
+        onConfirm={handleConfirm}
+        onCancel={hideDatePicker}
+      />
+    </View>
+  );
+};
+
+export default Example;
 
 const styles = StyleSheet.create({
 
@@ -26,4 +53,3 @@ const styles = StyleSheet.create({
     },
 
 })
-

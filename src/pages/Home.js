@@ -26,7 +26,7 @@ export default function Home({navigation}) {
     const [username,setUsername] = useState("")
     const [password,setPassword] = useState("")
     const userPicture = global.userPicture;
-    const userName = global.userName;
+    var userName = global.userName;
 
     // Set State
     const [selector,setSelector] = useState(1)
@@ -50,8 +50,9 @@ export default function Home({navigation}) {
             return (<Image style={styles.profilePicture} source={{uri:userPicture}}/>);
         }
         else
-        {
-            return (<Image style={styles.profilePicture} source={require('../../assets/img/sad-cat.jpg')}/>);
+        {   
+            userName = "Nome usuário";
+            return (<Image style={styles.profilePicture} source={require('../../assets/img/person-circle-white.png')}/>);
         }
 
     }
@@ -250,7 +251,7 @@ const styles = StyleSheet.create({
     title: {
         fontSize:34,
         marginBottom:34,
-        color:'#121212',
+        color:'#EFF4F8',
         fontWeight:'bold',
         justifyContent:'center',
         marginBottom:0
@@ -260,6 +261,7 @@ const styles = StyleSheet.create({
         fontSize:40,
         paddingTop:'25%',
         alignSelf:'center',
+        color:'#EFF4F8'
     },
 
     link: {
