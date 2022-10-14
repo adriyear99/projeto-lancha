@@ -9,22 +9,18 @@ import { StyleSheet,Text,View } from 'react-native'
 export default function Reservas() {
 
     return (
-        <Text>Reservas</Text>
+        <View style={styles.container}>
+            <Text>Reservas</Text>
+        </View>
     )
 }
 
 const styles = StyleSheet.create({
 
     container: {
-        flex: 1,
-        width:'80%',
-        alignSelf:'center',
-        marginTop:10,
-        borderWidth: 4,
-        borderRadius: 4,
-        borderColor: 'lightgray',
-        alignItems:'center',
-        justifyContent:'center'
+        flexDirection:'row',
+        width:'100%',
+        justifyContent:'space-around',
     }
 
 })

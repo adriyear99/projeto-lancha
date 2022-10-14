@@ -1,36 +1,26 @@
 // Utilidades
-import { StyleSheet,Text,View } from 'react-native'
+import { StyleSheet,Text,View,Image } from 'react-native'
 
-// Componentes
+// Fontes
+import { useFonts } from '@expo-google-fonts/montserrat'
 
-// Expo Icons
 
+export default function Boat({image,name}) {
 
-export default function Boat({navigation}) {
+    // Carregar fontes
+    let [fontsLoaded] = useFonts({
+        "Montserrat_Regular": require('../../assets/fonts/Montserrat-Regular.ttf'),
+        "Montserrat_Bold": require('../../assets/fonts/Montserrat-Bold.ttf')
+    })
+    if(!fontsLoaded){
+        return null
+    }
 
-    const barcosTeste = [
-        {
-            foto:'foto 1',
-            nome:'barco 1'
-        },
-        {
-            foto:'foto 2',
-            nome:'barco 2'
-        },
-        {
-            foto:'foto 3',
-            nome:'barco 3'
-        }
-    ]
 
     return (
         <View style={styles.container}>
-            {barcosTeste.map((barco) => {
-                <View style={styles.boatContainer}>
-                    <Text style={styles.foto}>{barco.foto}</Text>
-                    <Text style={styles.nome}>{barco.nome}</Text>
-                </View>
-            })}
+            <Image style={styles.foto} source={image}/>
+            <Text style={styles.nome}>{name}</Text>
         </View>
     )
 }
@@ -38,20 +28,30 @@ export default function Boat({navigation}) {
 const styles = StyleSheet.create({
 
     container: {
-        flexDirection:'column'
-    },
-
-    boatContainer: {
+        width:'95%',
+        height:60,
+        alignSelf:'flex-start',
         flexDirection:'row',
-        marginVertical:10
+        backgroundColor:'#E8E8E8',
+        borderRadius:20,
+        marginTop:10,
+        marginBottom:10,
+        marginLeft:5,
+        alignItems:'center'
     },
 
     foto: {
-        width:'20%'
+        width:'40%',
+        height:'100%',
+        borderRadius:20
+
     },
 
     nome: {
-        width:'80%'
+        width:'60%',
+        fontFamily:'Montserrat_Bold',
+        fontSize:20,
+        textAlign:'center'
     }
 
 })

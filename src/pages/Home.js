@@ -1,5 +1,5 @@
 // Utilidades
-import { StyleSheet,Text,TouchableOpacity,View,Image } from 'react-native'
+import { StyleSheet,Text,TouchableOpacity,View,ScrollView,Image,StatusBar } from 'react-native'
 import { useState,useContext } from 'react'
 import SwitchSelector from "react-native-switch-selector"
 
@@ -63,10 +63,9 @@ export default function Home({navigation}) {
     // console.log(global.userName);
 
     return (
-        <View style={styles.container}>
-            <SafeAreaView>
+        <SafeAreaView contentContainerStyle={styles.container}>
+            <ScrollView style={styles.scrollView}>
                 <View style={styles.blueContainer}>
-
                     {/* Header */}
                     <View style={styles.flexContainer}>
                         <TouchableOpacity activeOpacity={0.5} style={styles.icon} onPress={() => navigation.navigate("Configurações")}>
@@ -110,37 +109,19 @@ export default function Home({navigation}) {
                         </Text>
                     </View>
                 </View>
-            </SafeAreaView>
-            <View style={styles.whiteContainer}>
-                <SwitchSelector
-                    options={options}
-                    initial={0}
-                    textColor={'#4B7E94'}
-                    selectedColor={'#4B7E94'}
-                    buttonColor={'lightgray'}
-                    borderColor={'lightgray'}
-                    hasPadding
-                    style={styles.switch}
-                    onPress={value => setSelector(value)}
-                />
+                <View style={styles.whiteContainer}>
+                    <SwitchSelector
+                        options={options}
+                        initial={0}
+                        textColor={'#4B7E94'}
+                        selectedColor={'#4B7E94'}
+                        buttonColor={'lightgray'}
+                        borderColor={'lightgray'}
+                        hasPadding
+                        style={styles.switch}
+                        onPress={value => setSelector(value)}
+                    />
 
-                {/* <View style={styles.boxContainer}>
-                    <Box/>
-                </View>
-                
-                <View style={styles.boxContainer}>
-                    <Box/>
-                </View>
-
-                <View style={styles.boxContainer}>
-                    <Box/>
-                </View>
-
-                <View style={styles.boxContainer}>
-                    <Box/>
-                </View> */}
-
-                <View style={styles.switchContainer}>  
                     {selector == 1 ? 
                         // Renderiza componente de embarcações
                         <BoatList/>
@@ -149,9 +130,8 @@ export default function Home({navigation}) {
                         <Reservas/>
                     }
                 </View>
-                
-            </View>
-        </View>
+            </ScrollView>
+        </SafeAreaView>
 
     )
 }
@@ -163,6 +143,15 @@ export default function Home({navigation}) {
 
 const styles = StyleSheet.create({
 
+    container: {
+        flex: 1,
+        paddingTop: StatusBar.currentHeight,
+    },
+
+    scrollView: {
+        
+    },
+
     blueContainer: {
         width:'100%',
         height:'60%',
@@ -172,14 +161,7 @@ const styles = StyleSheet.create({
     whiteContainer: {
         width:'100%',
         height:'70%',
-        backgroundColor:'#fff'
-    },
-
-    container: {
-        flex: 1,
-        backgroundColor:'#4B7E94',
-        height:'30%',
-        alignItems:'center',
+        backgroundColor:'#fff',
     },
 
     profilePicContainer: {
@@ -333,16 +315,4 @@ const styles = StyleSheet.create({
         alignSelf: 'center'
     },
 
-    switchContainer: {
-        flex: 1,
-        width:'80%',
-        alignSelf:'center',
-        marginTop:10,
-        marginBottom:40,
-        borderWidth: 4,
-        borderRadius: 4,
-        borderColor: 'lightgray',
-        alignItems:'center',
-        justifyContent:'center'
-    }
 })
