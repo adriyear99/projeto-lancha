@@ -1,11 +1,11 @@
 // Utilidades
-import { StyleSheet,Text,View } from 'react-native'
+import { StyleSheet,Text,TouchableOpacity,View } from 'react-native'
 
 // Fontes
 import { useFonts } from '@expo-google-fonts/montserrat'
 
 
-export default function Reserva({name}) {
+export default function Reserva({name,onPress}) {
 
     // Carregar fontes
     let [fontsLoaded] = useFonts({
@@ -18,9 +18,11 @@ export default function Reserva({name}) {
 
 
     return (
-        <View style={styles.container}>
-            <Text style={styles.nome}>{name}</Text>
-        </View>
+        <TouchableOpacity onPress={onPress}>
+            <View style={styles.container}>
+                <Text style={styles.nome}>{name}</Text>
+            </View>
+        </TouchableOpacity>
     )
 }
 

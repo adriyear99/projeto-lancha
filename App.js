@@ -17,6 +17,7 @@ import Home from './src/pages/Home'
 import EsqueciMinhaSenha from './src/pages/EsqueciMinhaSenha'
 import Settings from './src/pages/Settings'
 import Agendar from './src/pages/Agendar'
+import EditarReserva from './src/pages/EditarReserva'
 
 
 export default function App() {
@@ -52,6 +53,7 @@ export default function App() {
           <Stack.Screen name="Esqueci minha senha" component={EsqueciMinhaSenha}/>
           <Stack.Screen name="Configurações" component={Settings}/>
           <Stack.Screen name="Agendar" component={Agendar}/>
+          <Stack.Screen name="Editar Reserva" component={EditarReserva}/>
         </Stack.Navigator>
         <StatusBar style="auto" />
       </NavigationContainer>

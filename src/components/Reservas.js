@@ -1,12 +1,12 @@
 // Utilidades
-import { ScrollView, StyleSheet,Text,View } from 'react-native'
+import { ScrollView, StyleSheet,View } from 'react-native'
 
 // Componentes
 import CustomButton from '../components/CustomButton'
 import Reserva from './Reserva'
 
 
-export default function Reservas() {
+export default function Reservas({navigation}) {
 
     const reservasTeste = [
         {
@@ -50,7 +50,11 @@ export default function Reservas() {
     function mapReservas(){
         return reservasTeste.map((reserva) => {
             return (
-                <Reserva key={reserva.id} name={reserva.nome}/>
+                <Reserva 
+                    key={reserva.id} 
+                    name={reserva.nome} 
+                    onPress={()=> navigation.navigate("Editar Reserva")}
+                />
             )   
         })
     }
