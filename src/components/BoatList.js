@@ -34,7 +34,22 @@ export default function BoatList() {
             id:5,
             foto:'foto 5',
             nome:'Barco 5'
-        }
+        },
+        {
+            id:6,
+            foto:'foto 6',
+            nome:'Barco 6'
+        },
+        {
+            id:7,
+            foto:'foto 7',
+            nome:'Barco 7'
+        },
+        {
+            id:8,
+            foto:'foto 8',
+            nome:'Barco 8'
+        },
     ]
 
     /**
@@ -50,14 +65,14 @@ export default function BoatList() {
     }
 
     return (
-        <View style={styles.flexContainer}>
+        <ScrollView contentContainerStyle={styles.flexContainer}>
             <View style={styles.boatContainer}>
                 {mapBarcos()}
             </View>
-            <View style={styles.scrollContainer}>
+            {/* <View style={styles.scrollContainer}>
                 <Text>Scroll</Text>
-            </View>
-        </View>
+            </View> */}
+        </ScrollView>
     )
 }
 
