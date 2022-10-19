@@ -64,7 +64,7 @@ export default function Home({navigation}) {
 
     return (
         <SafeAreaView contentContainerStyle={styles.container}>
-            <ScrollView style={styles.scrollView}>
+            <ScrollView showsVerticalScrollIndicator={false} style={styles.scrollView}>
                 <View style={styles.blueContainer}>
                     {/* Header */}
                     <View style={styles.flexContainer}>
@@ -149,7 +149,10 @@ const styles = StyleSheet.create({
     },
 
     scrollView: {
-        
+        width:'100%',
+        alignSelf:'center',
+        // borderColor:'green',
+        // borderWidth:2
     },
 
     blueContainer: {

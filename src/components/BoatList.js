@@ -1,5 +1,5 @@
 // Utilidades
-import { ScrollView, StyleSheet,Text,View } from 'react-native'
+import { FlatList, ScrollView, StyleSheet,Text,View } from 'react-native'
 
 // Componentes
 import Boat from './Boat'
@@ -64,28 +64,40 @@ export default function BoatList() {
         })
     }
 
+    const mapBarcos2 = (barco) => {
+        return (
+            <Boat key={barco.id} image={require('../../assets/img/Lancha.jpeg')} name={barco.nome}/>
+        )
+    }
+
     return (
         <ScrollView contentContainerStyle={styles.flexContainer}>
             <View style={styles.boatContainer}>
                 {mapBarcos()}
             </View>
-            {/* <View style={styles.scrollContainer}>
-                <Text>Scroll</Text>
-            </View> */}
         </ScrollView>
+        // <FlatList
+        //     data={barcosTeste}
+        //     keyExtractor={(barco) => barco.id}
+        //     renderItem={({barco}) => (
+        //         <Boat image={require('../../assets/img/Lancha.jpeg')} name={barco.nome}/>
+        //     )}
+        //     // renderItem={mapBarcos2}
+        // />
     )
 }
 
 const styles = StyleSheet.create({
 
     flexContainer: {
-        flexDirection:'row',
-        width:'80%',
+        // flexDirection:'row'
+        width:'100%',
         height:800,
-        justifyContent:'space-around',
-        alignSelf:'center',
+        // justifyContent:'space-around',
+        // alignSelf:'center',
+        alignItems:'center',
         marginTop:20,
-        backgroundColor:'lightgray'
+        // backgroundColor:'lightgray'
     },
 
     boatContainer: {

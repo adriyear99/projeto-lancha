@@ -70,6 +70,7 @@ export default function Reservas({navigation}) {
                 onPress={console.log('testando')}
                 style={{ height:60, width:200, backgroundColor:'#4B7E94' }}
             />
+
         </ScrollView>
     )
     
@@ -83,7 +84,7 @@ const styles = StyleSheet.create({
         alignItems:'center',
         alignSelf:'center',
         marginTop:20,
-        backgroundColor:'lightgray'
+        // backgroundColor:'lightgray'
     },
 
     

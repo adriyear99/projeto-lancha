@@ -8,6 +8,9 @@ import AppContext from './src/components/AppContext'
 import { NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 
+// API
+import { createServer } from "miragejs"
+
 // Páginas
 import Login from './src/pages/Login'
 import Cadastro from './src/pages/Cadastro'
@@ -19,6 +22,29 @@ import Settings from './src/pages/Settings'
 import Agendar from './src/pages/Agendar'
 import EditarReserva from './src/pages/EditarReserva'
 
+if (window.server) {
+  server.shutdown()
+}
+
+window.server = createServer({
+  routes() {
+    this.get("/api/barcos", () => {
+      return {
+        barcos: [
+          // {id:1,foto:'foto 1',nome:'Barco 1'},
+          // {id:2,foto:'foto 2',nome:'Barco 2'},
+          // {id:3,foto:'foto 3',nome:'Barco 3'},
+          // {id:4,foto:'foto 4',nome:'Barco 4'},
+          // {id:5,foto:'foto 5',nome:'Barco 5'},
+          // {id:6,foto:'foto 6',nome:'Barco 6'},
+          // {id:7,foto:'foto 7',nome:'Barco 7'},
+          // {id:8,foto:'foto 8',nome:'Barco 8'}
+        ]
+      }
+    })
+  },
+})
+
 
 export default function App() {
 
@@ -26,6 +52,9 @@ export default function App() {
   const [tipoUsuario, setTipoUsuario] = useState('empresa')
   const [userName, setUserName] = useState('Undefined')
   const [userPicture, setUserPicture] = useState('')
+
+  // API
+  const [barcos,setBarcos] = useState([])
 
   // Dados do usuário logado
   const user = {

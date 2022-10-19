@@ -37,7 +37,8 @@
     "react-native-web": "~0.18.7"
   },
   "devDependencies": {
-    "@babel/core": "^7.12.9"
+    "@babel/core": "^7.12.9",
+    "miragejs": "^0.1.45"
   },
   "private": true
 }
