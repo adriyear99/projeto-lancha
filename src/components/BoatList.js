@@ -1,73 +1,30 @@
 // Utilidades
 import { FlatList, ScrollView, StyleSheet,Text,View } from 'react-native'
+import { useContext } from 'react'
 
 // Componentes
 import Boat from './Boat'
 
-// Expo Icons
-
+// Variáveis globais
+import AppContext from '../components/AppContext'
 
 export default function BoatList() {
 
-    const barcosTeste = [
-        {
-            id:1,
-            foto:'foto 1',
-            nome:'Barco 1'
-        },
-        {
-            id:2,
-            foto:'foto 2',
-            nome:'Barco 2'
-        },
-        {
-            id:3,
-            foto:'foto 3',
-            nome:'Barco 3'
-        },
-        {
-            id:4,
-            foto:'foto 4',
-            nome:'Barco 4'
-        },
-        {
-            id:5,
-            foto:'foto 5',
-            nome:'Barco 5'
-        },
-        {
-            id:6,
-            foto:'foto 6',
-            nome:'Barco 6'
-        },
-        {
-            id:7,
-            foto:'foto 7',
-            nome:'Barco 7'
-        },
-        {
-            id:8,
-            foto:'foto 8',
-            nome:'Barco 8'
-        },
-    ]
+    // Variáveis e métodos globais
+    const global = useContext(AppContext);
+
+    const barcos = global.barcos
 
     /**
      * Renderiza dinamicamente o array de barcos vindo da API com foto e nome
      * @returns Dynamic rendering of boat list
      */
     function mapBarcos(){
-        return barcosTeste.map((barco) => {
+        return barcos.map((barco) => {
             return (
                 <Boat key={barco.id} image={require('../../assets/img/Lancha.jpeg')} name={barco.nome}/>
             )   
         })
-    }
-
-    const mapBarcos2 = (barco) => {
-        return (
-            <Boat key={barco.id} image={require('../../assets/img/Lancha.jpeg')} name={barco.nome}/>
-        )
     }
 
     return (
@@ -77,12 +34,12 @@ export default function BoatList() {
             </View>
         </ScrollView>
         // <FlatList
-        //     data={barcosTeste}
+        //     data={barcos}
         //     keyExtractor={(barco) => barco.id}
         //     renderItem={({barco}) => (
         //         <Boat image={require('../../assets/img/Lancha.jpeg')} name={barco.nome}/>
         //     )}
-        //     // renderItem={mapBarcos2}
+        //     // renderItem={mapBarcos}
         // />
     )
 }

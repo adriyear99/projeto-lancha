@@ -22,6 +22,7 @@ import Settings from './src/pages/Settings'
 import Agendar from './src/pages/Agendar'
 import EditarReserva from './src/pages/EditarReserva'
 
+// Simulando API
 if (window.server) {
   server.shutdown()
 }
@@ -31,14 +32,14 @@ window.server = createServer({
     this.get("/api/barcos", () => {
       return {
         barcos: [
-          // {id:1,foto:'foto 1',nome:'Barco 1'},
-          // {id:2,foto:'foto 2',nome:'Barco 2'},
-          // {id:3,foto:'foto 3',nome:'Barco 3'},
-          // {id:4,foto:'foto 4',nome:'Barco 4'},
-          // {id:5,foto:'foto 5',nome:'Barco 5'},
-          // {id:6,foto:'foto 6',nome:'Barco 6'},
-          // {id:7,foto:'foto 7',nome:'Barco 7'},
-          // {id:8,foto:'foto 8',nome:'Barco 8'}
+          {id:1,foto:'foto 1',nome:'Barco 1'},
+          {id:2,foto:'foto 2',nome:'Barco 2'},
+          {id:3,foto:'foto 3',nome:'Barco 3'},
+          {id:4,foto:'foto 4',nome:'Barco 4'},
+          {id:5,foto:'foto 5',nome:'Barco 5'},
+          {id:6,foto:'foto 6',nome:'Barco 6'},
+          {id:7,foto:'foto 7',nome:'Barco 7'},
+          {id:8,foto:'foto 8',nome:'Barco 8'}
         ]
       }
     })
@@ -52,8 +53,6 @@ export default function App() {
   const [tipoUsuario, setTipoUsuario] = useState('empresa')
   const [userName, setUserName] = useState('Undefined')
   const [userPicture, setUserPicture] = useState('')
-
-  // API
   const [barcos,setBarcos] = useState([])
 
   // Dados do usuário logado
@@ -63,7 +62,9 @@ export default function App() {
     userName: userName,
     setUserName,
     userPicture: userPicture,
-    setUserPicture
+    setUserPicture,
+    barcos: barcos,
+    setBarcos
   }
 
   // Navegador de páginas

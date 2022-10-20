@@ -1,6 +1,6 @@
 // Utilidades
 import { StyleSheet,Text,TouchableOpacity,View,ScrollView,Image,StatusBar } from 'react-native'
-import { useState,useContext } from 'react'
+import { useState,useContext,useEffect } from 'react'
 import SwitchSelector from "react-native-switch-selector"
 
 // Expo Icons
@@ -11,10 +11,12 @@ import { AntDesign } from '@expo/vector-icons'
 // Variáveis globais
 import AppContext from '../components/AppContext'
 
+// API
+import axios from 'axios'
+
 // Componentes Customizados
 import BoatList from '../components/BoatList'
 import Reservas from '../components/Reservas'
-import Box from '../components/Box'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 export default function Home({navigation}) {
@@ -22,19 +24,31 @@ export default function Home({navigation}) {
     // Variáveis e métodos globais
     const global = useContext(AppContext);
 
+    // Funcionalidades
+    const [loading,setLoading] = useState(false)
+
+    // Chamadas de API
+    const baseURL = 'http://localhost:19006'
+
+    useEffect(() => {
+        getBoats()
+    },[])
+
+    async function getBoats(){
+        if(loading) return
+        setLoading(true)
+        const response = await axios.get(`${baseURL}/api/barcos`)
+        console.log(response.data.barcos)
+        global.setBarcos([...global.barcos,...response.data.barcos])
+        setLoading(false)
+    }
+
     // Set State
-    const [username,setUsername] = useState("")
-    const [password,setPassword] = useState("")
     const userPicture = global.userPicture;
     var userName = global.userName;
 
     // Set State
     const [selector,setSelector] = useState(1)
-    
-    const [invalidUsername,setInvalidUsername] = useState(false)
-    const [invalidPassword,setInvalidPassword] = useState(false)
-    
-    const [usuarios,setUsuarios] = useState([])
 
     // Switch
     const options = [
