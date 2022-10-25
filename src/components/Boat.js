@@ -28,7 +28,7 @@ export default function Boat({image,name}) {
 const styles = StyleSheet.create({
 
     container: {
-        width:'95%',
+        width:'100%',
         height:100,
         alignSelf:'flex-start',
         flexDirection:'row',

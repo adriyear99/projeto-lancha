@@ -24,25 +24,6 @@ export default function Home({navigation}) {
     // Variáveis e métodos globais
     const global = useContext(AppContext);
 
-    // Funcionalidades
-    const [loading,setLoading] = useState(false)
-
-    // Chamadas de API
-    const baseURL = 'http://localhost:19006'
-
-    useEffect(() => {
-        getBoats()
-    },[])
-
-    async function getBoats(){
-        if(loading) return
-        setLoading(true)
-        const response = await axios.get(`${baseURL}/api/barcos`)
-        console.log(response.data.barcos)
-        global.setBarcos([...global.barcos,...response.data.barcos])
-        setLoading(false)
-    }
-
     // Set State
     const userPicture = global.userPicture;
     var userName = global.userName;
@@ -59,16 +40,12 @@ export default function Home({navigation}) {
     console.log(userPicture.includes('http'));
 
     function loadPicture() {
-        if (userPicture.includes('http'))
-        {
+        if (userPicture.includes('http')){
             return (<Image style={styles.profilePicture} source={{uri:userPicture}}/>);
-        }
-        else
-        {   
+        } else {   
             userName = "Nome usuário";
             return (<Image style={styles.profilePicture} source={require('../../assets/img/person-circle-white.png')}/>);
         }
-
     }
 
     // console.log('tela home');

@@ -1,6 +1,9 @@
 // Utilidades
 import { FlatList, ScrollView, StyleSheet,Text,View } from 'react-native'
-import { useContext } from 'react'
+import { useState,useEffect,useContext } from 'react'
+
+// API
+import axios from 'axios'
 
 // Componentes
 import Boat from './Boat'
@@ -13,63 +16,51 @@ export default function BoatList() {
     // Variáveis e métodos globais
     const global = useContext(AppContext);
 
-    const barcos = global.barcos
+    // Funcionalidades
+    const [loading,setLoading] = useState(false)
+
+    useEffect(() => {
+        getBoats()
+    },[])
 
     /**
-     * Renderiza dinamicamente o array de barcos vindo da API com foto e nome
-     * @returns Dynamic rendering of boat list
+     * 
+     * @returns Lista de barcos vindo da API
      */
-    function mapBarcos(){
-        return barcos.map((barco) => {
-            return (
-                <Boat key={barco.id} image={require('../../assets/img/Lancha.jpeg')} name={barco.nome}/>
-            )   
-        })
+    async function getBoats(){
+        if(loading) return
+        setLoading(true)
+        const response = await axios.get('/api/barcos')
+        console.log(response.data.barcos)
+        global.setBarcos([...global.barcos,...response.data.barcos])
+        setLoading(false)
     }
 
+    const barcos = global.barcos
+
     return (
-        <ScrollView contentContainerStyle={styles.flexContainer}>
-            <View style={styles.boatContainer}>
-                {mapBarcos()}
-            </View>
-        </ScrollView>
-        // <FlatList
-        //     data={barcos}
-        //     keyExtractor={(barco) => barco.id}
-        //     renderItem={({barco}) => (
-        //         <Boat image={require('../../assets/img/Lancha.jpeg')} name={barco.nome}/>
-        //     )}
-        //     // renderItem={mapBarcos}
-        // />
+        <View style={styles.container}>
+            {barcos.length == 0 ? 
+                <Text>Carregando</Text>
+            :
+                <FlatList
+                    data={barcos}
+                    keyExtractor={(item) => item.id}
+                    renderItem={ ({item}) => (
+                        <Boat image={require('../../assets/img/Lancha.jpeg')} name={item.nome}/>
+                    )}
+                />  
+            }     
+        </View>
     )
 }
 
 const styles = StyleSheet.create({
 
-    flexContainer: {
-        // flexDirection:'row'
-        width:'100%',
-        height:800,
-        // justifyContent:'space-around',
-        // alignSelf:'center',
-        alignItems:'center',
-        marginTop:20,
-        // backgroundColor:'lightgray'
+    container: {
+        flex:1,
+        paddingHorizontal:'5%',
+        marginTop:20
     },
-
-    boatContainer: {
-        width:'80%',
-        textAlign:'center',
-        // borderWidth:2,
-        // borderColor:'green'
-    },
-
-    scrollContainer: {
-        width:'10%',   
-        textAlign:'right',
-        borderWidth:2,
-        borderColor:'blue',
-        padding:20
-    }
 
 })
