@@ -1,5 +1,5 @@
 // Utilidades
-import { ScrollView, StyleSheet,View } from 'react-native'
+import { FlatList, StyleSheet,View } from 'react-native'
 
 // Componentes
 import CustomButton from '../components/CustomButton'
@@ -25,22 +25,22 @@ export default function Reservas({navigation}) {
             id:4,
             nome:'Reserva 4'
         },
-        // {
-        //     id:5,
-        //     nome:'Reserva 5'
-        // },
-        // {
-        //     id:6,
-        //     nome:'Reserva 6'
-        // },
-        // {
-        //     id:7,
-        //     nome:'Reserva 7'
-        // },
-        // {
-        //     id:8,
-        //     nome:'Reserva 8'
-        // },
+        {
+            id:5,
+            nome:'Reserva 5'
+        },
+        {
+            id:6,
+            nome:'Reserva 6'
+        },
+        {
+            id:7,
+            nome:'Reserva 7'
+        },
+        {
+            id:8,
+            nome:'Reserva 8'
+        },
     ]
 
     /**
@@ -60,23 +60,53 @@ export default function Reservas({navigation}) {
     }
 
     return (
-        <ScrollView contentContainerStyle={styles.flexContainer}>
-            {/* <Reserva nome="Reserva 1"/> */}
-            <View style={styles.reservaContainer}>
-                {mapReservas()}
-            </View>
-            <CustomButton 
-                text="Nova Reserva"
-                onPress={console.log('testando')}
-                style={{ height:60, width:200, backgroundColor:'#4B7E94' }}
-            />
+        // <ScrollView contentContainerStyle={styles.flexContainer}>
+        //     {/* <Reserva nome="Reserva 1"/> */}
+        //     <View style={styles.reservaContainer}>
+        //         {mapReservas()}
+        //     </View>
+            // <CustomButton 
+            //     text="Nova Reserva"
+            //     onPress={console.log('testando')}
+            //     style={{ height:60, width:200, backgroundColor:'#4B7E94' }}
+            // />
 
-        </ScrollView>
+        // </ScrollView>
+        <View style={styles.container}>
+            {reservasTeste.length == 0 ? 
+                <Text>Carregando</Text>
+            :
+                <FlatList
+                    data={reservasTeste}
+                    keyExtractor={(item) => item.id}
+                    renderItem={ ({item}) => (
+                        <Reserva 
+                            key={item.id} 
+                            name={item.nome} 
+                            onPress={()=> navigation.navigate("Editar Reserva")}
+                        />
+                    )}
+                    onEndReached={() => (
+                        <CustomButton 
+                            text="Nova Reserva"
+                            onPress={console.log('testando')}
+                            style={{ height:60, width:200, backgroundColor:'#4B7E94' }}
+                        />
+                    )}
+                />  
+            }     
+    </View>
     )
     
 }
 
 const styles = StyleSheet.create({
+
+    container: {
+        flex:1,
+        paddingHorizontal:'5%',
+        marginTop:20
+    },
 
     flexContainer: {
         width:'80%',
