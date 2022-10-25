@@ -1,11 +1,11 @@
 // Utilidades
-import { View,StyleSheet } from 'react-native';
+import { View,Text,StyleSheet } from 'react-native';
 
-export default function EditarReserva() {
+export default function NovaReserva() {
 
     return (
         <View style={styles.container}>
-            <Text>Editar Reserva</Text>
+            <Text>Nova Reserva</Text>
         </View>
     );
 }

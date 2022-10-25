@@ -1,6 +1,7 @@
 // Utilidades
 import { FlatList, ScrollView, StyleSheet,Text,View } from 'react-native'
 import { useState,useEffect,useContext } from 'react'
+import { withNavigation } from '@react-navigation/native'
 
 // API
 import axios from 'axios'
@@ -40,17 +41,13 @@ export default function BoatList() {
 
     return (
         <View style={styles.container}>
-            {barcos.length == 0 ? 
-                <Text>Carregando</Text>
-            :
-                <FlatList
-                    data={barcos}
-                    keyExtractor={(item) => item.id}
-                    renderItem={ ({item}) => (
-                        <Boat image={require('../../assets/img/Lancha.jpeg')} name={item.nome}/>
-                    )}
-                />  
-            }     
+            <FlatList
+                data={barcos}
+                keyExtractor={(item) => item.id}
+                renderItem={ ({item}) => (
+                    <Boat image={require('../../assets/img/Lancha.jpeg')} name={item.nome}/>
+                )}
+            />      
         </View>
     )
 }

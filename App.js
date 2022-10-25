@@ -21,6 +21,9 @@ import EsqueciMinhaSenha from './src/pages/EsqueciMinhaSenha'
 import Settings from './src/pages/Settings'
 import Agendar from './src/pages/Agendar'
 import EditarReserva from './src/pages/EditarReserva'
+import NovaReserva from './src/pages/NovaReserva'
+import Reservas from './src/components/Reservas'
+import BoatList from './src/components/BoatList'
 
 // Simulando API
 if (window.server) {
@@ -83,7 +86,10 @@ export default function App() {
           <Stack.Screen name="Esqueci minha senha" component={EsqueciMinhaSenha}/>
           <Stack.Screen name="Configurações" component={Settings}/>
           <Stack.Screen name="Agendar" component={Agendar}/>
+          <Stack.Screen name="Lista de Barcos" component={BoatList}/>
+          <Stack.Screen name="Reservas" component={Reservas}/>
           <Stack.Screen name="Editar Reserva" component={EditarReserva}/>
+          <Stack.Screen name="Nova Reserva" component={NovaReserva}/>
         </Stack.Navigator>
         <StatusBar style="auto" />
       </NavigationContainer>

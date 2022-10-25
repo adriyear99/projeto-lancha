@@ -1,5 +1,6 @@
 // Utilidades
 import { FlatList, StyleSheet,View } from 'react-native'
+import { withNavigation } from '@react-navigation/native'
 
 // Componentes
 import CustomButton from '../components/CustomButton'
@@ -59,42 +60,31 @@ export default function Reservas({navigation}) {
         })
     }
 
-    return (
-        // <ScrollView contentContainerStyle={styles.flexContainer}>
-        //     {/* <Reserva nome="Reserva 1"/> */}
-        //     <View style={styles.reservaContainer}>
-        //         {mapReservas()}
-        //     </View>
-            // <CustomButton 
-            //     text="Nova Reserva"
-            //     onPress={console.log('testando')}
-            //     style={{ height:60, width:200, backgroundColor:'#4B7E94' }}
-            // />
+    const novaReserva = () => {
+        navigation.navigate("Nova Reserva")
+    }
 
-        // </ScrollView>
+    return (
         <View style={styles.container}>
-            {reservasTeste.length == 0 ? 
-                <Text>Carregando</Text>
-            :
-                <FlatList
-                    data={reservasTeste}
-                    keyExtractor={(item) => item.id}
-                    renderItem={ ({item}) => (
-                        <Reserva 
-                            key={item.id} 
-                            name={item.nome} 
-                            onPress={()=> navigation.navigate("Editar Reserva")}
-                        />
-                    )}
-                    onEndReached={() => (
-                        <CustomButton 
-                            text="Nova Reserva"
-                            onPress={console.log('testando')}
-                            style={{ height:60, width:200, backgroundColor:'#4B7E94' }}
-                        />
-                    )}
-                />  
-            }     
+            <FlatList
+                data={reservasTeste}
+                keyExtractor={(item) => item.id}
+                renderItem={ ({item}) => (
+                    <Reserva 
+                        key={item.id} 
+                        name={item.nome} 
+                        onPress={()=> navigation.navigate("Editar Reserva")}
+                    />
+                )}
+                ListFooterComponent={
+                    <CustomButton 
+                        text="Nova Reserva"
+                        onPress={novaReserva}
+                        style={{ height:60, width:200, backgroundColor:'#4B7E94' }}
+                    />
+                }
+                ListFooterComponentStyle={{alignSelf:'center'}}
+            />   
     </View>
     )
     
