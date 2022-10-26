@@ -1,11 +1,11 @@
 // Utilidades
 import { View,Text,StyleSheet } from 'react-native';
 
-export default function EditarReserva() {
+export default function VerBarco() {
 
     return (
         <View style={styles.container}>
-            <Text>Editar Reserva</Text>
+            <Text>Ver Barco</Text>
         </View>
     );
 }

@@ -1,13 +1,13 @@
 // Utilidades
 import { FlatList, StyleSheet,View } from 'react-native'
-import { withNavigation } from '@react-navigation/native'
+import { useNavigation } from '@react-navigation/native'
 
 // Componentes
 import CustomButton from '../components/CustomButton'
 import Reserva from './Reserva'
 
 
-export default function Reservas({navigation}) {
+export default function Reservas() {
 
     const reservasTeste = [
         {
@@ -44,6 +44,8 @@ export default function Reservas({navigation}) {
         },
     ]
 
+    const navigation = useNavigation()
+
     /**
      * Renderiza dinamicamente o array de reservas vindo da API com foto e nome
      * @returns Dynamic rendering of reservation list
@@ -54,7 +56,7 @@ export default function Reservas({navigation}) {
                 <Reserva 
                     key={reserva.id} 
                     name={reserva.nome} 
-                    onPress={()=> navigation.navigate("Editar Reserva")}
+                    onPress={() => navigation.navigate("Editar Reserva")}
                 />
             )   
         })
@@ -95,7 +97,13 @@ const styles = StyleSheet.create({
     container: {
         flex:1,
         paddingHorizontal:'5%',
-        marginTop:20
+        marginTop:20,
+        marginHorizontal:20,
+        marginBottom:40,
+        borderWidth:2,
+        borderColor:'#f6f6f6',
+        borderRadius:10,
+        backgroundColor:'#f6f6f6'
     },
 
     flexContainer: {

@@ -1,11 +1,11 @@
 // Utilidades
-import { StyleSheet,Text,View,Image } from 'react-native'
+import { StyleSheet,Text,View,Image,TouchableOpacity } from 'react-native'
 
 // Fontes
 import { useFonts } from '@expo-google-fonts/montserrat'
 
 
-export default function Boat({image,name}) {
+export default function Boat({image,name,onPress}) {
 
     // Carregar fontes
     let [fontsLoaded] = useFonts({
@@ -18,10 +18,12 @@ export default function Boat({image,name}) {
 
 
     return (
-        <View style={styles.container}>
-            <Image style={styles.foto} source={image}/>
-            <Text style={styles.nome}>{name}</Text>
-        </View>
+        <TouchableOpacity onPress={onPress}>
+            <View style={styles.container}>
+                <Image style={styles.foto} source={image}/>
+                <Text style={styles.nome}>{name}</Text>
+            </View>
+        </TouchableOpacity>
     )
 }
 

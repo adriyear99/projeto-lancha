@@ -1,7 +1,7 @@
 // Utilidades
 import { FlatList, ScrollView, StyleSheet,Text,View } from 'react-native'
 import { useState,useEffect,useContext } from 'react'
-import { withNavigation } from '@react-navigation/native'
+import { useNavigation } from '@react-navigation/native'
 
 // API
 import axios from 'axios'
@@ -15,7 +15,10 @@ import AppContext from '../components/AppContext'
 export default function BoatList() {
 
     // Variáveis e métodos globais
-    const global = useContext(AppContext);
+    const global = useContext(AppContext)
+
+    // Alterar tela
+    const navigation = useNavigation()
 
     // Funcionalidades
     const [loading,setLoading] = useState(false)
@@ -45,7 +48,11 @@ export default function BoatList() {
                 data={barcos}
                 keyExtractor={(item) => item.id}
                 renderItem={ ({item}) => (
-                    <Boat image={require('../../assets/img/Lancha.jpeg')} name={item.nome}/>
+                    <Boat 
+                        image={require('../../assets/img/Lancha.jpeg')} 
+                        name={item.nome}
+                        onPress={() => navigation.navigate("Ver Barco")}
+                    />
                 )}
             />      
         </View>
@@ -57,7 +64,13 @@ const styles = StyleSheet.create({
     container: {
         flex:1,
         paddingHorizontal:'5%',
-        marginTop:20
+        marginTop:20,
+        marginHorizontal:20,
+        marginBottom:40,
+        borderWidth:2,
+        borderColor:'#f6f6f6',
+        borderRadius:10,
+        backgroundColor:'#f6f6f6'
     },
 
 })

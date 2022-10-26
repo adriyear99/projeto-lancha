@@ -24,6 +24,7 @@ import EditarReserva from './src/pages/EditarReserva'
 import NovaReserva from './src/pages/NovaReserva'
 import Reservas from './src/components/Reservas'
 import BoatList from './src/components/BoatList'
+import VerBarco from './src/pages/VerBarco'
 
 // Simulando API
 if (window.server) {
@@ -86,8 +87,7 @@ export default function App() {
           <Stack.Screen name="Esqueci minha senha" component={EsqueciMinhaSenha}/>
           <Stack.Screen name="Configurações" component={Settings}/>
           <Stack.Screen name="Agendar" component={Agendar}/>
-          <Stack.Screen name="Lista de Barcos" component={BoatList}/>
-          <Stack.Screen name="Reservas" component={Reservas}/>
+          <Stack.Screen name="Ver Barco" component={VerBarco}/>
           <Stack.Screen name="Editar Reserva" component={EditarReserva}/>
           <Stack.Screen name="Nova Reserva" component={NovaReserva}/>
         </Stack.Navigator>
