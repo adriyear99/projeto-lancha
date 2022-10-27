@@ -22,8 +22,6 @@ import Settings from './src/pages/Settings'
 import Agendar from './src/pages/Agendar'
 import EditarReserva from './src/pages/EditarReserva'
 import NovaReserva from './src/pages/NovaReserva'
-import Reservas from './src/components/Reservas'
-import BoatList from './src/components/BoatList'
 import VerBarco from './src/pages/VerBarco'
 
 // Simulando API
@@ -36,14 +34,102 @@ window.server = createServer({
     this.get("/api/barcos", () => {
       return {
         barcos: [
-          {id:1,foto:'foto 1',nome:'Barco 1'},
-          {id:2,foto:'foto 2',nome:'Barco 2'},
-          {id:3,foto:'foto 3',nome:'Barco 3'},
-          {id:4,foto:'foto 4',nome:'Barco 4'},
-          {id:5,foto:'foto 5',nome:'Barco 5'},
-          {id:6,foto:'foto 6',nome:'Barco 6'},
-          {id:7,foto:'foto 7',nome:'Barco 7'},
-          {id:8,foto:'foto 8',nome:'Barco 8'}
+          {
+            id:1,
+            foto:'foto 1',
+            nome:'Barco 1',
+            consumo:15,
+            idade:3,
+            cooler:true,
+            capacidade: {
+              pessoas:8,
+              peso:967
+            }
+          },
+          {
+            id:2,
+            foto:'foto 2',
+            nome:'Barco 2',
+            consumo:15,
+            idade:3,
+            cooler:true,
+            capacidade: {
+              pessoas:8,
+              peso:967
+            }
+          },
+          {
+            id:3,
+            foto:'foto 3',
+            nome:'Barco 3',
+            consumo:15,
+            idade:3,
+            cooler:true,
+            capacidade: {
+              pessoas:8,
+              peso:967
+            }
+          },
+          {
+            id:4,
+            foto:'foto 4',
+            nome:'Barco 4',
+            consumo:15,
+            idade:3,
+            cooler:true,
+            capacidade: {
+              pessoas:8,
+              peso:967
+            }
+          },
+          {
+            id:5,
+            foto:'foto 5',
+            nome:'Barco 5',
+            consumo:15,
+            idade:3,
+            cooler:true,
+            capacidade: {
+              pessoas:8,
+              peso:967
+            }
+          },
+          {
+            id:6,
+            foto:'foto 6',
+            nome:'Barco 6',
+            consumo:15,
+            idade:3,
+            cooler:true,
+            capacidade: {
+              pessoas:8,
+              peso:967
+            }
+          },
+          {
+            id:7,
+            foto:'foto 7',
+            nome:'Barco 7',
+            consumo:15,
+            idade:3,
+            cooler:true,
+            capacidade: {
+              pessoas:8,
+              peso:967
+            }
+          },
+          {
+            id:8,
+            foto:'foto 8',
+            nome:'Barco 8',
+            consumo:15,
+            idade:3,
+            cooler:true,
+            capacidade: {
+              pessoas:8,
+              peso:967
+            }
+          }
         ]
       }
     })
