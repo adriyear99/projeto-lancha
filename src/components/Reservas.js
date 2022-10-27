@@ -1,13 +1,24 @@
 // Utilidades
-import { FlatList, StyleSheet,View } from 'react-native'
+import { FlatList, StyleSheet,View,Text } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
+import { useState,useContext } from 'react'
 
 // Componentes
 import CustomButton from '../components/CustomButton'
 import Reserva from './Reserva'
 
+// Variáveis globais
+import AppContext from '../components/AppContext'
+
 
 export default function Reservas() {
+
+    // Alterar tela
+    const navigation = useNavigation()
+
+    // Variáveis e métodos globais
+    const global = useContext(AppContext);
+
 
     const reservasTeste = [
         {
@@ -44,26 +55,11 @@ export default function Reservas() {
         },
     ]
 
-    const navigation = useNavigation()
-
-    /**
-     * Renderiza dinamicamente o array de reservas vindo da API com foto e nome
-     * @returns Dynamic rendering of reservation list
-     */
-    function mapReservas(){
-        return reservasTeste.map((reserva) => {
-            return (
-                <Reserva 
-                    key={reserva.id} 
-                    name={reserva.nome} 
-                    onPress={() => navigation.navigate("Editar Reserva")}
-                />
-            )   
-        })
-    }
 
     const novaReserva = () => {
-        navigation.navigate("Nova Reserva")
+        global.setShowModal(true)
+        global.setDark(true)
+        // navigation.navigate("Nova Reserva")
     }
 
     return (
@@ -86,8 +82,8 @@ export default function Reservas() {
                     />
                 }
                 ListFooterComponentStyle={{alignSelf:'center'}}
-            />   
-    </View>
+            />
+        </View>
     )
     
 }
@@ -103,24 +99,7 @@ const styles = StyleSheet.create({
         borderWidth:2,
         borderColor:'#f6f6f6',
         borderRadius:10,
-        backgroundColor:'#f6f6f6'
-    },
-
-    flexContainer: {
-        width:'80%',
-        height:800,
-        alignItems:'center',
-        alignSelf:'center',
-        marginTop:20,
-        // backgroundColor:'lightgray'
-    },
-
-    
-    reservaContainer: {
-        width:'80%',
-        textAlign:'center',
-        // borderWidth:2,
-        // borderColor:'green'
-    },
+        backgroundColor:'#f6f6f6',
+    }
 
 })

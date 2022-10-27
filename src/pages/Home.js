@@ -14,22 +14,34 @@ import AppContext from '../components/AppContext'
 // API
 import axios from 'axios'
 
+// Fontes
+import { useFonts } from '@expo-google-fonts/montserrat'
+
 // Componentes Customizados
 import BoatList from '../components/BoatList'
 import Reservas from '../components/Reservas'
+import CustomButton from '../components/CustomButton'
 import { SafeAreaView } from 'react-native-safe-area-context'
+import darkColors from 'react-native-elements/dist/config/colorsDark'
 
 export default function Home({navigation}) {
 
     // Variáveis e métodos globais
     const global = useContext(AppContext);
-
-    // Set State
     const userPicture = global.userPicture;
     var userName = global.userName;
 
     // Set State
     const [selector,setSelector] = useState(1)
+
+    // Carregar fontes
+    let [fontsLoaded] = useFonts({
+        "Montserrat_Regular": require('../../assets/fonts/Montserrat-Regular.ttf'),
+        "Montserrat_Bold": require('../../assets/fonts/Montserrat-Bold.ttf')
+    })
+    if(!fontsLoaded){
+        return null
+    }
 
     // Switch
     const options = [
@@ -55,7 +67,13 @@ export default function Home({navigation}) {
 
     return (
         <SafeAreaView contentContainerStyle={styles.container}>
-            <ScrollView showsVerticalScrollIndicator={false} style={styles.scrollView}>
+            <ScrollView 
+                showsVerticalScrollIndicator={false} 
+                style={[
+                    styles.scrollView, 
+                    global.dark ? {opacity:0.3} : {opacity:1} 
+                ]}
+            >
                 <View style={styles.blueContainer}>
                     {/* Header */}
                     <View style={styles.flexContainer}>
@@ -122,6 +140,21 @@ export default function Home({navigation}) {
                     }
                 </View>
             </ScrollView>
+            {global.showModal &&
+                <View style={styles.modal}>
+                    <Text style={styles.texto}>Tipo de Busca</Text>
+                    <CustomButton 
+                        text="Por Data"
+                        onPress={()=> console.log('teste')}
+                        style={{ height:60, width:200, backgroundColor:'#4B7E94' }}
+                    />
+                    <CustomButton 
+                        text="Por Embarcação"
+                        onPress={()=> console.log('teste')}
+                        style={{ height:60, width:200, backgroundColor:'#4B7E94' }}
+                    />
+                </View>
+            }
         </SafeAreaView>
 
     )
@@ -308,5 +341,22 @@ const styles = StyleSheet.create({
         height: '10%',
         alignSelf: 'center'
     },
+
+    modal: {
+        position:'absolute',
+        bottom:0,
+        alignSelf:'center',
+        width:'90%',
+        height:'30%',
+        backgroundColor:'#fff',
+        borderTopLeftRadius:10,
+        borderTopRightRadius:10,
+        justifyContent:'center',
+        alignItems:'center'
+    },
+
+    texto: {
+        fontFamily:'Montserrat_Bold'
+    }
 
 })

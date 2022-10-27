@@ -58,6 +58,8 @@ export default function App() {
   const [userName, setUserName] = useState('Undefined')
   const [userPicture, setUserPicture] = useState('')
   const [barcos,setBarcos] = useState([])
+  const [showModal,setShowModal] = useState(false)
+  const [dark,setDark] = useState(false)
 
   // Dados do usuário logado
   const user = {
@@ -68,7 +70,11 @@ export default function App() {
     userPicture: userPicture,
     setUserPicture,
     barcos: barcos,
-    setBarcos
+    setBarcos,
+    showModal:showModal,
+    setShowModal,
+    dark:dark,
+    setDark
   }
 
   // Navegador de páginas
