@@ -31,13 +31,12 @@ const styles = StyleSheet.create({
 
     container: {
         width:'100%',
-        height:100,
+        height:70,
         alignSelf:'flex-start',
         flexDirection:'row',
         backgroundColor:'#E8E8E8',
         borderRadius:20,
-        marginTop:10,
-        marginBottom:10,
+        marginVertical:5,
         marginLeft:5,
         alignItems:'center',
         // borderRadius:4,

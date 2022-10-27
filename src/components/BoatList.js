@@ -36,7 +36,9 @@ export default function BoatList() {
         setLoading(true)
         const response = await axios.get('/api/barcos')
         console.log(response.data.barcos)
-        global.setBarcos([...global.barcos,...response.data.barcos])
+        // global.setBarcos([...global.barcos,...response.data.barcos])
+        global.setBarcos(response.data.barcos)
+
         setLoading(false)
     }
 
@@ -45,6 +47,7 @@ export default function BoatList() {
     return (
         <View style={styles.container}>
             <FlatList
+                horizontal={false}
                 data={barcos}
                 keyExtractor={(item) => item.id}
                 renderItem={ ({item}) => (

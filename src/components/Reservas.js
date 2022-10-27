@@ -65,6 +65,7 @@ export default function Reservas() {
     return (
         <View style={styles.container}>
             <FlatList
+                horizontal={false}
                 data={reservasTeste}
                 keyExtractor={(item) => item.id}
                 renderItem={ ({item}) => (
@@ -78,7 +79,12 @@ export default function Reservas() {
                     <CustomButton 
                         text="Nova Reserva"
                         onPress={novaReserva}
-                        style={{ height:60, width:200, backgroundColor:'#4B7E94' }}
+                        style={{ 
+                            height:60, 
+                            width:200, 
+                            backgroundColor:'#4B7E94',
+                            marginBottom:10
+                        }}
                     />
                 }
                 ListFooterComponentStyle={{alignSelf:'center'}}

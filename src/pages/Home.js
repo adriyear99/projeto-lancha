@@ -67,7 +67,7 @@ export default function Home({navigation}) {
 
     return (
         <SafeAreaView contentContainerStyle={styles.container}>
-            <ScrollView 
+            <View 
                 showsVerticalScrollIndicator={false} 
                 style={[
                     styles.scrollView, 
@@ -91,7 +91,7 @@ export default function Home({navigation}) {
                             <TouchableOpacity activeOpacity={0.5} style={styles.calendar} onPress={() => navigation.navigate("Agendar")}>
                                 <AntDesign 
                                     name="calendar" 
-                                    size={80} 
+                                    size={60} 
                                     color="white" 
                                 />
                             </TouchableOpacity>
@@ -104,7 +104,7 @@ export default function Home({navigation}) {
                         >
                             <Ionicons 
                                 name="chatbubble-ellipses-outline" 
-                                size={80} 
+                                size={60} 
                                 color="white" 
                             />
                         </TouchableOpacity>
@@ -112,10 +112,8 @@ export default function Home({navigation}) {
                     <View style={styles.profilePicContainer}>
                         {loadPicture()}
                     </View>
-                    <View style={styles.flexContainer}>
-                        <Text style={styles.nome}>
-                            {userName}
-                        </Text>
+                    <View style={styles.nameContainer}>
+                        <Text style={styles.nome}>{userName}</Text>
                     </View>
                 </View>
                 <View style={styles.whiteContainer}>
@@ -139,7 +137,7 @@ export default function Home({navigation}) {
                         <Reservas/>
                     }
                 </View>
-            </ScrollView>
+            </View>
             {global.showModal &&
                 <View style={styles.modal}>
                     <Text style={styles.texto}>Tipo de Busca</Text>
@@ -170,24 +168,30 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         paddingTop: StatusBar.currentHeight,
+        borderWidth:4,
+        borderColor:'blue'
     },
 
     scrollView: {
         width:'100%',
+        height:'100%',
         alignSelf:'center',
         // borderColor:'green',
         // borderWidth:2
     },
 
     blueContainer: {
+        flex:1,
         width:'100%',
-        height:'60%',
-        backgroundColor:'#4B7E94'
+        height:'50%',
+        backgroundColor:'#4B7E94',
+        // borderWidth:2,
+        // borderColor:'yellow'
     },
 
     whiteContainer: {
         width:'100%',
-        height:'70%',
+        height:'50%',
         backgroundColor:'#fff',
     },
 
@@ -202,24 +206,40 @@ const styles = StyleSheet.create({
         borderColor:'white',
         height:'30%',
         opacity: 1,
+        // borderColor:'green',
+        // borderWidth:4,
+        bottom:'20%'
     },
 
     profilePicture: {
-        width:200,
-        height:200,
-        borderRadius:100,
+        width:150,
+        height:150,
+        borderRadius:75,
         // textAlign:'center',
         // margin:'auto'
         margin:'auto',
     },
 
     flexContainer: {
+        flex:1,
         flexDirection:'row',
-        width:'95%',
+        width:'100%',
         alignItems:'center',
         alignSelf:'center',
-        justifyContent:'space-evenly',
+        justifyContent:'space-between',
         marginBottom:16,
+        // borderColor:'blue',
+        // borderWidth:4,
+        paddingHorizontal:10
+    },
+
+    nameContainer: {
+        flex:1,
+        // borderColor:'yellow',
+        // borderWidth:4,
+        justifyContent:'center',
+        alignItems:'center',
+        bottom:'5%'
     },
 
     iconContainer: {
@@ -268,9 +288,7 @@ const styles = StyleSheet.create({
 
     nome: {
         fontSize:40,
-        paddingTop:'25%',
-        alignSelf:'center',
-        color:'#EFF4F8'
+        color:'#EFF4F8',
     },
 
     link: {

@@ -30,12 +30,11 @@ const styles = StyleSheet.create({
 
     container: {
         width:'90%',
-        height:80,
+        height:60,
         alignSelf:'center',
         backgroundColor:'#E8E8E8',
         borderRadius:20,
-        marginTop:10,
-        marginBottom:10,
+        marginVertical:5,
         marginLeft:5,
         alignItems:'center',
         textAlign:'center',
