@@ -170,16 +170,16 @@ export default function App() {
   return (
     <AppContext.Provider value={user}>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="Home">
+        <Stack.Navigator initialRouteName="Ver Barco">
           <Stack.Screen name="Tela Inicial" component={CadastroLogin} options={styles.hideHeader}/>
           <Stack.Screen name="Pessoa ou Empresa" component={PessoaEmpresa} options={styles.hideLabel}/>
           <Stack.Screen name="Home" component={Home} options={styles.hideHeader}/>
           <Stack.Screen name="Login" component={Login}/>
-          <Stack.Screen name="Cadastro" component={Cadastro} options={{headerShown: false}}/>
+          <Stack.Screen name="Cadastro" component={Cadastro} options={styles.hideHeader}/>
           <Stack.Screen name="Esqueci minha senha" component={EsqueciMinhaSenha}/>
           <Stack.Screen name="Configurações" component={Settings}/>
           <Stack.Screen name="Agendar" component={Agendar}/>
-          <Stack.Screen name="Ver Barco" component={VerBarco}/>
+          <Stack.Screen name="Ver Barco" initialParams={{barco:null}} component={VerBarco} options={styles.hideHeader}/>
           <Stack.Screen name="Editar Reserva" component={EditarReserva}/>
           <Stack.Screen name="Nova Reserva" component={NovaReserva}/>
         </Stack.Navigator>
