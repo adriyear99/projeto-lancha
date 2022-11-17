@@ -23,6 +23,7 @@ import Agendar from './src/pages/Agendar'
 import EditarReserva from './src/pages/EditarReserva'
 import NovaReserva from './src/pages/NovaReserva'
 import VerBarco from './src/pages/VerBarco'
+import Perfil from './src/pages/Perfil'
 
 // Simulando API
 if (window.server) {
@@ -182,6 +183,7 @@ export default function App() {
           <Stack.Screen name="Ver Barco" initialParams={{barco:null}} component={VerBarco} options={styles.hideHeader}/>
           <Stack.Screen name="Editar Reserva" component={EditarReserva}/>
           <Stack.Screen name="Nova Reserva" component={NovaReserva}/>
+          <Stack.Screen name="Perfil" component={Perfil}/>
         </Stack.Navigator>
         <StatusBar style="auto" />
       </NavigationContainer>
