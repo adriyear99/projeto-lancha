@@ -171,7 +171,7 @@ export default function App() {
   return (
     <AppContext.Provider value={user}>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="Ver Barco">
+        <Stack.Navigator initialRouteName="Home">
           <Stack.Screen name="Tela Inicial" component={CadastroLogin} options={styles.hideHeader}/>
           <Stack.Screen name="Pessoa ou Empresa" component={PessoaEmpresa} options={styles.hideLabel}/>
           <Stack.Screen name="Home" component={Home} options={styles.hideHeader}/>

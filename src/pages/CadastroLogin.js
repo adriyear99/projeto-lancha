@@ -20,7 +20,7 @@ export default function CadastroLogin({navigation}) {
     // Renderizar componente
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>Projeto Lancha</Text>
+            <Text style={styles.title}>Boatz</Text>
             <CustomButton 
                 text='Novo usuário' 
                 onPress={()=> navigation.navigate("Pessoa ou Empresa")}
