@@ -4,7 +4,7 @@ import { useState,useEffect,useContext } from 'react'
 import { useNavigation } from '@react-navigation/native'
 
 // API
-import axios from 'axios'
+import { axiosClient } from '../../client'
 
 // Componentes
 import Boat from './Boat'
@@ -34,7 +34,8 @@ export default function BoatList() {
     async function getBoats(){
         if(loading) return
         setLoading(true)
-        const response = await axios.get('/api/barcos')
+        // const response = await axios.get(global.baseURL + '/barcos')
+        const response = await axiosClient.get('/barcos')
         console.log(response.data.barcos)
         // global.setBarcos([...global.barcos,...response.data.barcos])
         global.setBarcos(response.data.barcos)

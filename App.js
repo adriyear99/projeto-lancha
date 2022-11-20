@@ -8,9 +8,6 @@ import AppContext from './src/components/AppContext'
 import { NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 
-// API
-import { createServer } from "miragejs"
-
 // Páginas
 import Login from './src/pages/Login'
 import Cadastro from './src/pages/Cadastro'
@@ -24,118 +21,7 @@ import EditarReserva from './src/pages/EditarReserva'
 import NovaReserva from './src/pages/NovaReserva'
 import VerBarco from './src/pages/VerBarco'
 import Perfil from './src/pages/Perfil'
-
-// Simulando API
-if (window.server) {
-  server.shutdown()
-}
-
-window.server = createServer({
-  routes() {
-    this.get("/api/barcos", () => {
-      return {
-        barcos: [
-          {
-            id:1,
-            foto:'foto 1',
-            nome:'Barco 1',
-            consumo:15,
-            idade:3,
-            cooler:true,
-            capacidade: {
-              pessoas:8,
-              peso:967
-            }
-          },
-          {
-            id:2,
-            foto:'foto 2',
-            nome:'Barco 2',
-            consumo:15,
-            idade:3,
-            cooler:true,
-            capacidade: {
-              pessoas:8,
-              peso:967
-            }
-          },
-          {
-            id:3,
-            foto:'foto 3',
-            nome:'Barco 3',
-            consumo:15,
-            idade:3,
-            cooler:true,
-            capacidade: {
-              pessoas:8,
-              peso:967
-            }
-          },
-          {
-            id:4,
-            foto:'foto 4',
-            nome:'Barco 4',
-            consumo:15,
-            idade:3,
-            cooler:true,
-            capacidade: {
-              pessoas:8,
-              peso:967
-            }
-          },
-          {
-            id:5,
-            foto:'foto 5',
-            nome:'Barco 5',
-            consumo:15,
-            idade:3,
-            cooler:true,
-            capacidade: {
-              pessoas:8,
-              peso:967
-            }
-          },
-          {
-            id:6,
-            foto:'foto 6',
-            nome:'Barco 6',
-            consumo:15,
-            idade:3,
-            cooler:true,
-            capacidade: {
-              pessoas:8,
-              peso:967
-            }
-          },
-          {
-            id:7,
-            foto:'foto 7',
-            nome:'Barco 7',
-            consumo:15,
-            idade:3,
-            cooler:true,
-            capacidade: {
-              pessoas:8,
-              peso:967
-            }
-          },
-          {
-            id:8,
-            foto:'foto 8',
-            nome:'Barco 8',
-            consumo:15,
-            idade:3,
-            cooler:true,
-            capacidade: {
-              pessoas:8,
-              peso:967
-            }
-          }
-        ]
-      }
-    })
-  },
-})
+import EditarPerfil from './src/pages/EditarPerfil'
 
 
 export default function App() {
@@ -147,6 +33,7 @@ export default function App() {
   const [barcos,setBarcos] = useState([])
   const [showModal,setShowModal] = useState(false)
   const [dark,setDark] = useState(false)
+  const [baseURL,setBaseURL] = useState('http://54.84.178.96:3000')
 
   // Dados do usuário logado
   const user = {
@@ -161,7 +48,9 @@ export default function App() {
     showModal:showModal,
     setShowModal,
     dark:dark,
-    setDark
+    setDark,
+    baseURL,
+    setBaseURL
   }
 
   // Navegador de páginas
@@ -184,6 +73,7 @@ export default function App() {
           <Stack.Screen name="Editar Reserva" component={EditarReserva}/>
           <Stack.Screen name="Nova Reserva" component={NovaReserva}/>
           <Stack.Screen name="Perfil" component={Perfil}/>
+          <Stack.Screen name="Editar Perfil" component={EditarPerfil}/>
         </Stack.Navigator>
         <StatusBar style="auto" />
       </NavigationContainer>

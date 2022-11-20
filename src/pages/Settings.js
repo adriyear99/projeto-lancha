@@ -1,6 +1,7 @@
 // Utilidades
 import { StyleSheet,Text,View,TouchableOpacity,  Image } from 'react-native'
 import { useState,useContext } from 'react'
+
 // Componentes
 import CustomButton from '../components/CustomButton'
 
@@ -23,7 +24,7 @@ export default function Settings({navigation}) {
         <View style={styles.container}>
             <CustomButton 
                 text='Editar Perfil' 
-                onPress={console.log('teste')}
+                onPress={() => navigation.navigate("Editar Perfil")}
                 style={{ height:60, width:300, backgroundColor:'#4B7E94' }}
             />
             <CustomButton 

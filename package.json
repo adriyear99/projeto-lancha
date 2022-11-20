@@ -19,8 +19,6 @@
     "@react-navigation/native": "^6.0.12",
     "@react-navigation/native-stack": "^6.8.0",
     "axios": "^0.27.2",
-    "body-parser": "^1.20.1",
-    "cors": "^2.8.5",
     "expo": "~46.0.9",
     "expo-application": "^4.2.2",
     "expo-auth-session": "~3.7.1",
@@ -37,12 +35,10 @@
     "react-native-safe-area-context": "4.3.1",
     "react-native-screens": "~3.15.0",
     "react-native-switch-selector": "^2.2.1",
-    "react-native-web": "~0.18.7",
-    "sequelize": "^6.25.6"
+    "react-native-web": "~0.18.7"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
-    "miragejs": "^0.1.45",
     "sequelize-cli": "^6.5.2"
   },
   "private": true
