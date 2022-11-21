@@ -1,24 +1,11 @@
 // Utilidades
-import { StyleSheet,Text,View,TouchableOpacity,  Image } from 'react-native'
-import { useState,useContext } from 'react'
+import { StyleSheet,View } from 'react-native'
 
 // Componentes
 import CustomButton from '../components/CustomButton'
 
 
-import AppContext from '../components/AppContext'
-
 export default function Settings({navigation}) {
-
-    // Variáveis e métodos globais
-    const global = useContext(AppContext);
-
-    // Set State
-    const [username,setUsername] = useState("")
-    const [password,setPassword] = useState("")
-    const userPicture = global.userPicture;
-    const userName = global.userName;
-
 
     return (
         <View style={styles.container}>
@@ -54,9 +41,9 @@ const styles = StyleSheet.create({
         padding:20,
         alignItems:'center',
         justifyContent:'center',
-        // borderWidth:2,
-        // borderColor:'red'
-    },profilePicContainer: {
+    },
+    
+    profilePicContainer: {
         width:'30%',
         alignSelf:'center',
         padding:20,
@@ -72,8 +59,6 @@ const styles = StyleSheet.create({
         width:200,
         height:200,
         borderRadius:100,
-        // textAlign:'center',
-        // margin:'auto'
         margin:'auto',
     }
 

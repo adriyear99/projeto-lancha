@@ -31,6 +31,7 @@ export default function App() {
   const [userName, setUserName] = useState('Undefined')
   const [userPicture, setUserPicture] = useState('')
   const [barcos,setBarcos] = useState([])
+  const [reservas,setReservas] = useState([])
   const [showModal,setShowModal] = useState(false)
   const [dark,setDark] = useState(false)
   const [baseURL,setBaseURL] = useState('http://54.84.178.96:3000')
@@ -45,6 +46,8 @@ export default function App() {
     setUserPicture,
     barcos: barcos,
     setBarcos,
+    reservas: reservas,
+    setReservas,
     showModal:showModal,
     setShowModal,
     dark:dark,
