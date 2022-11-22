@@ -20,6 +20,7 @@ export default function Reservas() {
     const global = useContext(AppContext);
 
 
+    // deletar quando pegar os dados do servidor
     const reservasTeste = [
         {
             id:1,
@@ -66,7 +67,7 @@ export default function Reservas() {
         <View style={styles.container}>
             <FlatList
                 horizontal={false}
-                data={reservasTeste}
+                data={global.reservas}
                 keyExtractor={(item) => item.id}
                 renderItem={ ({item}) => (
                     <Reserva 
