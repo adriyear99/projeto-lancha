@@ -1,7 +1,10 @@
 // Utilidades
 import { FlatList, StyleSheet,View,Text } from 'react-native'
+import { useState,useEffect,useContext } from 'react'
 import { useNavigation } from '@react-navigation/native'
-import { useState,useContext } from 'react'
+
+// API
+import axios from 'axios'
 
 // Componentes
 import CustomButton from '../components/CustomButton'
@@ -18,6 +21,28 @@ export default function Reservas() {
 
     // Variáveis e métodos globais
     const global = useContext(AppContext);
+
+    // Funcionalidades
+    const [loading,setLoading] = useState(false)
+
+    useEffect(() => {
+        getReservas()
+    },[])
+
+    /**
+     * 
+     * @returns Lista de barcos vindo da API
+     */
+    async function getReservas(){
+        if(loading) return
+        setLoading(true)
+        const response = await axios.get(global.baseURL + '/api/reservas', { 
+            params: { id_user: 1 } 
+        })
+        console.log(response.data)
+        global.setReservas(response.data)
+        setLoading(false)
+    }
 
 
     // deletar quando pegar os dados do servidor
@@ -68,11 +93,11 @@ export default function Reservas() {
             <FlatList
                 horizontal={false}
                 data={global.reservas}
-                keyExtractor={(item) => item.id}
+                keyExtractor={(item) => item.idAgendamento}
                 renderItem={ ({item}) => (
                     <Reserva 
-                        key={item.id} 
-                        name={item.nome} 
+                        key={item.idAgendamento} 
+                        name={item.tipo} 
                         onPress={()=> navigation.navigate("Editar Reserva")}
                     />
                 )}
