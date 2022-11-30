@@ -81,7 +81,7 @@ export default function Home({navigation}) {
                             <EvilIcons name="gear" size={60} color="white"/>
                         </TouchableOpacity>
                         <Text style={styles.title}>Meu Perfil</Text>
-                        <TouchableOpacity activeOpacity={0.5} style={styles.icon} onPress={() => navigation.navigate("Login")}>
+                        <TouchableOpacity activeOpacity={0.5} style={styles.icon} onPress={() => navigation.navigate("Tela Inicial")}>
                             <Text style={styles.link}>Logout</Text>
                         </TouchableOpacity>
                     </View>

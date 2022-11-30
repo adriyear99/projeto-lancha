@@ -29,6 +29,7 @@ export default function App() {
   // Variáveis globais
   const [tipoUsuario, setTipoUsuario] = useState('empresa')
   const [userName, setUserName] = useState('Undefined')
+  const [email, setEmail] = useState(undefined)
   const [userPicture, setUserPicture] = useState('')
   const [barcos,setBarcos] = useState([])
   const [reservas,setReservas] = useState([])
