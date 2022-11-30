@@ -2,7 +2,6 @@
 import { Text, TextInput, StyleSheet, TouchableOpacity, View, Button} from 'react-native'
 import { useState, useRef,   useContext  } from 'react'
 
-import * as React from 'react';
 //import * as Google from 'expo-auth-session/providers/google';
 //import GoogleButton from 'react-google-button'
 import * as AuthSession from 'expo-auth-session';
@@ -101,10 +100,18 @@ export default function Login({ navigation }) {
     return <>
         <View style={styles.container}>
             
-            <CustomButton
+            {/* <CustomButton
                 text='Entrar com Google'
                 onPress={handleSignIn}
                 style={{ height: 60, width: 300, backgroundColor: '#4B7E94' }}
+            /> */}
+
+            <SocialButton
+                buttonTitle="Entrar com Google"
+                btnType="google"
+                color="#fff"
+                backgroundColor="#de4d41"
+                onPress={handleSignIn}
             />
 
         </View>
