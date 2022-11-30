@@ -99,13 +99,13 @@ export default function EditarPerfil({ navigation }) {
                             name="arrow-back-circle-sharp" 
                             size={60} 
                             color="black" 
-                            style={styles.arrow}
+                            style={{paddingLeft:10}}
                         />
                     </TouchableOpacity>
 
                     {/* Mostrar tela de alterar nome */}
                     {mostrarAlterarNome && 
-                    <View>
+                    <View style={styles.alignInput}>
                         <Text style={[styles.nome,styles.input]}>
                             {global.userName}
                         </Text>
@@ -201,7 +201,6 @@ const styles = StyleSheet.create({
         flex: 1,
         height: '100%',
         backgroundColor: "#fff",
-        padding: 20,
         alignItems: "center",
         justifyContent: "center",
         // borderWidth:2,
@@ -209,7 +208,7 @@ const styles = StyleSheet.create({
     },
 
     flexContainer: {
-        width:'90%',
+        width:'100%',
         height:'90%',
         alignSelf:'center',
         backgroundColor: "#fff",
@@ -227,14 +226,6 @@ const styles = StyleSheet.create({
         width: "60%",
     },
 
-    input: {
-        alignSelf:'center',
-        height: 60,
-        paddingHorizontal: 8,
-        marginBottom: 8,
-        borderWidth: 2,
-    },
-
     opcaoContainer: {
         flex: 1,
         flexDirection: "row",
@@ -243,8 +234,9 @@ const styles = StyleSheet.create({
     input: {
         height: 40,
         margin: 12,
-        borderWidth: 1,
+        borderWidth: 2,
         padding: 10,
+        borderRadius:10
     },
 
     alignInput: {
@@ -254,11 +246,6 @@ const styles = StyleSheet.create({
         // borderColor:'red',
         // borderWidth:2,
         // justifyContent:'center'
-
-    },
-
-    arrow: {
-        padding:10
 
     },
 
