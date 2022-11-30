@@ -2,7 +2,7 @@
 import { View,Text,StyleSheet } from 'react-native'
 import CustomButton from '../components/CustomButton'
 import SocialButton from '../components/SocialButton'
-import { useState,useRef,useContext } from 'react'
+import { useState,useRef,useEffect,useContext } from 'react'
 
 // Fontes
 import { useFonts } from '@expo-google-fonts/montserrat'
@@ -21,11 +21,22 @@ WebBrowser.maybeCompleteAuthSession()
 import axios from 'axios'
 
 
-
 export default function CadastroLogin({navigation}) {
 
     // Variáveis e métodos globais
     const global = useContext(AppContext);
+
+    // executar quando estado for alterado
+    useEffect(() => {
+        // global.temConta ? navigation.navigate("Home") : navigation.navigate("Pessoa ou Empresa")
+        if(global.temConta == true){
+            navigation.navigate("Home")
+        } 
+        
+        if(global.temConta == false) {
+            navigation.navigate("Pessoa ou Empresa")
+        }
+    }, [global.temConta]);
 
     // Carregar fontes
     let [fontsLoaded] = useFonts({
@@ -41,11 +52,10 @@ export default function CadastroLogin({navigation}) {
             params: { email: global.email } 
         })
 
-        console.log(response.data)
         const tamanho = response.data.length
-        console.log("Tamanho: ", tamanho > 0)
-        return tamanho > 0
+        global.setTemConta(tamanho > 0)
     }
+
 
     async function handleSignIn(){
         // const CLIENT_ID = '192988181548-gf4n6icnpf32c5a3ibqdiociu15pq8qv.apps.googleusercontent.com';
@@ -81,12 +91,10 @@ export default function CadastroLogin({navigation}) {
         //     global.setUserName(userInfo?.given_name);
         //     global.setUserPicture(userInfo?.picture);
 
-        if(userExists){
-            console.log("caiu aqui")
-            navigation.navigate("Home")
-        } else {
-            navigation.navigate("Pessoa ou Empresa")
-        }
+        global.setEmail('lulinha@gmail.com')
+
+        userExists()
+
         // else {
         //     console.log('Falha');
         // }

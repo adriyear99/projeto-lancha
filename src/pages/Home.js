@@ -49,8 +49,6 @@ export default function Home({navigation}) {
         { label: "Reservas", value: 2 }
     ];
 
-    console.log(userPicture.includes('http'));
-
     function loadPicture() {
         if (userPicture.includes('http')){
             return (<Image style={styles.profilePicture} source={{uri:userPicture}}/>);
@@ -60,10 +58,10 @@ export default function Home({navigation}) {
         }
     }
 
-    // console.log('tela home');
-    // console.log(global);
-    console.log("user pic:" + global.userPicture);
-    // console.log(global.userName);
+    function logout() {
+        global.setTemConta(null)
+        navigation.navigate("Tela Inicial")
+    }
 
     return (
         <SafeAreaView contentContainerStyle={styles.container}>
@@ -81,7 +79,7 @@ export default function Home({navigation}) {
                             <EvilIcons name="gear" size={60} color="white"/>
                         </TouchableOpacity>
                         <Text style={styles.title}>Meu Perfil</Text>
-                        <TouchableOpacity activeOpacity={0.5} style={styles.icon} onPress={() => navigation.navigate("Tela Inicial")}>
+                        <TouchableOpacity activeOpacity={0.5} style={styles.icon} onPress={logout}>
                             <Text style={styles.link}>Logout</Text>
                         </TouchableOpacity>
                     </View>

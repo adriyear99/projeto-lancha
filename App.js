@@ -28,8 +28,9 @@ export default function App() {
 
   // Variáveis globais
   const [tipoUsuario, setTipoUsuario] = useState('empresa')
+  const [temConta,setTemConta] = useState(null)
   const [userName, setUserName] = useState('Undefined')
-  const [email, setEmail] = useState(undefined)
+  const [email, setEmail] = useState('lulinha@gmail.com')
   const [userPicture, setUserPicture] = useState('')
   const [barcos,setBarcos] = useState([])
   const [reservas,setReservas] = useState([])
@@ -40,9 +41,13 @@ export default function App() {
   // Dados do usuário logado
   const user = {
     tipoUsuario: tipoUsuario,
-    setTipoUsuario, 
+    setTipoUsuario,
+    temConta,
+    setTemConta,
     userName: userName,
     setUserName,
+    email,
+    setEmail,
     userPicture: userPicture,
     setUserPicture,
     barcos: barcos,
