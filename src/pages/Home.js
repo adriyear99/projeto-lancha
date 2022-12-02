@@ -1,5 +1,15 @@
 // Utilidades
-import { StyleSheet,Text,TouchableOpacity,View,ScrollView,Image,StatusBar } from 'react-native'
+import { 
+    StyleSheet,
+    Text,
+    TouchableOpacity,
+    View,
+    Image,
+    StatusBar,
+    TouchableWithoutFeedback,
+    BackHandler,
+    Alert
+} from 'react-native'
 import { useState,useContext,useEffect } from 'react'
 import SwitchSelector from "react-native-switch-selector"
 
@@ -22,7 +32,6 @@ import BoatList from '../components/BoatList'
 import Reservas from '../components/Reservas'
 import CustomButton from '../components/CustomButton'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import darkColors from 'react-native-elements/dist/config/colorsDark'
 
 export default function Home({navigation}) {
 
@@ -31,8 +40,36 @@ export default function Home({navigation}) {
     const userPicture = global.userPicture;
     var userName = global.userName;
 
+    // Switch
+    const options = [
+        { label: "Embarcações", value: 1 },
+        { label: "Reservas", value: 2 }
+    ];
+
     // Set State
     const [selector,setSelector] = useState(1)
+
+    // Hardware
+    useEffect(() => {
+        const backAction = () => {
+            Alert.alert("Espere um pouco!", "Tem certeza que deseja sair?", [
+            {
+                text: "Cancelar",
+                onPress: () => null,
+                style: "cancel"
+            },
+            { text: "SIM", onPress: () => BackHandler.exitApp() }
+            ]);
+            return true;
+        };
+    
+        const backHandler = BackHandler.addEventListener(
+            "hardwareBackPress",
+            backAction
+        );
+    
+        return () => backHandler.remove();
+    }, []);
 
     // Carregar fontes
     let [fontsLoaded] = useFonts({
@@ -43,12 +80,7 @@ export default function Home({navigation}) {
         return null
     }
 
-    // Switch
-    const options = [
-        { label: "Embarcações", value: 1 },
-        { label: "Reservas", value: 2 }
-    ];
-
+    // User
     function loadPicture() {
         if (userPicture.includes('http')){
             return (<Image style={styles.profilePicture} source={{uri:userPicture}}/>);
@@ -59,8 +91,29 @@ export default function Home({navigation}) {
     }
 
     function logout() {
+        Alert.alert("Espere um pouco!", "Tem certeza que deseja sair?", [
+            {
+                text: "Cancelar",
+                onPress: () => null,
+                style: "cancel"
+            },
+            { text: "SIM", onPress: resetValores }
+        ]);
+    }
+
+    function resetValores(){
+        console.log('saiu')
         global.setTemConta(null)
         navigation.navigate("Tela Inicial")
+    }
+
+    // Modal
+    function fecharModal(){
+        if(global.modalOpen){
+            global.setDark(false)
+            global.openModal(false)
+            console.log('naoooo')
+        }
     }
 
     return (
@@ -69,51 +122,54 @@ export default function Home({navigation}) {
                 showsVerticalScrollIndicator={false} 
                 style={[
                     styles.scrollView, 
-                    global.dark ? {opacity:0.3} : {opacity:1} 
+                    global.modalOpen ? {opacity:0.3} : {opacity:1} 
                 ]}
             >
-                <View style={styles.blueContainer}>
-                    {/* Header */}
-                    <View style={styles.flexContainer}>
-                        <TouchableOpacity activeOpacity={0.5} style={styles.icon} onPress={() => navigation.navigate("Configurações")}>
-                            <EvilIcons name="gear" size={60} color="white"/>
-                        </TouchableOpacity>
-                        <Text style={styles.title}>Meu Perfil</Text>
-                        <TouchableOpacity activeOpacity={0.5} style={styles.icon} onPress={logout}>
-                            <Text style={styles.link}>Logout</Text>
-                        </TouchableOpacity>
-                    </View>
-                    {/* Icones */}
-                    <View style={global.tipoUsuario == "empresa" ? styles.iconContainer : styles.iconContainer2}>
-                        {global.tipoUsuario == "empresa" &&
-                            <TouchableOpacity activeOpacity={0.5} style={styles.calendar} onPress={() => navigation.navigate("Agendar")}>
-                                <AntDesign 
-                                    name="calendar" 
+                <TouchableWithoutFeedback onPress={fecharModal}>
+                    <View style={styles.blueContainer}>
+                        {/* Header */}
+                        <View style={styles.flexContainer}>
+                            <TouchableOpacity activeOpacity={0.5} style={styles.icon} onPress={() => navigation.navigate("Configurações")}>
+                                <EvilIcons name="gear" size={60} color="white"/>
+                            </TouchableOpacity>
+                            <Text style={styles.title}>Meu Perfil</Text>
+                            <TouchableOpacity activeOpacity={0.5} style={styles.icon} onPress={logout}>
+                                <Text style={styles.link}>Logout</Text>
+                            </TouchableOpacity>
+                        </View>
+                        {/* Icones */}
+                        <View style={global.tipoUsuario == "empresa" ? styles.iconContainer : styles.iconContainer2}>
+                            {global.tipoUsuario == "empresa" &&
+                                <TouchableOpacity activeOpacity={0.5} style={styles.calendar} onPress={() => navigation.navigate("Agendar")}>
+                                    <AntDesign 
+                                        name="calendar" 
+                                        size={60} 
+                                        color="white" 
+                                    />
+                                </TouchableOpacity>
+                            }
+                            
+                            <TouchableOpacity 
+                                activeOpacity={0.5} 
+                                style={global.tipoUsuario == "empresa" ? styles.bubbleEmpresa : styles.bubble} 
+                                onPress={() => navigation.navigate("Agendar")}
+                            >
+                                <Ionicons 
+                                    name="chatbubble-ellipses-outline" 
                                     size={60} 
                                     color="white" 
                                 />
                             </TouchableOpacity>
-                        }
-                        
-                        <TouchableOpacity 
-                            activeOpacity={0.5} 
-                            style={global.tipoUsuario == "empresa" ? styles.bubbleEmpresa : styles.bubble} 
-                            onPress={() => navigation.navigate("Agendar")}
-                        >
-                            <Ionicons 
-                                name="chatbubble-ellipses-outline" 
-                                size={60} 
-                                color="white" 
-                            />
-                        </TouchableOpacity>
+                        </View>
+                        <View style={styles.profilePicContainer}>
+                            {loadPicture()}
+                        </View>
+                        <View style={styles.nameContainer}>
+                            <Text style={styles.nome}>{userName}</Text>
+                        </View>
                     </View>
-                    <View style={styles.profilePicContainer}>
-                        {loadPicture()}
-                    </View>
-                    <View style={styles.nameContainer}>
-                        <Text style={styles.nome}>{userName}</Text>
-                    </View>
-                </View>
+                </TouchableWithoutFeedback>
+
                 <View style={styles.whiteContainer}>
                     <SwitchSelector
                         options={options}
@@ -136,7 +192,7 @@ export default function Home({navigation}) {
                     }
                 </View>
             </View>
-            {global.showModal &&
+            {global.modalOpen &&
                 <View style={styles.modal}>
                     <Text style={styles.texto}>Tipo de Busca</Text>
                     <CustomButton 
@@ -155,11 +211,7 @@ export default function Home({navigation}) {
 
     )
 }
-/*
-<View style={styles.boatContainer}>
-<BoatList/>
-</View>
- */
+
 
 const styles = StyleSheet.create({
 

@@ -9,6 +9,7 @@ import { NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 
 // Páginas
+import TelaInicial from './src/pages/TelaInicial'
 import Login from './src/pages/Login'
 import Cadastro from './src/pages/Cadastro'
 import CadastroLogin from './src/pages/CadastroLogin'
@@ -29,12 +30,13 @@ export default function App() {
   // Variáveis globais
   const [tipoUsuario, setTipoUsuario] = useState('empresa')
   const [temConta,setTemConta] = useState(null)
+  const [usuarioLogado,setUsuarioLogado] = useState(false)
   const [userName, setUserName] = useState('Undefined')
   const [email, setEmail] = useState('lulinha@gmail.com')
   const [userPicture, setUserPicture] = useState('')
   const [barcos,setBarcos] = useState([])
   const [reservas,setReservas] = useState([])
-  const [showModal,setShowModal] = useState(false)
+  const [modalOpen,openModal] = useState(false)
   const [dark,setDark] = useState(false)
   const [baseURL,setBaseURL] = useState('http://54.84.178.96:3000')
 
@@ -44,6 +46,8 @@ export default function App() {
     setTipoUsuario,
     temConta,
     setTemConta,
+    usuarioLogado,
+    setUsuarioLogado,
     userName: userName,
     setUserName,
     email,
@@ -54,8 +58,8 @@ export default function App() {
     setBarcos,
     reservas: reservas,
     setReservas,
-    showModal:showModal,
-    setShowModal,
+    modalOpen,
+    openModal,
     dark:dark,
     setDark,
     baseURL,
@@ -70,7 +74,8 @@ export default function App() {
     <AppContext.Provider value={user}>
       <NavigationContainer>
         <Stack.Navigator initialRouteName="Tela Inicial">
-          <Stack.Screen name="Tela Inicial" component={CadastroLogin} options={styles.hideHeader}/>
+        <Stack.Screen name="Tela Inicial" component={TelaInicial} options={styles.hideHeader}/>
+          <Stack.Screen name="Cadastro ou Login" component={CadastroLogin} options={styles.hideHeader}/>
           <Stack.Screen name="Pessoa ou Empresa" component={PessoaEmpresa} options={styles.hideLabel}/>
           <Stack.Screen name="Home" component={Home} options={styles.hideHeader}/>
           <Stack.Screen name="Login" component={Login}/>

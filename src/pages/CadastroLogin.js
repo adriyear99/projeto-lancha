@@ -4,6 +4,9 @@ import CustomButton from '../components/CustomButton'
 import SocialButton from '../components/SocialButton'
 import { useState,useRef,useEffect,useContext } from 'react'
 
+// Componentes
+import Home from './Home'
+
 // Fontes
 import { useFonts } from '@expo-google-fonts/montserrat'
 
@@ -54,6 +57,7 @@ export default function CadastroLogin({navigation}) {
 
         const tamanho = response.data.length
         global.setTemConta(tamanho > 0)
+        global.setUsuarioLogado(global.temConta)
     }
 
 
@@ -104,17 +108,6 @@ export default function CadastroLogin({navigation}) {
     return (
         <View style={styles.container}>
             <Text style={styles.title}>Boatz</Text>
-            {/* <CustomButton 
-                text='Novo usuário' 
-                onPress={()=> navigation.navigate("Pessoa ou Empresa")}
-                style={{ height:60, width:300, backgroundColor:'#4B7E94' }}
-            />
-            <CustomButton 
-                text='Já tenho conta' 
-                onPress={()=> navigation.navigate("Login")}
-                style={{ height:60, width:300, backgroundColor:'#4B7E94' }}
-            /> */}
-
             <SocialButton
                 buttonTitle="Entrar com Google"
                 btnType="google"
@@ -123,7 +116,7 @@ export default function CadastroLogin({navigation}) {
                 onPress={handleSignIn}
             />
         </View>
-    );
+    )
 }
 
 

@@ -83,7 +83,7 @@ export default function Reservas() {
 
 
     const novaReserva = () => {
-        global.setShowModal(true)
+        global.openModal(true)
         global.setDark(true)
         // navigation.navigate("Nova Reserva")
     }
