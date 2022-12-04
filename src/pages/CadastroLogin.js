@@ -31,12 +31,11 @@ export default function CadastroLogin({navigation}) {
 
     // executar quando estado for alterado
     useEffect(() => {
-        // global.temConta ? navigation.navigate("Home") : navigation.navigate("Pessoa ou Empresa")
         if(global.temConta == true){
             navigation.navigate("Home")
         } 
         
-        if(global.temConta == false) {
+        if(global.temConta == false){
             navigation.navigate("Pessoa ou Empresa")
         }
     }, [global.temConta]);

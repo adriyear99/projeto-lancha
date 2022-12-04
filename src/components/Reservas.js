@@ -44,44 +44,6 @@ export default function Reservas() {
         setLoading(false)
     }
 
-
-    // deletar quando pegar os dados do servidor
-    const reservasTeste = [
-        {
-            id:1,
-            nome:'Reserva 1'
-        },
-        {
-            id:2,
-            nome:'Reserva 2'
-        },
-        {
-            id:3,
-            nome:'Reserva 3'
-        },
-        {
-            id:4,
-            nome:'Reserva 4'
-        },
-        {
-            id:5,
-            nome:'Reserva 5'
-        },
-        {
-            id:6,
-            nome:'Reserva 6'
-        },
-        {
-            id:7,
-            nome:'Reserva 7'
-        },
-        {
-            id:8,
-            nome:'Reserva 8'
-        },
-    ]
-
-
     const novaReserva = () => {
         global.openModal(true)
         global.setDark(true)

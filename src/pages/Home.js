@@ -8,7 +8,8 @@ import {
     StatusBar,
     TouchableWithoutFeedback,
     BackHandler,
-    Alert
+    Alert,
+    Platform
 } from 'react-native'
 import { useState,useContext,useEffect } from 'react'
 import SwitchSelector from "react-native-switch-selector"
@@ -38,7 +39,7 @@ export default function Home({navigation}) {
     // Variáveis e métodos globais
     const global = useContext(AppContext);
     const userPicture = global.userPicture;
-    var userName = global.userName;
+    let userName = global.userName;
 
     // Switch
     const options = [
@@ -91,19 +92,30 @@ export default function Home({navigation}) {
     }
 
     function logout() {
-        Alert.alert("Espere um pouco!", "Tem certeza que deseja sair?", [
-            {
-                text: "Cancelar",
-                onPress: () => null,
-                style: "cancel"
-            },
-            { text: "SIM", onPress: resetValores }
-        ]);
+        if(Platform.OS === 'web'){
+            resetValores()
+        } else {
+            Alert.alert("Espere um pouco!", "Tem certeza que deseja sair?", [
+                {
+                    text: "Cancelar",
+                    onPress: () => null,
+                    style: "cancel"
+                },
+                { text: "SIM", onPress: resetValores }
+            ]);
+        }
     }
 
     function resetValores(){
-        console.log('saiu')
         global.setTemConta(null)
+        global.setTipoUsuario(undefined)
+        global.setUserName(null)
+        global.setEmail('lulinha@gmail.com')
+        global.setUserPicture('')
+        global.setBarcos([])
+        global.setReservas([])
+        global.openModal(false)
+        global.setDark(false)
         navigation.navigate("Tela Inicial")
     }
 

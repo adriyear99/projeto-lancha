@@ -28,10 +28,10 @@ import EditarPerfil from './src/pages/EditarPerfil'
 export default function App() {
 
   // Variáveis globais
-  const [tipoUsuario, setTipoUsuario] = useState('empresa')
+  const [tipoUsuario, setTipoUsuario] = useState(undefined)
   const [temConta,setTemConta] = useState(null)
   const [usuarioLogado,setUsuarioLogado] = useState(false)
-  const [userName, setUserName] = useState('Undefined')
+  const [userName, setUserName] = useState(null)
   const [email, setEmail] = useState('lulinha@gmail.com')
   const [userPicture, setUserPicture] = useState('')
   const [barcos,setBarcos] = useState([])
@@ -73,7 +73,7 @@ export default function App() {
   return (
     <AppContext.Provider value={user}>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="Tela Inicial">
+        <Stack.Navigator initialRouteName="Editar Reserva">
         <Stack.Screen name="Tela Inicial" component={TelaInicial} options={styles.hideHeader}/>
           <Stack.Screen name="Cadastro ou Login" component={CadastroLogin} options={styles.hideHeader}/>
           <Stack.Screen name="Pessoa ou Empresa" component={PessoaEmpresa} options={styles.hideLabel}/>
