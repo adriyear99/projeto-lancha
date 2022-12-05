@@ -16,7 +16,6 @@ export default function BoatList() {
 
     // Variáveis e métodos globais
     const global = useContext(AppContext)
-    const [barcos,setBarcos] = useState([])
 
     // Alterar tela
     const navigation = useNavigation()
@@ -26,7 +25,7 @@ export default function BoatList() {
 
     useEffect(() => {
         getBoats()
-    },[])
+    },[global.barcos])
 
     /**
      * 
@@ -35,7 +34,7 @@ export default function BoatList() {
     async function getBoats(){
         if(loading) return
         setLoading(true)
-        const response = await axios.get(global.baseURL + '/barcos')
+        const response = await axios.get(global.baseURL + '/embarcacoes')
         console.log(response.data)
         global.setBarcos(response.data)
         setLoading(false)
@@ -47,7 +46,7 @@ export default function BoatList() {
             <FlatList
                 horizontal={false}
                 data={global.barcos}
-                keyExtractor={(item) => item.id}
+                keyExtractor={(item) => item.idEmbarcação}
                 renderItem={ ({item}) => (
                     <Boat 
                         image={require('../../assets/img/Lancha.jpeg')} 

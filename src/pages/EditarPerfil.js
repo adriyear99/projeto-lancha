@@ -55,13 +55,11 @@ export default function EditarPerfil({ navigation }) {
     async function alterarNome(){
         const response = await axios.get(global.baseURL + '/barcos')
         console.log(response.data)
-        console.log('teste')
     }
 
     async function alterarSenha(){
         const response = await axios.get(global.baseURL + '/barcos')
         console.log(response.data)
-        console.log('teste')
     }
 
     // Renderizar componente

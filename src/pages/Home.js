@@ -150,8 +150,8 @@ export default function Home({navigation}) {
                             </TouchableOpacity>
                         </View>
                         {/* Icones */}
-                        <View style={global.tipoUsuario == "empresa" ? styles.iconContainer : styles.iconContainer2}>
-                            {global.tipoUsuario == "empresa" &&
+                        <View style={(global.tipoUsuario == "empresa" || global.tipoUsuario == undefined) ? styles.iconContainer : styles.iconContainer2}>
+                            {(global.tipoUsuario == "empresa" || global.tipoUsuario == undefined) &&
                                 <TouchableOpacity activeOpacity={0.5} style={styles.calendar} onPress={() => navigation.navigate("Agendar")}>
                                     <AntDesign 
                                         name="calendar" 

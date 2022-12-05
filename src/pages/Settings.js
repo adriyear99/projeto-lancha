@@ -1,11 +1,46 @@
 // Utilidades
-import { StyleSheet,View } from 'react-native'
+import { StyleSheet,View,Platform } from 'react-native'
+import { useContext } from 'react'
 
 // Componentes
 import CustomButton from '../components/CustomButton'
 
+// Variáveis globais
+import AppContext from '../components/AppContext'
+
 
 export default function Settings({navigation}) {
+
+    // Variáveis e métodos globais
+    const global = useContext(AppContext);
+
+    function logout() {
+        if(Platform.OS === 'web'){
+            resetValores()
+        } else {
+            Alert.alert("Espere um pouco!", "Tem certeza que deseja sair?", [
+                {
+                    text: "Cancelar",
+                    onPress: () => null,
+                    style: "cancel"
+                },
+                { text: "SIM", onPress: resetValores }
+            ]);
+        }
+    }
+
+    function resetValores(){
+        global.setTemConta(null)
+        global.setTipoUsuario(undefined)
+        global.setUserName(null)
+        global.setEmail('lulinha@gmail.com')
+        global.setUserPicture('')
+        global.setBarcos([])
+        global.setReservas([])
+        global.openModal(false)
+        global.setDark(false)
+        navigation.navigate("Tela Inicial")
+    }
 
     return (
         <View style={styles.container}>
@@ -26,7 +61,7 @@ export default function Settings({navigation}) {
             />
             <CustomButton 
                 text='Fazer Logout' 
-                onPress={console.log('teste')}
+                onPress={logout}
                 style={{ height:60, width:300, backgroundColor:'#4B7E94' }}
             />
         </View>

@@ -20,14 +20,14 @@ export default function VerBarco({navigation}) {
     function loadPicture() {
         if (global.userPicture.includes('http')){
             return (
-                <TouchableOpacity onPress={() => navigation.navigate("Perfil")}>
+                <TouchableOpacity onPress={() => navigation.navigate("Editar Perfil")}>
                     <Image style={styles.profilePicture} source={{uri:userPicture}}/>
                 </TouchableOpacity>
             );
         } else {   
             global.userName = "Nome usuário";
             return (
-                <TouchableOpacity onPress={() => navigation.navigate("Perfil")}>
+                <TouchableOpacity onPress={() => navigation.navigate("Editar Perfil")}>
                     <Image 
                         style={styles.profilePicture} 
                         source={require('../../assets/img/person-circle-white.png')}
@@ -49,7 +49,7 @@ export default function VerBarco({navigation}) {
                         onPress={() => navigation.navigate("Home")}
                     />
                     <Text style={styles.text}>Detalhes</Text>
-                    <View style={styles.profilePicContainer} onPress={() => navigation.navigate("Perfil")}>
+                    <View style={styles.profilePicContainer} onPress={() => navigation.navigate("Editar Perfil")}>
                         {loadPicture()}
                     </View>
                 </View>
