@@ -21,6 +21,7 @@ import Agendar from './src/pages/Agendar'
 import EditarReserva from './src/pages/EditarReserva'
 import NovaReserva from './src/pages/NovaReserva'
 import VerBarco from './src/pages/VerBarco'
+import VerReservas from './src/pages/VerReservas'
 import Perfil from './src/pages/Perfil'
 import EditarPerfil from './src/pages/EditarPerfil'
 
@@ -89,6 +90,7 @@ export default function App() {
             component={VerBarco} 
             options={styles.hideHeader}
           />
+          <Stack.Screen name="Ver Reservas" component={VerReservas}/>
           <Stack.Screen name="Editar Reserva" component={EditarReserva}/>
           <Stack.Screen name="Nova Reserva" component={NovaReserva}/>
           <Stack.Screen name="Perfil" component={Perfil}/>

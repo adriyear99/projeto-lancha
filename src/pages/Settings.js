@@ -1,6 +1,6 @@
 // Utilidades
-import { StyleSheet,View,Platform,Alert } from 'react-native'
-import { useContext } from 'react'
+import { StyleSheet,View,Platform,Alert,BackHandler } from 'react-native'
+import { useContext,useEffect } from 'react'
 
 // Componentes
 import CustomButton from '../components/CustomButton'
@@ -31,6 +31,21 @@ export default function Settings({navigation}) {
             ]);
         }
     }
+
+    // Hardware
+    useEffect(() => {
+        const backAction = () => {
+            navigation.navigate("Home")
+            return true;
+        };
+    
+        const backHandler = BackHandler.addEventListener(
+            "hardwareBackPress",
+            backAction
+        );
+    
+        return () => backHandler.remove();
+    }, []);
 
     function resetValores(){
         global.setTemConta(null)
@@ -80,8 +95,8 @@ export default function Settings({navigation}) {
                 style={{ height:60, width:300, backgroundColor:'#4B7E94' }}
             />
             <CustomButton 
-                text='Privacidade e Segurança' 
-                onPress={console.log('teste')}
+                text='Ver Reservas' 
+                onPress={() => navigation.navigate("Ver Reservas")}
                 style={{ height:60, width:300, backgroundColor:'#4B7E94' }}
             />
             <CustomButton 

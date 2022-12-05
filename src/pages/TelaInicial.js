@@ -1,13 +1,12 @@
 // Utilidades
-import { View,Text,StyleSheet } from 'react-native'
-import { useState,useRef,useEffect,useContext } from 'react'
+import { View,StyleSheet } from 'react-native'
+import { useContext } from 'react'
 
 
 // Variáveis globais
 import AppContext from '../components/AppContext'
 
-
-// API
+// Telas
 import CadastroLogin from './CadastroLogin'
 import Home from './Home'
 

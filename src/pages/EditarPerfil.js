@@ -1,6 +1,6 @@
 // Utilidades
-import { useContext, useState } from "react"
-import { View,StyleSheet,Text,TextInput,SafeAreaView,FlatList,TouchableOpacity } from "react-native"
+import { useContext,useState,useEffect } from "react"
+import { View,StyleSheet,Text,TextInput,SafeAreaView,FlatList,TouchableOpacity,BackHandler,Alert } from "react-native"
 
 // Componentes
 import CustomButton from "../components/CustomButton"
@@ -28,6 +28,21 @@ export default function EditarPerfil({ navigation }) {
     const [mostrarAlterarSenha, setAlterarSenha] = useState(false)
     const [verReservas, setVerReservas] = useState(false)
 
+    // Hardware
+    useEffect(() => {
+        const backAction = () => {
+            navigation.navigate("Configurações")
+            return true;
+        };
+    
+        const backHandler = BackHandler.addEventListener(
+            "hardwareBackPress",
+            backAction
+        );
+    
+        return () => backHandler.remove();
+    }, []);
+
     // Renderizacao condicional
     function showAlterarNome(){
         setAlterarNome(true)
@@ -49,6 +64,35 @@ export default function EditarPerfil({ navigation }) {
         setAlterarNome(false)
         setAlterarSenha(false)
         setVerReservas(false)
+    }
+
+    // Importantes
+    function logout() {
+        if(Platform.OS === 'web'){
+            resetValores()
+        } else {
+            Alert.alert("Espere um pouco!", "Tem certeza que deseja sair?", [
+                {
+                    text: "Cancelar",
+                    onPress: () => null,
+                    style: "cancel"
+                },
+                { text: "SIM", onPress: resetValores }
+            ]);
+        }
+    }
+
+    function resetValores(){
+        global.setTemConta(null)
+        global.setTipoUsuario(undefined)
+        global.setUserName(null)
+        global.setEmail('lulinha@gmail.com')
+        global.setUserPicture('')
+        global.setBarcos([])
+        global.setReservas([])
+        global.openModal(false)
+        global.setDark(false)
+        navigation.navigate("Tela Inicial")
     }
 
     // Chamadas de API
@@ -84,7 +128,7 @@ export default function EditarPerfil({ navigation }) {
                     />
                     <CustomButton
                         text="Fazer Logout"
-                        onPress={() => navigation.navigate("Tela Inicial")}
+                        onPress={logout}
                         style={{ height: 60, width: 300, backgroundColor: "#4B7E94" }}
                     />
                 </View>
