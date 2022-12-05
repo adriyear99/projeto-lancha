@@ -83,7 +83,12 @@ export default function App() {
           <Stack.Screen name="Esqueci minha senha" component={EsqueciMinhaSenha}/>
           <Stack.Screen name="Configurações" component={Settings}/>
           <Stack.Screen name="Agendar" component={Agendar}/>
-          <Stack.Screen name="Ver Barco" initialParams={{barco:null}} component={VerBarco} options={styles.hideHeader}/>
+          <Stack.Screen 
+            name="Ver Barco" 
+            initialParams={null} 
+            component={VerBarco} 
+            options={styles.hideHeader}
+          />
           <Stack.Screen name="Editar Reserva" component={EditarReserva}/>
           <Stack.Screen name="Nova Reserva" component={NovaReserva}/>
           <Stack.Screen name="Perfil" component={Perfil}/>

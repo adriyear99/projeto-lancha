@@ -35,7 +35,7 @@ export default function BoatList() {
         if(loading) return
         setLoading(true)
         const response = await axios.get(global.baseURL + '/embarcacoes')
-        console.log(response.data)
+        // console.log(response.data)
         global.setBarcos(response.data)
         setLoading(false)
     }
@@ -51,7 +51,12 @@ export default function BoatList() {
                     <Boat 
                         image={require('../../assets/img/Lancha.jpeg')} 
                         name={item.nome}
-                        onPress={() => navigation.navigate("Ver Barco")}
+                        onPress={() => navigation.navigate("Ver Barco",{
+                            screen:'Var Barco',
+                            params:{item}
+                        })}
+                        // onPress={() => console.log(route.params)}
+
                     />
                 )}
             />      

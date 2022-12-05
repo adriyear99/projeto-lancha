@@ -1,6 +1,6 @@
 // Utilidades
 import { View,Text,StyleSheet,Image,TouchableOpacity } from 'react-native'
-import { useContext } from 'react'
+import { useContext,useEffect,useState } from 'react'
 
 // Expo Icons
 import { Ionicons } from '@expo/vector-icons'
@@ -12,10 +12,21 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { StatusBar } from 'expo-status-bar';
 
 
-export default function VerBarco({navigation}) {
+export default function VerBarco({navigation,route}) {
 
     // Variáveis e métodos globais
-    const global = useContext(AppContext);
+    const global = useContext(AppContext)
+    const [barco,setBarco] = useState(undefined)
+    const [boatLoaded,loadBoat] = useState(false)
+
+    useEffect(() => {
+        console.log("====== BARCO =======")
+        setBarco(route.params.params.item)
+        if(barco != undefined){
+            console.log(barco)
+            loadBoat(true)
+        }
+    },[barco])
 
     function loadPicture() {
         if (global.userPicture.includes('http')){
@@ -38,93 +49,101 @@ export default function VerBarco({navigation}) {
     }
 
     return (
-        <SafeAreaView style={styles.container}>
-            <View style={styles.blueContainer}>
-                <View style={styles.flexContainer}>
-                    <Ionicons 
-                        name="arrow-back-circle-outline" 
-                        size={60} 
-                        color="white" 
-                        style={styles.icon}
-                        onPress={() => navigation.navigate("Home")}
-                    />
-                    <Text style={styles.text}>Detalhes</Text>
-                    <View style={styles.profilePicContainer} onPress={() => navigation.navigate("Editar Perfil")}>
-                        {loadPicture()}
+        <View>
+            {!boatLoaded ?
+                <SafeAreaView style={{backgroundColor:'blue'}}>
+                    <Text style={{fontSize:40,textAlign:'center'}}>Carregando Barco</Text>
+                </SafeAreaView>
+            :
+                <SafeAreaView style={styles.container}>
+                    <View style={styles.blueContainer}>
+                        <View style={styles.flexContainer}>
+                            <Ionicons 
+                                name="arrow-back-circle-outline" 
+                                size={60} 
+                                color="white" 
+                                style={styles.icon}
+                                onPress={() => navigation.navigate("Home")}
+                            />
+                            <Text style={styles.text}>Detalhes</Text>
+                            <View style={styles.profilePicContainer} onPress={() => navigation.navigate("Editar Perfil")}>
+                                {loadPicture()}
+                            </View>
+                        </View>
+
+                        <View style={styles.boatContainer}>
+                            <Image 
+                                style={styles.boatImage}
+                                source={require('../../assets/img/Lancha.jpeg')}
+                            />
+                            <Text style={styles.boatName}>{barco.nome}</Text>
+                        </View>
+
                     </View>
-                </View>
+                    <View style={styles.whiteContainer}>
+                        <View style={styles.boatInfoContainer}>
+                            <Text style={styles.descricao}>Descrição</Text>
 
-                <View style={styles.boatContainer}>
-                    <Image 
-                        style={styles.boatImage}
-                        source={require('../../assets/img/Lancha.jpeg')}
-                    />
-                    <Text style={styles.boatName}>Nome do Barco</Text>
-                </View>
+                            <View style={styles.attributeContainer}>
+                                <FontAwesome 
+                                    name="circle" 
+                                    size={24} 
+                                    color="#4B7E94" 
+                                    style={styles.circle}
+                                />
+                                <Text style={styles.atributo}>Consumo</Text>
+                                <Text style={styles.valor}>15 Km/L</Text>
+                            </View>
 
-            </View>
-            <View style={styles.whiteContainer}>
-                <View style={styles.boatInfoContainer}>
-                    <Text style={styles.descricao}>Descrição</Text>
+                            <View style={styles.attributeContainer}>
+                                <FontAwesome 
+                                    name="circle" 
+                                    size={24} 
+                                    color="#4B7E94" 
+                                    style={styles.circle}
+                                />
+                                <Text style={styles.atributo}>Idade</Text>
+                                <Text style={styles.valor}>{barco.tempoUso} ano{barco.tempoUso==1 ? '' : 's'} de uso</Text>
+                            </View>
 
-                    <View style={styles.attributeContainer}>
-                        <FontAwesome 
-                            name="circle" 
-                            size={24} 
-                            color="#4B7E94" 
-                            style={styles.circle}
-                        />
-                        <Text style={styles.atributo}>Consumo</Text>
-                        <Text style={styles.valor}>15 Km/L</Text>
+                            <View style={styles.attributeContainer}>
+                                <FontAwesome 
+                                    name="circle" 
+                                    size={24} 
+                                    color="#4B7E94" 
+                                    style={styles.circle}
+                                />
+                                <Text style={styles.atributo}>Tanque de Combustível</Text>
+                                <Text style={styles.valor}>{barco.combustivel} L</Text>
+                            </View>
+
+                            <View style={styles.attributeContainer}>
+                                <FontAwesome 
+                                    name="circle" 
+                                    size={24} 
+                                    color="#4B7E94" 
+                                    style={styles.circle}
+                                />
+                                <Text style={styles.atributo}>Capacidade</Text>
+                                <Text style={styles.valor}>
+                                    {barco.capacidade} pessoas/967kg</Text>
+                            </View>
+
+                            <Text style={styles.info}>
+                                {barco.descrição}
+                            </Text>
+
+                        </View>
                     </View>
-
-                    <View style={styles.attributeContainer}>
-                        <FontAwesome 
-                            name="circle" 
-                            size={24} 
-                            color="#4B7E94" 
-                            style={styles.circle}
-                        />
-                        <Text style={styles.atributo}>Idade</Text>
-                        <Text style={styles.valor}>3 anos de uso</Text>
-                    </View>
-
-                    <View style={styles.attributeContainer}>
-                        <FontAwesome 
-                            name="circle" 
-                            size={24} 
-                            color="#4B7E94" 
-                            style={styles.circle}
-                        />
-                        <Text style={styles.atributo}>Tanque de Combustível</Text>
-                        <Text style={styles.valor}>300 L</Text>
-                    </View>
-
-                    <View style={styles.attributeContainer}>
-                        <FontAwesome 
-                            name="circle" 
-                            size={24} 
-                            color="#4B7E94" 
-                            style={styles.circle}
-                        />
-                        <Text style={styles.atributo}>Capacidade</Text>
-                        <Text style={styles.valor}>8 pessoas/967kg</Text>
-                    </View>
-
-                    <Text style={styles.info}>
-                        aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-                    </Text>
-
-                </View>
-            </View>
-        </SafeAreaView>
+                </SafeAreaView>
+            }
+        </View>
     );
 }
 
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
         paddingTop: StatusBar.currentHeight,
         width:'100%',
         height:'100%',
