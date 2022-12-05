@@ -1,5 +1,5 @@
 // Utilidades
-import { View,Text,StyleSheet,Image,TouchableOpacity } from 'react-native'
+import { View,Text,StyleSheet,Image,TouchableOpacity,BackHandler } from 'react-native'
 import { useContext,useEffect,useState } from 'react'
 
 // Expo Icons
@@ -27,6 +27,21 @@ export default function VerBarco({navigation,route}) {
             loadBoat(true)
         }
     },[barco])
+
+    // Hardware
+    useEffect(() => {
+        const backAction = () => {
+            navigation.navigate("Home")
+            return true;
+        };
+    
+        const backHandler = BackHandler.addEventListener(
+            "hardwareBackPress",
+            backAction
+        );
+    
+        return () => backHandler.remove();
+    }, []);
 
     function loadPicture() {
         if (global.userPicture.includes('http')){
@@ -75,8 +90,9 @@ export default function VerBarco({navigation,route}) {
                             <Image 
                                 style={styles.boatImage}
                                 source={require('../../assets/img/Lancha.jpeg')}
+                                // source={barco.url_imagem}
                             />
-                            <Text style={styles.boatName}>{barco.nome}</Text>
+                            <Text style={styles.boatName}>{barco.nome} ({barco.nome_modelo})</Text>
                         </View>
 
                     </View>
@@ -92,7 +108,7 @@ export default function VerBarco({navigation,route}) {
                                     style={styles.circle}
                                 />
                                 <Text style={styles.atributo}>Consumo</Text>
-                                <Text style={styles.valor}>15 Km/L</Text>
+                                <Text style={styles.valor}>{barco.consumo} Km/L</Text>
                             </View>
 
                             <View style={styles.attributeContainer}>
@@ -103,7 +119,9 @@ export default function VerBarco({navigation,route}) {
                                     style={styles.circle}
                                 />
                                 <Text style={styles.atributo}>Idade</Text>
-                                <Text style={styles.valor}>{barco.tempoUso} ano{barco.tempoUso==1 ? '' : 's'} de uso</Text>
+                                <Text style={styles.valor}>
+                                    {barco.tempoUso} ano{barco.tempoUso==1 ? '' : 's'} de uso
+                                </Text>
                             </View>
 
                             <View style={styles.attributeContainer}>
@@ -130,7 +148,7 @@ export default function VerBarco({navigation,route}) {
                             </View>
 
                             <Text style={styles.info}>
-                                {barco.descrição}
+                                {barco.descricao}
                             </Text>
 
                         </View>
@@ -155,7 +173,7 @@ const styles = StyleSheet.create({
         flex:1,
         width:'100%',
         height:'40%',
-        backgroundColor:'#4B7E94'
+        backgroundColor:'#4B7E94',
     },
 
     whiteContainer: {
@@ -193,10 +211,11 @@ const styles = StyleSheet.create({
     },
 
     boatName: {
-        fontSize:30,
+        fontSize:26,
         color:'#fff',
         textAlign:'center',
-        marginTop:10
+        marginTop:12,
+        marginBottom:-6
     },
 
     icon: {
@@ -278,7 +297,7 @@ const styles = StyleSheet.create({
     info: {
         height:'20%',
         textAlign:'justify',
-        fontSize:12,
+        fontSize:10,
         marginTop:6,
         // borderColor:'blue',
         // borderWidth:2

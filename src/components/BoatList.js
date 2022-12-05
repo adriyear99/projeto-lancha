@@ -46,10 +46,11 @@ export default function BoatList() {
             <FlatList
                 horizontal={false}
                 data={global.barcos}
-                keyExtractor={(item) => item.idEmbarcação}
+                keyExtractor={(item) => item.idEmbarcacao}
                 renderItem={ ({item}) => (
                     <Boat 
                         image={require('../../assets/img/Lancha.jpeg')} 
+                        // image={item.url_imagem} 
                         name={item.nome}
                         onPress={() => navigation.navigate("Ver Barco",{
                             screen:'Var Barco',

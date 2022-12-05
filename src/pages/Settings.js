@@ -1,5 +1,5 @@
 // Utilidades
-import { StyleSheet,View,Platform } from 'react-native'
+import { StyleSheet,View,Platform,Alert } from 'react-native'
 import { useContext } from 'react'
 
 // Componentes
@@ -7,6 +7,9 @@ import CustomButton from '../components/CustomButton'
 
 // Variáveis globais
 import AppContext from '../components/AppContext'
+
+// API
+import axios from 'axios'
 
 
 export default function Settings({navigation}) {
@@ -42,6 +45,33 @@ export default function Settings({navigation}) {
         navigation.navigate("Tela Inicial")
     }
 
+    /**
+     * Envia a request para deletar conta pelo Axios e abre o modal de sucesso
+     */
+    async function enviarRequest(){
+        // await axios.delete(global.baseURL + '/usuarios')
+        Alert.alert("Que pena!", "Conta deletada com sucesso", [
+            { text: "SIM", onPress: () => null, style: "cancel" }
+        ]);
+        setTimeout(() => {
+            resetValores()
+        }, 2000);
+    }
+
+    /**
+     * Mostra mensagem de confirmação para deletar conta
+     */
+    async function deletarConta(){
+        Alert.alert("Espere um pouco!", "Tem certeza que deseja deletar a conta?", [
+            {
+                text: "Cancelar",
+                onPress: () => null,
+                style: "cancel"
+            },
+            { text: "SIM", onPress: enviarRequest }
+        ]);
+    }
+
     return (
         <View style={styles.container}>
             <CustomButton 
@@ -55,8 +85,8 @@ export default function Settings({navigation}) {
                 style={{ height:60, width:300, backgroundColor:'#4B7E94' }}
             />
             <CustomButton 
-                text='Acessibilidade' 
-                onPress={console.log('teste')}
+                text='Deletar Conta' 
+                onPress={deletarConta}
                 style={{ height:60, width:300, backgroundColor:'#4B7E94' }}
             />
             <CustomButton 

@@ -150,16 +150,10 @@ export default function Home({navigation}) {
                             </TouchableOpacity>
                         </View>
                         {/* Icones */}
-                        <View style={(global.tipoUsuario == "empresa" || global.tipoUsuario == undefined) ? styles.iconContainer : styles.iconContainer2}>
-                            {(global.tipoUsuario == "empresa" || global.tipoUsuario == undefined) &&
-                                <TouchableOpacity activeOpacity={0.5} style={styles.calendar} onPress={() => navigation.navigate("Agendar")}>
-                                    <AntDesign 
-                                        name="calendar" 
-                                        size={60} 
-                                        color="white" 
-                                    />
-                                </TouchableOpacity>
-                            }
+                        <View style={styles.iconContainer}>
+                            <TouchableOpacity activeOpacity={0.5} style={styles.calendar} onPress={() => navigation.navigate("Agendar")}>
+                                <AntDesign name="calendar" size={60} color="white"/>
+                            </TouchableOpacity>
                             
                             <TouchableOpacity 
                                 activeOpacity={0.5} 
@@ -305,12 +299,13 @@ const styles = StyleSheet.create({
     },
 
     iconContainer: {
+        flex:1,
         flexDirection:'row',
         width:'90%',
         height:100,
         alignSelf:'center',
-        justifyContent:'space-between',
-        alignItems:'center',
+        justifyContent:'center',
+        alignItems:'center'
     },
 
     iconContainer2: {
