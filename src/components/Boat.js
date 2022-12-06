@@ -48,7 +48,6 @@ const styles = StyleSheet.create({
         height:'100%',
         borderRadius:20,
         resizeMode:'stretch'
-
     },
 
     nome: {

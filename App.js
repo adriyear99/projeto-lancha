@@ -74,7 +74,7 @@ export default function App() {
   return (
     <AppContext.Provider value={user}>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="Home">
+        <Stack.Navigator initialRouteName="Nova Reserva">
         <Stack.Screen name="Tela Inicial" component={TelaInicial} options={styles.hideHeader}/>
           <Stack.Screen name="Cadastro ou Login" component={CadastroLogin} options={styles.hideHeader}/>
           <Stack.Screen name="Pessoa ou Empresa" component={PessoaEmpresa} options={styles.hideLabel}/>
@@ -84,15 +84,10 @@ export default function App() {
           <Stack.Screen name="Esqueci minha senha" component={EsqueciMinhaSenha}/>
           <Stack.Screen name="Configurações" component={Settings}/>
           <Stack.Screen name="Agendar" component={Agendar}/>
-          <Stack.Screen 
-            name="Ver Barco" 
-            initialParams={null} 
-            component={VerBarco} 
-            options={styles.hideHeader}
-          />
+          <Stack.Screen name="Ver Barco" initialParams={null} component={VerBarco} options={styles.hideHeader}/>
           <Stack.Screen name="Ver Reservas" component={VerReservas}/>
           <Stack.Screen name="Editar Reserva" component={EditarReserva}/>
-          <Stack.Screen name="Nova Reserva" component={NovaReserva}/>
+          <Stack.Screen name="Nova Reserva" initialParams={null} component={NovaReserva}/>
           <Stack.Screen name="Perfil" component={Perfil}/>
           <Stack.Screen name="Editar Perfil" component={EditarPerfil}/>
         </Stack.Navigator>

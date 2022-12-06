@@ -203,12 +203,12 @@ export default function Home({navigation}) {
                     <Text style={styles.texto}>Tipo de Busca</Text>
                     <CustomButton 
                         text="Por Data"
-                        onPress={()=> console.log('teste')}
+                        onPress={() => navigation.navigate("Nova Reserva")}
                         style={{ height:60, width:200, backgroundColor:'#4B7E94' }}
                     />
                     <CustomButton 
                         text="Por Embarcação"
-                        onPress={()=> console.log('teste')}
+                        onPress={() => navigation.navigate("Nova Reserva")}
                         style={{ height:60, width:200, backgroundColor:'#4B7E94' }}
                     />
                 </View>

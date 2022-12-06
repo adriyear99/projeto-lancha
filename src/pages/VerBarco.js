@@ -172,14 +172,12 @@ const styles = StyleSheet.create({
     blueContainer: {
         flex:1,
         width:'100%',
-        height:'40%',
         backgroundColor:'#4B7E94',
     },
 
     whiteContainer: {
         flex:1,
         width:'100%',
-        height:'60%',
         backgroundColor:'#fff'
     },
 
@@ -188,19 +186,17 @@ const styles = StyleSheet.create({
         // borderWidth:2,
         // borderColor:'blue',
         justifyContent:'space-between',
-        padding:10
+        paddingTop:5
     },
 
     boatContainer: {
+        flex:1,
         width:'100%',
-        height:'70%',
+        height:'60%',
         // borderWidth:2,
         // borderColor:'blue',
         alignSelf:'center',
-        marginTop:10,
-        borderRadius:20,
-        paddingBottom:10,
-        paddingHorizontal:20
+        padding:12
     },
 
     boatImage: {
@@ -211,18 +207,17 @@ const styles = StyleSheet.create({
     },
 
     boatName: {
-        fontSize:26,
+        fontSize:24,
         color:'#fff',
         textAlign:'center',
-        marginTop:12,
-        marginBottom:-6
+        marginTop:10
     },
 
     icon: {
         flex:1,
         alignSelf:'center',
         textAlign:'left',
-        paddingLeft:10,
+        paddingLeft:5,
     },
 
     text: {
