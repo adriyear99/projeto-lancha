@@ -4,6 +4,7 @@ import { View,StyleSheet,Text,TextInput,SafeAreaView,FlatList,TouchableOpacity,B
 
 // Componentes
 import CustomButton from "../components/CustomButton"
+import Reserva from "../components/Reserva"
 
 // API
 import axios from 'axios'
@@ -13,6 +14,9 @@ import { Ionicons } from '@expo/vector-icons'
 
 // Variáveis globais
 import AppContext from "../components/AppContext"
+
+// Fontes
+import { useFonts } from '@expo-google-fonts/montserrat'
 
 export default function EditarPerfil({ navigation }) {
     // Variáveis e métodos globais
@@ -31,17 +35,19 @@ export default function EditarPerfil({ navigation }) {
     // Hardware
     useEffect(() => {
         const backAction = () => {
-            navigation.navigate("Configurações")
-            return true;
+            navigation.navigate("Home")
+            return true
         };
-    
         const backHandler = BackHandler.addEventListener(
             "hardwareBackPress",
             backAction
         );
-    
-        return () => backHandler.remove();
-    }, []);
+        return () => backHandler.remove()
+    },[])
+
+    useEffect(() => {
+        getReservas()
+    },[])
 
     // Renderizacao condicional
     function showAlterarNome(){
@@ -66,7 +72,39 @@ export default function EditarPerfil({ navigation }) {
         setVerReservas(false)
     }
 
-    // Importantes
+    // Chamadas de API
+    async function alterarNome(){
+        const response = await axios.get(global.baseURL + '/barcos')
+        console.log(response.data)
+    }
+
+    async function alterarSenha(){
+        const response = await axios.get(global.baseURL + '/barcos')
+        console.log(response.data)
+    }
+
+        /**
+     * 
+     * @returns Lista de barcos vindo da API
+     */
+    async function getReservas(){
+        const response = await axios.get(global.baseURL + '/api/reservas', { 
+            params: { id_user: 1 } 
+        })
+        console.log(response.data)
+        global.setReservas(response.data)
+    }
+
+    // Carregar fontes
+    let [fontsLoaded] = useFonts({
+        "Montserrat_Regular": require('../../assets/fonts/Montserrat-Regular.ttf'),
+        "Montserrat_Bold": require('../../assets/fonts/Montserrat-Bold.ttf')
+    })
+    if(!fontsLoaded){
+        return null
+    }
+
+    // Conta
     function logout() {
         if(Platform.OS === 'web'){
             resetValores()
@@ -93,17 +131,6 @@ export default function EditarPerfil({ navigation }) {
         global.openModal(false)
         global.setDark(false)
         navigation.navigate("Tela Inicial")
-    }
-
-    // Chamadas de API
-    async function alterarNome(){
-        const response = await axios.get(global.baseURL + '/barcos')
-        console.log(response.data)
-    }
-
-    async function alterarSenha(){
-        const response = await axios.get(global.baseURL + '/barcos')
-        console.log(response.data)
     }
 
     // Renderizar componente
@@ -135,15 +162,21 @@ export default function EditarPerfil({ navigation }) {
         
                 :
 
-                <View style={styles.flexContainer}>
-                    <TouchableOpacity onPress={voltar}>
-                        <Ionicons 
-                            name="arrow-back-circle-sharp" 
-                            size={60} 
-                            color="black" 
-                            style={{paddingLeft:10}}
-                        />
-                    </TouchableOpacity>
+                <View style={styles.optionContainer}>
+                    <View style={styles.flexContainer}>
+                        <TouchableOpacity onPress={voltar}>
+                            <Ionicons 
+                                name="arrow-back-circle-sharp" 
+                                size={60} 
+                                color="black" 
+                                style={styles.seta}
+                            />
+                        </TouchableOpacity>
+                        <Text style={styles.texto}>
+                            {mostrarAlterarNome && "Alterar nome de exibição"}
+                            {mostrarAlterarSenha && "Alterar senha"}
+                        </Text>
+                    </View>
 
                     {/* Mostrar tela de alterar nome */}
                     {mostrarAlterarNome && 
@@ -220,7 +253,7 @@ export default function EditarPerfil({ navigation }) {
                     ListFooterComponent={
                         <CustomButton 
                             text="Nova Reserva"
-                            onPress={novaReserva}
+                            onPress={()=>console.log('teste')}
                             style={{ 
                                 height:60, 
                                 width:200, 
@@ -249,13 +282,33 @@ const styles = StyleSheet.create({
         // borderColor:'red'
     },
 
-    flexContainer: {
+    optionContainer: {
         width:'100%',
         height:'90%',
         alignSelf:'center',
         backgroundColor: "#fff",
         // borderWidth:2,
         // borderColor:'red'
+    },
+
+    flexContainer: {
+        flexDirection:'row',
+        alignItems:'center'
+    },
+
+    seta: {
+        flex:0,
+        alignSelf:'center',
+        textAlign:'center',
+        paddingHorizontal:10
+    },
+
+    texto: {
+        flex:2,
+        fontSize:24,
+        fontFamily:'Montserrat_Bold',
+        textAlign:'center',
+        paddingRight:'20%'
     },
 
     titulo: {
@@ -292,6 +345,8 @@ const styles = StyleSheet.create({
     },
 
     nome: {
-        backgroundColor:'lightgray'
+        backgroundColor:'lightgray',
+        color:'white',
+        fontWeight:'bold'
     }
 });
