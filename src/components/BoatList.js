@@ -49,7 +49,12 @@ export default function BoatList() {
                 keyExtractor={(item) => item.idEmbarcacao}
                 renderItem={ ({item}) => (
                     <Boat 
-                        image={require('../../assets/img/Lancha.jpeg')} 
+                        // image={item.idModelo < 5 ?
+                        //     require(`../../assets/img/barcos/barco${item.idModelo}.jpg`)
+                        //     :
+                        //     require('../../assets/img/Lancha.jpeg')
+                        // } 
+                        image={require('../../assets/img/Lancha.jpeg')}
                         // image={item.url_imagem} 
                         name={item.nome}
                         onPress={() => navigation.navigate("Ver Barco",{

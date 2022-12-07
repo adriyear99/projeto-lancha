@@ -33,6 +33,7 @@ export default function App() {
   const [temConta,setTemConta] = useState(null)
   const [usuarioLogado,setUsuarioLogado] = useState(false)
   const [userName, setUserName] = useState(null)
+  const [userId, setUserId] = useState(1)
   const [email, setEmail] = useState('lulinha@gmail.com')
   const [userPicture, setUserPicture] = useState('')
   const [barcos,setBarcos] = useState([])
@@ -49,6 +50,8 @@ export default function App() {
     setTemConta,
     usuarioLogado,
     setUsuarioLogado,
+    userId: userId,
+    setUserId,
     userName: userName,
     setUserName,
     email,
@@ -74,7 +77,7 @@ export default function App() {
   return (
     <AppContext.Provider value={user}>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="Editar Perfil">
+        <Stack.Navigator initialRouteName="Home">
         <Stack.Screen name="Tela Inicial" component={TelaInicial} options={styles.hideHeader}/>
           <Stack.Screen name="Cadastro ou Login" component={CadastroLogin} options={styles.hideHeader}/>
           <Stack.Screen name="Pessoa ou Empresa" component={PessoaEmpresa} options={styles.hideLabel}/>

@@ -1,6 +1,6 @@
 // Utilidades
 import { useContext,useState,useEffect } from "react"
-import { View,StyleSheet,Text,TextInput,SafeAreaView,FlatList,TouchableOpacity,BackHandler,Alert } from "react-native"
+import { View,StyleSheet,Text,TextInput,SafeAreaView,FlatList,TouchableOpacity,BackHandler,Alert,Platform } from "react-native"
 
 // Componentes
 import CustomButton from "../components/CustomButton"
@@ -239,31 +239,18 @@ export default function EditarPerfil({ navigation }) {
 
                     {/* Mostrar tela de ver reservas */}
                     {verReservas && 
-                    <FlatList
-                    horizontal={false}
-                    data={global.reservas}
-                    keyExtractor={(item) => item.idAgendamento}
-                    renderItem={ ({item}) => (
-                        <Reserva 
-                            key={item.idAgendamento} 
-                            name={item.tipo} 
-                            onPress={()=> navigation.navigate("Editar Reserva")}
+                        <FlatList
+                            horizontal={false}
+                            data={global.reservas}
+                            keyExtractor={(item) => item.idAgendamento}
+                            renderItem={ ({item}) => (
+                                <Reserva 
+                                    key={item.idAgendamento} 
+                                    name={item.tipo} 
+                                    onPress={()=> navigation.navigate("Editar Reserva")}
+                                />
+                            )}
                         />
-                    )}
-                    ListFooterComponent={
-                        <CustomButton 
-                            text="Nova Reserva"
-                            onPress={()=>console.log('teste')}
-                            style={{ 
-                                height:60, 
-                                width:200, 
-                                backgroundColor:'#4B7E94',
-                                marginBottom:10
-                            }}
-                        />
-                    }
-                    ListFooterComponentStyle={{alignSelf:'center'}}
-                    />
                     }
                 </View>
             }
