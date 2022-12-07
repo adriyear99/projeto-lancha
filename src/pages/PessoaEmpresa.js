@@ -36,14 +36,14 @@ export default function PessoaEmpresa({navigation}) {
 
     const pessoa = () => {
         global.setTipoUsuario("pessoa")
-        handleSignIn()
-        // navigation.navigate("Cadastro")
+        //handleSignIn()
+        navigation.navigate("Home")
     }
     
     const empresa = () => {
         global.setTipoUsuario("empresa")
-        handleSignIn()
-        // navigation.navigate("Cadastro")
+        //handleSignIn()
+        navigation.navigate("Home")
     }
 
     async function handleSignIn(){

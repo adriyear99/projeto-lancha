@@ -22,15 +22,21 @@ WebBrowser.maybeCompleteAuthSession()
 
 // API
 import axios from 'axios'
+import { unstable_renderSubtreeIntoContainer } from 'react-dom'
+
+
 
 
 export default function CadastroLogin({navigation}) {
 
     // Variáveis e métodos globais
     const global = useContext(AppContext);
+    const [sucessoCadastro, setSucessoCadastro] = useState(false);
+    const [sucessoRequisicao, setSucessoRequisicao] = useState(false);
 
     // manda para tela diferente se a pessoa já tiver sido cadastrada
     useEffect(() => {
+        // verifica se tem conta
         if(global.temConta == true){
             navigation.navigate("Home")
         } 
@@ -38,7 +44,15 @@ export default function CadastroLogin({navigation}) {
         if(global.temConta == false){
             navigation.navigate("Pessoa ou Empresa")
         }
-    }, [global.temConta]);
+        if(sucessoRequisicao == true && global.email != undefined){
+            console.log('Entrou onde nao devia @@@@@@@@@@@@@@@@');
+            userExists();
+        }
+        if(sucessoCadastro == true && global.email != undefined && global.userName != undefined){
+            console.log('Finalmente entrou aqui!!!!!!!!!!');
+            cadastrarUsuario();
+        }
+    }, [global.temConta, global.email, global.userName, sucessoRequisicao, sucessoCadastro]);
 
     // Carregar fontes
     let [fontsLoaded] = useFonts({
@@ -49,23 +63,43 @@ export default function CadastroLogin({navigation}) {
         return null
     }
 
-    async function userExists(){
-        const response = await axios.get(global.baseURL + '/api/email_usuario', { 
+    function userExists(){
+        const response = axios.get(global.baseURL + '/api/email_usuario', { 
             params: { email: global.email } 
         })
-
-        const tamanho = response.data.length
-        global.setTemConta(tamanho > 0)
-        global.setUsuarioLogado(global.temConta)
+        .then(response => {
+            const tamanho = response.data.length
+            global.setTemConta(tamanho > 0)
+            global.setUsuarioLogado(global.temConta)
+        })
+        .catch(error => {
+            console.log(error);
+        })
+        
     }
 
     function cadastrarUsuario(){
-        const response = axios.post(global.baseURL + '/api/cadastro_pessoa', { 
+        console.log('$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$')
+        console.log(global.userName + '***' + global.userPicture);
+ 
+        let data = JSON.stringify({ 
             nome: global.userName,
-            data_nasc: "1999-10-06",
+            data_nasc: '1990-01-01',
             sexo: "M",
             url_imagem_perfil: global.userPicture
         })
+        data = "[" + data + "]";
+        console.log(data);
+        const url =global.baseURL + '/api/cadastro_pessoa' 
+        console.log(url);
+        axios.post(url, data,{headers:{"Content-Type" : "application/json"}})
+        .then(response => {
+            setSucessoRequisicao(true);
+            console.log('deu certo mais ou menos !!!!!!!!!');
+        })
+        .catch(error => {
+            console.log(error.response.data + 'deu erro no post!!!!!!!!!!!!!!!!!!!!!!!!!!!');            
+        });
     }
 
 
@@ -101,13 +135,15 @@ export default function CadastroLogin({navigation}) {
             
             global.setUserName(userInfo?.given_name);
             global.setUserPicture(userInfo?.picture);
+            global.setEmail(userInfo?.email);
+            if(global.email != undefined && global.userPicture != undefined && global.email != undefined)
+            {
+                setSucessoCadastro(true);
+            }
 
-            global.setEmail('lulinha@gmail.com')
-
-            userExists()
-    
         } else {
             console.log('Falha');
+        
         }
     }
 

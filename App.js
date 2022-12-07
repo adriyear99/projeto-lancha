@@ -30,12 +30,12 @@ export default function App() {
 
   // Variáveis globais
   const [tipoUsuario, setTipoUsuario] = useState(undefined)
-  const [temConta,setTemConta] = useState(null)
+  const [temConta,setTemConta] = useState(undefined)
   const [usuarioLogado,setUsuarioLogado] = useState(false)
-  const [userName, setUserName] = useState(null)
-  const [userId, setUserId] = useState(1)
-  const [email, setEmail] = useState('lulinha@gmail.com')
-  const [userPicture, setUserPicture] = useState('')
+  const [userName, setUserName] = useState(undefined)
+  const [userId, setUserId] = useState(undefined)
+  const [email, setEmail] = useState(undefined)
+  const [userPicture, setUserPicture] = useState(undefined)
   const [barcos,setBarcos] = useState([])
   const [reservas,setReservas] = useState([])
   const [modalOpen,openModal] = useState(false)
@@ -77,7 +77,7 @@ export default function App() {
   return (
     <AppContext.Provider value={user}>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="Home">
+        <Stack.Navigator initialRouteName="Tela Inicial">
         <Stack.Screen name="Tela Inicial" component={TelaInicial} options={styles.hideHeader}/>
           <Stack.Screen name="Cadastro ou Login" component={CadastroLogin} options={styles.hideHeader}/>
           <Stack.Screen name="Pessoa ou Empresa" component={PessoaEmpresa} options={styles.hideLabel}/>

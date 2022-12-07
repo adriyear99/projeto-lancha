@@ -80,6 +80,7 @@ export default function Login({ navigation }) {
             
             global.setUserName(userInfo?.given_name);
             global.setUserPicture(userInfo?.picture);
+            global.setEmail(userInfo?.email);
 
             //navigation.navigate("Configurações")
             navigation.navigate("Home")
