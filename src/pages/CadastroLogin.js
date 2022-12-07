@@ -33,6 +33,12 @@ export default function CadastroLogin({navigation}) {
     const global = useContext(AppContext);
     const [sucessoCadastro, setSucessoCadastro] = useState(false);
     const [sucessoRequisicao, setSucessoRequisicao] = useState(false);
+    const [sucessoGetIdPessoa, setSucessoGetIdPessoa] = useState(false);
+    const [sucessoAdicionarUser, setSucessoAdicionarUser] = useState(false);
+    let local_email = undefined
+    let local_nome = undefined
+    let local_picture = undefined
+
 
     // manda para tela diferente se a pessoa já tiver sido cadastrada
     useEffect(() => {
@@ -42,6 +48,7 @@ export default function CadastroLogin({navigation}) {
         } 
         
         if(global.temConta == false){
+            getUserId();
             navigation.navigate("Pessoa ou Empresa")
         }
         if(sucessoRequisicao == true && global.email != undefined){
@@ -52,7 +59,13 @@ export default function CadastroLogin({navigation}) {
             console.log('Finalmente entrou aqui!!!!!!!!!!');
             cadastrarUsuario();
         }
-    }, [global.temConta, global.email, global.userName, sucessoRequisicao, sucessoCadastro]);
+        if(sucessoGetIdPessoa == true){
+            insereDadosLogin()
+        }
+        if(sucessoAdicionarUser == true){
+            navigation.navigate("Pessoa ou Empresa")
+        }
+    }, [global.temConta, global.email, global.userName, sucessoRequisicao, sucessoCadastro,  sucessoGetIdPessoa, sucessoAdicionarUser]);
 
     // Carregar fontes
     let [fontsLoaded] = useFonts({
@@ -102,8 +115,62 @@ export default function CadastroLogin({navigation}) {
         });
     }
 
+    
+    function getUserId(){
+        console.log('get user id ------------------------------------------------------------------------------')
+        const email_user = global.email;
+        const url =global.baseURL + '/api/email_usuario'
+        let data = JSON.stringify({
+            email: email_user
+        })
+        data = "[" + data + "]";
+
+        axios.get(url, data)
+        .then(response => {
+            console.log(response)
+            let user_id = JSON.response(response.idPessoa);
+            console.log(user_id)
+            global.setUserId(user_id)
+            setSucessoGetIdPessoa(true)
+        })
+        .catch(error => {
+            console.log(error + 'deu erro no get user id!!!!!!!!!!!!!!!!!!!!!!!!!!!');            
+        });
+        
+    }
+    
+    function insereDadosLogin(){
+        console.log('insere dados login *************************************************************')
+        const url =global.baseURL + '/api/cadastro_login'
+        const username = global.userName
+        const email = global.email
+        const idPessoa = global.idPessoa
+        let data = JSON.stringify({
+            usuario: username,
+            email: email,
+            senha: "senha",
+            idPessoa: idPessoa
+        })
+        data = "[" + data + "]";
+        console.log('///////////////////////')
+        console.log(data)
+        console.log('///////////////////////')
+        axios.post(url, data,{headers:{"Content-Type" : "application/json"}})
+        .then(response => {
+            console.log('login criado !!!!!!!!!');
+            sucessoAdicionarUser(true);
+        })
+        .catch(error => {
+            console.log(error.response.data + 'deu erro no post de criacao de login!!!!!!!!!!!!!!!!!!!!!!!!!!!');            
+        });
+        
+    }
 
     async function handleSignIn(){
+
+        console.log('aqui PRIMEIRO ----------------------------------------------')
+        console.log(global.email)
+        console.log('aqui ----------------------------------------------')
         const CLIENT_ID = '192988181548-gf4n6icnpf32c5a3ibqdiociu15pq8qv.apps.googleusercontent.com';
         const REDIRECT_URI = 'https://auth.expo.io/@fabiotepe/projetolancha';
         const RESPONSE_TYPE = 'token';
@@ -133,13 +200,20 @@ export default function CadastroLogin({navigation}) {
             console.log('###User data###');
             console.log(userInfo);
             
+            local_nome = userInfo?.given_name;
+            local_picture = userInfo?.picture;
+            local_email = userInfo?.email;
+
             global.setUserName(userInfo?.given_name);
             global.setUserPicture(userInfo?.picture);
             global.setEmail(userInfo?.email);
-            if(global.email != undefined && global.userPicture != undefined && global.email != undefined)
-            {
-                setSucessoCadastro(true);
+            if(local_email != undefined && local_nome != undefined && local_picture != undefined)
+            {   
+                console.log('aqui ----------------------------------------------')
+                console.log(local_email)
+                userExists(true);
             }
+            //navigation.navigate("HandleSignIn")
 
         } else {
             console.log('Falha');
