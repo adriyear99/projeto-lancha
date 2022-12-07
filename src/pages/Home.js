@@ -107,10 +107,10 @@ export default function Home({navigation}) {
     }
 
     function resetValores(){
-        global.setTemConta(null)
+        global.setTemConta(undefined)
         global.setTipoUsuario(undefined)
         global.setUserName(null)
-        global.setEmail('lulinha@gmail.com')
+        global.setEmail(undefined)
         global.setUserPicture('')
         global.setBarcos([])
         global.setReservas([])

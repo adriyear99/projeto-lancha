@@ -35,6 +35,7 @@ export default function CadastroLogin({navigation}) {
     const [sucessoRequisicao, setSucessoRequisicao] = useState(false);
     const [sucessoGetIdPessoa, setSucessoGetIdPessoa] = useState(false);
     const [sucessoAdicionarUser, setSucessoAdicionarUser] = useState(false);
+    const [checkUser, setCheckUser] = useState(false);
     let local_email = undefined
     let local_nome = undefined
     let local_picture = undefined
@@ -48,24 +49,16 @@ export default function CadastroLogin({navigation}) {
         } 
         
         if(global.temConta == false){
-            getUserId();
-            navigation.navigate("Pessoa ou Empresa")
+            cadastrarUsuario();
+            
         }
         if(sucessoRequisicao == true && global.email != undefined){
-            console.log('Entrou onde nao devia @@@@@@@@@@@@@@@@');
-            userExists();
-        }
-        if(sucessoCadastro == true && global.email != undefined && global.userName != undefined){
-            console.log('Finalmente entrou aqui!!!!!!!!!!');
-            cadastrarUsuario();
-        }
-        if(sucessoGetIdPessoa == true){
-            insereDadosLogin()
-        }
-        if(sucessoAdicionarUser == true){
             navigation.navigate("Pessoa ou Empresa")
         }
-    }, [global.temConta, global.email, global.userName, sucessoRequisicao, sucessoCadastro,  sucessoGetIdPessoa, sucessoAdicionarUser]);
+        if(checkUser == true){
+            userExists();
+        }
+    }, [global.temConta, global.email, global.userName, sucessoRequisicao, checkUser]);
 
     // Carregar fontes
     let [fontsLoaded] = useFonts({
@@ -96,14 +89,13 @@ export default function CadastroLogin({navigation}) {
         console.log(global.userName + '***' + global.userPicture);
  
         let data = JSON.stringify({ 
-            nome: global.userName,
-            data_nasc: '1990-01-01',
-            sexo: "M",
+            usuario: global.userName,
+            email: global.email,
             url_imagem_perfil: global.userPicture
         })
         data = "[" + data + "]";
         console.log(data);
-        const url =global.baseURL + '/api/cadastro_pessoa' 
+        const url =global.baseURL + '/api/cadastro_usuario' 
         console.log(url);
         axios.post(url, data,{headers:{"Content-Type" : "application/json"}})
         .then(response => {
@@ -111,7 +103,7 @@ export default function CadastroLogin({navigation}) {
             console.log('deu certo mais ou menos !!!!!!!!!');
         })
         .catch(error => {
-            console.log(error.response.data + 'deu erro no post!!!!!!!!!!!!!!!!!!!!!!!!!!!');            
+            console.log(error + '***deu erro no post!!!!!!!!!!!!!!!!!!!!!!!!!!!');            
         });
     }
 
@@ -207,13 +199,16 @@ export default function CadastroLogin({navigation}) {
             global.setUserName(userInfo?.given_name);
             global.setUserPicture(userInfo?.picture);
             global.setEmail(userInfo?.email);
-            if(local_email != undefined && local_nome != undefined && local_picture != undefined)
+            /*if(local_email != undefined && local_nome != undefined && local_picture != undefined)
             {   
                 console.log('aqui ----------------------------------------------')
                 console.log(local_email)
                 userExists(true);
             }
+            */
             //navigation.navigate("HandleSignIn")
+            setCheckUser(true);
+
 
         } else {
             console.log('Falha');
