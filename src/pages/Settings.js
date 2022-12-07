@@ -57,6 +57,7 @@ export default function Settings({navigation}) {
         global.setReservas([])
         global.openModal(false)
         global.setDark(false)
+        global.setUsuarioLogado(false)
         navigation.navigate("Tela Inicial")
     }
 

@@ -47,7 +47,7 @@ export default function VerBarco({navigation,route}) {
         if (global.userPicture.includes('http')){
             return (
                 <TouchableOpacity onPress={() => navigation.navigate("Editar Perfil")}>
-                    <Image style={styles.profilePicture} source={{uri:userPicture}}/>
+                    <Image style={styles.profilePicture} source={{uri:global.userPicture}}/>
                 </TouchableOpacity>
             );
         } else {   

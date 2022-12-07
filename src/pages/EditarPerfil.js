@@ -130,6 +130,7 @@ export default function EditarPerfil({ navigation }) {
         global.setReservas([])
         global.openModal(false)
         global.setDark(false)
+        global.setUsuarioLogado(false)
         navigation.navigate("Tela Inicial")
     }
 
