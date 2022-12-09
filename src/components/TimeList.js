@@ -14,29 +14,33 @@ import AppContext from './AppContext'
 
 export default function TimeList() {
 
+    // Estados
+    const [horarios,setHorarios] = useState(undefined)
+    const [horarioSelecionado,setHorarioSelecionado] = useState(undefined)
+
     // Horarios (apagar quando pegar do servidor)
-    const horarios = [
-        {
-            id:1,
-            horario:'9:00'
-        },
-        {
-            id:2,
-            horario:'9:30'   
-        },
-        {
-            id:3,
-            horario:'10:00'   
-        },
-        {
-            id:4,
-            horario:'10:30'   
-        },
-        {
-            id:5,
-            horario:'11:00'   
-        },
-    ]
+    // const horarios = [
+    //     {
+    //         id:1,
+    //         horario:'9:00'
+    //     },
+    //     {
+    //         id:2,
+    //         horario:'9:30'   
+    //     },
+    //     {
+    //         id:3,
+    //         horario:'10:00'   
+    //     },
+    //     {
+    //         id:4,
+    //         horario:'10:30'   
+    //     },
+    //     {
+    //         id:5,
+    //         horario:'11:00'   
+    //     },
+    // ]
 
     // Variáveis e métodos globais
     const global = useContext(AppContext)
@@ -44,12 +48,16 @@ export default function TimeList() {
     // Alterar tela
     const navigation = useNavigation()
 
-    // Funcionalidades
-    const [loading,setLoading] = useState(false)
-
     useEffect(() => {
-        getTime()
-    },[])
+        if(horarios==undefined){
+            preencherHorarios()
+        }
+
+        if(horarioSelecionado!=undefined && horarios!=undefined){
+            console.log("Horario selecionado: ", horarios[horarioSelecionado-1].horario)
+        }
+
+    },[horarioSelecionado])
 
     // Carregar fontes
     let [fontsLoaded] = useFonts({
@@ -60,17 +68,32 @@ export default function TimeList() {
         return null
     }
 
+
     /**
-     * 
-     * @returns Lista de barcos vindo da API
+     * Preenche horarios de reserva
      */
-    async function getTime(){
-        if(loading) return
-        setLoading(true)
-        const response = await axios.get(global.baseURL + '/barcos')
-        console.log(response.data)
-        global.setBarcos(response.data)
-        setLoading(false)
+    function preencherHorarios(){
+        let horarios = []
+        let id = 1
+        for(let i=0; i<24; i++){
+            for(let j=0; j<=30; j+=30){
+                if(i<10){
+                    if(j==0){
+                        horarios.push({id:id,horario:`0${i}:00`})
+                    } else{
+                        horarios.push({id:id,horario:`0${i}:${j}`})
+                    }
+                } else {
+                    if(j==0){
+                        horarios.push({id:id,horario:`${i}:00`})
+                    } else{
+                        horarios.push({id:id,horario:`${i}:${j}`})
+                    }
+                }
+                id++
+            }
+        }
+        setHorarios(horarios)
     }
 
 
@@ -81,9 +104,44 @@ export default function TimeList() {
                 data={horarios}
                 keyExtractor={(item) => item.id}
                 renderItem={ ({item}) => (
-                    <TouchableOpacity>
-                        <View style={styles.horarioContainer}>
-                            <Text style={styles.textoHorario}>{item.horario}</Text>
+                    <TouchableOpacity onPress={() => setHorarioSelecionado(item.id)}>
+                        <View style={[styles.horarioContainer, (horarioSelecionado == item.id ? styles.selecionado : styles.naoSelecionado) ]}>
+                            {(Number(item.horario.substring(0,2)) < 10 && item.horario.substring(2,5) == ":00") &&
+                                <Text style={styles.textoHorario}>
+                                    {item.horario} - {item.horario.replace(":00",":30")}
+                                </Text>
+                            }
+
+                            {(Number(item.horario.substring(0,2)) >= 10 && item.horario.substring(2,5) == ":00") &&
+                                <Text style={styles.textoHorario}>
+                                    {item.horario} - {item.horario.replace(":00",":30")}
+                                </Text>
+                            }
+
+                            {(Number(item.horario.substring(0,2)) < 9 && item.horario.substring(2,5) == ":30") &&
+                                    <Text style={styles.textoHorario}>
+                                        {`0${Number(item.horario.substring(1,2))}:30`} - {`0${Number(item.horario.substring(0,2))+1}:00`}
+                                    </Text>
+                            }
+
+                            {(Number(item.horario.substring(0,2)) == 9 && item.horario.substring(2,5) == ":30") &&
+                                    <Text style={styles.textoHorario}>
+                                        {`0${Number(item.horario.substring(1,2))}:30`} - {`${Number(item.horario.substring(0,2))+1}:00`}
+                                    </Text>
+                            }
+
+                            {(Number(item.horario.substring(0,2)) >= 10 && Number(item.horario.substring(0,2)) < 23 && item.horario.substring(2,5) == ":30") &&
+                                    <Text style={styles.textoHorario}>
+                                        {item.horario} - {`${Number(item.horario.substring(0,2))+1}:00`}
+                                    </Text>
+                            }
+
+                            {item.horario == '23:30' &&
+                                    <Text style={styles.textoHorario}>
+                                        {item.horario} - {'00:00'}
+                                    </Text>
+                            }
+
                         </View>
                     </TouchableOpacity>
                 )}
@@ -113,11 +171,18 @@ const styles = StyleSheet.create({
         height:40,
         alignSelf:'center',
         justifyContent:'center',
-        backgroundColor:'#E8E8E8',
         borderRadius:25,
         marginVertical:5,
         marginLeft:5,
         alignItems:'center',
+    },
+
+    selecionado: {
+        backgroundColor:'green',
+    },
+
+    naoSelecionado: {
+        backgroundColor:'#E8E8E8',
     },
 
     textoHorario: {

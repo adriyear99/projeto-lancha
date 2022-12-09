@@ -48,18 +48,23 @@ export default function EditarReserva({navigation}) {
 
     // Variáveis e métodos globais
     const global = useContext(AppContext);
-    const userPicture = global.userPicture;
+
+    // Data
+    const [hora,setHora] = useState(undefined)
+    const [minuto,setMinuto] = useState(undefined)
 
     // Ativado toda vez que um estado mudar
     useEffect(() => {
-        console.log("DADOS ATUALIZADOS")
-        console.log("Condutor? ", estadoCondutor==1 ? "Sim" : "Não")
-        console.log("Comidas? ", estadoComidas==1 ? "Sim" : "Não")
-        console.log("Bebidas? ", estadoBebidas==1 ? "Sim" : "Não")
-        console.log("Concierge? ", estadoConcierge==1 ? "Sim" : "Não")
-        console.log("Outra Marina? ", estadoOutraMarina==1 ? "Sim" : "Não")
-        console.log("Pessoas: ", numeroPessoas)
-        console.log("========================")
+        // console.log("foto:", global.userPicture);
+        // loadPicture();
+        // console.log("DADOS ATUALIZADOS")
+        // console.log("Condutor? ", estadoCondutor==1 ? "Sim" : "Não")
+        // console.log("Comidas? ", estadoComidas==1 ? "Sim" : "Não")
+        // console.log("Bebidas? ", estadoBebidas==1 ? "Sim" : "Não")
+        // console.log("Concierge? ", estadoConcierge==1 ? "Sim" : "Não")
+        // console.log("Outra Marina? ", estadoOutraMarina==1 ? "Sim" : "Não")
+        // console.log("Pessoas: ", numeroPessoas)
+        // console.log("========================")
     },[
         estadoCondutor,
         estadoComidas,
@@ -80,17 +85,21 @@ export default function EditarReserva({navigation}) {
 
     // User
     function loadPicture() {
-        if (userPicture.includes('http')){
-            return (<Image style={styles.profilePicture} source={{uri:userPicture}}/>);
-        } else {   
-            global.userName = "Nome usuário";
-            return (
-                <Image 
-                    style={styles.profilePicture} 
-                    source={require('../../assets/img/person-circle-white.png')}
-                />
-            );
-        }
+        return (
+            <View style={{flex:1}}>
+                {global.userPicture == undefined ?
+                    <Image 
+                        style={styles.profilePicture} 
+                        source={require('../../assets/img/person-circle-white.png')}
+                    />
+                :
+                    <Image 
+                        style={styles.profilePicture} 
+                        source={{uri:global.userPicture}}
+                    />
+                }
+            </View>
+        )
     }
 
     /**
@@ -129,11 +138,11 @@ export default function EditarReserva({navigation}) {
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.header}>
-                <TouchableOpacity onPress={() => navigation.navigate("Home")}>
+                <TouchableOpacity onPress={() => navigation.navigate("Home")} style={{flex:0.5}}>
                     <Entypo
                     name="arrow-with-circle-left"
-                    size={36}
-                    color="black"
+                    size={40}
+                    color="white"
                     style={styles.voltar}
                     />
                 </TouchableOpacity>
@@ -217,14 +226,9 @@ export default function EditarReserva({navigation}) {
                     keyboardType="numeric"
                     editable
                     maxLength={3}
-                    placeholder={
-                    numeroPessoas == 0 ||
-                    numeroPessoas == null ||
-                    numeroPessoas == undefined
-                        ? "Qtd Pessoas"
-                        : numeroPessoas.toString()
+                    placeholder={numeroPessoas == 0 || numeroPessoas == null || numeroPessoas == undefined ? 
+                        "Qtd Pessoas" : numeroPessoas.toString()
                     }
-                    // placeholder={"Qtd Pessoas"}
                     placeholderTextColor="white"
                     style={styles.input}
                     onChangeText={(value) => verifyNumber(value)}
@@ -269,25 +273,26 @@ const styles = StyleSheet.create({
         flexDirection:'row',
         // borderWidth:2,
         // borderColor:'green',
-        justifyContent:'space-between',
+        justifyContent:'space-around',
         alignItems:'center',
-        marginBottom:0,
-        padding:10,
+        paddingVertical:20,
         borderBottomColor:'lightgray',
-        borderBottomWidth:2
+        borderBottomWidth:2,
+        backgroundColor:'blue'
     },
 
     voltar: {
         flex:1,
         // borderWidth:2,
         // borderColor:'green',
-        paddingLeft:4,
+        alignSelf:'center'
     },
 
     titulo: {
         flex:1,
         width:'30%',
-        fontSize:20,
+        fontSize:24,
+        color:'white',
         fontFamily:'Montserrat_Bold',
         textAlign:'center',
         // borderWidth:2,
@@ -295,23 +300,22 @@ const styles = StyleSheet.create({
     },
 
     profilePicContainer: {
+        flex:0.5,
         width:'20%',
+        height:'100%',
         alignSelf:'center',
-        alignItems:'center',
         justifyContent:'center',
-        opacity: 1,
-        borderWidth:2,
-        borderColor:'green',
+        // borderWidth:2,
+        // borderColor:'green',
     },
 
     profilePicture: {
         flex:1,
-        width:50,
-        height:50,
-        borderRadius:25,
-        // textAlign:'center',
-        // margin:'auto'
-        margin:'auto',
+        width:40,
+        height:40,
+        borderRadius:20,
+        alignSelf:'center',
+        padding:10
     },
 
     switchContainer: {
@@ -349,6 +353,7 @@ const styles = StyleSheet.create({
     },
 
     input: {
+        flex:1,
         width:'40%',
         height:30,
         textAlign:'center',

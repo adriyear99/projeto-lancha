@@ -87,7 +87,7 @@ export default function CadastroLogin({navigation}) {
     function cadastrarUsuario(){
         console.log('$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$')
         console.log(global.userName + '***' + global.userPicture);
- 
+
         let data = JSON.stringify({ 
             usuario: global.userName,
             email: global.email,
