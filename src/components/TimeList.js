@@ -105,39 +105,39 @@ export default function TimeList() {
                 keyExtractor={(item) => item.id}
                 renderItem={ ({item}) => (
                     <TouchableOpacity onPress={() => setHorarioSelecionado(item.id)}>
-                        <View style={[styles.horarioContainer, (horarioSelecionado == item.id ? styles.selecionado : styles.naoSelecionado) ]}>
+                        <View style={[styles.horarioContainer, {backgroundColor:(horarioSelecionado == item.id ? 'green' : '#E8E8E8')} ]}>
                             {(Number(item.horario.substring(0,2)) < 10 && item.horario.substring(2,5) == ":00") &&
-                                <Text style={styles.textoHorario}>
+                                <Text style={[styles.textoHorario,{color:(horarioSelecionado == item.id ? 'white' : 'black')}]}>
                                     {item.horario} - {item.horario.replace(":00",":30")}
                                 </Text>
                             }
 
                             {(Number(item.horario.substring(0,2)) >= 10 && item.horario.substring(2,5) == ":00") &&
-                                <Text style={styles.textoHorario}>
+                                <Text style={[styles.textoHorario,{color:(horarioSelecionado == item.id ? 'white' : 'black')}]}>
                                     {item.horario} - {item.horario.replace(":00",":30")}
                                 </Text>
                             }
 
                             {(Number(item.horario.substring(0,2)) < 9 && item.horario.substring(2,5) == ":30") &&
-                                    <Text style={styles.textoHorario}>
+                                    <Text style={[styles.textoHorario,{color:(horarioSelecionado == item.id ? 'white' : 'black')}]}>
                                         {`0${Number(item.horario.substring(1,2))}:30`} - {`0${Number(item.horario.substring(0,2))+1}:00`}
                                     </Text>
                             }
 
                             {(Number(item.horario.substring(0,2)) == 9 && item.horario.substring(2,5) == ":30") &&
-                                    <Text style={styles.textoHorario}>
+                                    <Text style={[styles.textoHorario,{color:(horarioSelecionado == item.id ? 'white' : 'black')}]}>
                                         {`0${Number(item.horario.substring(1,2))}:30`} - {`${Number(item.horario.substring(0,2))+1}:00`}
                                     </Text>
                             }
 
                             {(Number(item.horario.substring(0,2)) >= 10 && Number(item.horario.substring(0,2)) < 23 && item.horario.substring(2,5) == ":30") &&
-                                    <Text style={styles.textoHorario}>
+                                    <Text style={[styles.textoHorario,{color:(horarioSelecionado == item.id ? 'white' : 'black')}]}>
                                         {item.horario} - {`${Number(item.horario.substring(0,2))+1}:00`}
                                     </Text>
                             }
 
                             {item.horario == '23:30' &&
-                                    <Text style={styles.textoHorario}>
+                                    <Text style={[styles.textoHorario,{color:(horarioSelecionado == item.id ? 'white' : 'black')}]}>
                                         {item.horario} - {'00:00'}
                                     </Text>
                             }
@@ -177,18 +177,9 @@ const styles = StyleSheet.create({
         alignItems:'center',
     },
 
-    selecionado: {
-        backgroundColor:'green',
-    },
-
-    naoSelecionado: {
-        backgroundColor:'#E8E8E8',
-    },
-
     textoHorario: {
         fontSize:18,
         fontFamily:'Montserrat_Bold',
-        color:'gray',
         alignSelf:'center'
     },
 

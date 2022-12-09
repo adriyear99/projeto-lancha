@@ -1,5 +1,5 @@
 // Utilidades
-import { View,SafeAreaView,Text,StyleSheet,Image,TextInput,TouchableOpacity,FlatList } from 'react-native'
+import { View,SafeAreaView,Text,StyleSheet,Image,TextInput,TouchableOpacity } from 'react-native'
 import { useState,useContext,useEffect } from 'react'
 import SwitchSelector from "react-native-switch-selector"
 
@@ -55,16 +55,15 @@ export default function EditarReserva({navigation}) {
 
     // Ativado toda vez que um estado mudar
     useEffect(() => {
-        // console.log("foto:", global.userPicture);
-        // loadPicture();
-        // console.log("DADOS ATUALIZADOS")
-        // console.log("Condutor? ", estadoCondutor==1 ? "Sim" : "Não")
-        // console.log("Comidas? ", estadoComidas==1 ? "Sim" : "Não")
-        // console.log("Bebidas? ", estadoBebidas==1 ? "Sim" : "Não")
-        // console.log("Concierge? ", estadoConcierge==1 ? "Sim" : "Não")
-        // console.log("Outra Marina? ", estadoOutraMarina==1 ? "Sim" : "Não")
-        // console.log("Pessoas: ", numeroPessoas)
-        // console.log("========================")
+        loadPicture();
+        console.log("DADOS ATUALIZADOS")
+        console.log("Condutor? ", estadoCondutor==1 ? "Sim" : "Não")
+        console.log("Comidas? ", estadoComidas==1 ? "Sim" : "Não")
+        console.log("Bebidas? ", estadoBebidas==1 ? "Sim" : "Não")
+        console.log("Concierge? ", estadoConcierge==1 ? "Sim" : "Não")
+        console.log("Outra Marina? ", estadoOutraMarina==1 ? "Sim" : "Não")
+        console.log("Pessoas: ", numeroPessoas)
+        console.log("========================")
     },[
         estadoCondutor,
         estadoComidas,
@@ -147,7 +146,11 @@ export default function EditarReserva({navigation}) {
                     />
                 </TouchableOpacity>
                 <Text style={styles.titulo}>Reserva</Text>
-                <View style={styles.profilePicContainer}>{loadPicture()}</View>
+                <TouchableOpacity style={styles.profilePicContainer} onPress={() => navigation.navigate("Editar Perfil")}>
+                    <View style={{flex:1}}>
+                        {loadPicture()}
+                    </View>
+                </TouchableOpacity>
             </View>
 
             <View style={styles.switchContainer}>
@@ -278,7 +281,7 @@ const styles = StyleSheet.create({
         paddingVertical:20,
         borderBottomColor:'lightgray',
         borderBottomWidth:2,
-        backgroundColor:'blue'
+        backgroundColor:'#4B7E94'
     },
 
     voltar: {

@@ -22,9 +22,6 @@ import { AntDesign } from '@expo/vector-icons'
 // Variáveis globais
 import AppContext from '../components/AppContext'
 
-// API
-import axios from 'axios'
-
 // Fontes
 import { useFonts } from '@expo-google-fonts/montserrat'
 
@@ -38,8 +35,6 @@ export default function Home({navigation}) {
 
     // Variáveis e métodos globais
     const global = useContext(AppContext);
-    const userPicture = global.userPicture;
-    let userName = global.userName;
 
     // Switch
     const options = [
@@ -72,6 +67,11 @@ export default function Home({navigation}) {
         return () => backHandler.remove();
     }, []);
 
+    // onInit
+    useEffect(() => {
+        global.setBarcoSelecionado(undefined)
+    })
+
     // Carregar fontes
     let [fontsLoaded] = useFonts({
         "Montserrat_Regular": require('../../assets/fonts/Montserrat-Regular.ttf'),
@@ -83,12 +83,21 @@ export default function Home({navigation}) {
 
     // User
     function loadPicture() {
-        if (userPicture.includes('http')){
-            return (<Image style={styles.profilePicture} source={{uri:userPicture}}/>);
-        } else {   
-            userName = "Nome usuário";
-            return (<Image style={styles.profilePicture} source={require('../../assets/img/person-circle-white.png')}/>);
-        }
+        return (
+            <View style={{flex:1}}>
+                {global.userPicture == undefined ?
+                    <Image 
+                        style={styles.profilePicture} 
+                        source={require('../../assets/img/person-circle-white.png')}
+                    />
+                :
+                    <Image 
+                        style={styles.profilePicture} 
+                        source={{uri:global.userPicture}}
+                    />
+                }
+            </View>
+        )
     }
 
     function logout() {
@@ -109,14 +118,21 @@ export default function Home({navigation}) {
     function resetValores(){
         global.setTemConta(undefined)
         global.setTipoUsuario(undefined)
-        global.setUserName(null)
+        global.setUserName(undefined)
         global.setEmail(undefined)
-        global.setUserPicture('')
+        global.setUserPicture(undefined)
         global.setBarcos([])
         global.setReservas([])
+        global.setBarcoSelecionado(undefined)
         global.openModal(false)
         global.setDark(false)
+        global.setUsuarioLogado(false)
+        global.barcoSelecionado(false)
         navigation.navigate("Tela Inicial")
+    }
+
+    function resetSelecao(){
+        global.barcoSelecionado(false)
     }
 
     // Modal
@@ -167,11 +183,11 @@ export default function Home({navigation}) {
                                 />
                             </TouchableOpacity>
                         </View>
-                        <View style={styles.profilePicContainer}>
+                        <TouchableOpacity onPress={() => navigation.navigate("Editar Perfil")} style={styles.profilePicContainer}>
                             {loadPicture()}
-                        </View>
+                        </TouchableOpacity>
                         <View style={styles.nameContainer}>
-                            <Text style={styles.nome}>{userName}</Text>
+                            <Text style={styles.nome}>{global.userName}</Text>
                         </View>
                     </View>
                 </TouchableWithoutFeedback>

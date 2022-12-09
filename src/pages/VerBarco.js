@@ -44,23 +44,21 @@ export default function VerBarco({navigation,route}) {
     }, []);
 
     function loadPicture() {
-        if (global.userPicture.includes('http')){
-            return (
-                <TouchableOpacity onPress={() => navigation.navigate("Editar Perfil")}>
-                    <Image style={styles.profilePicture} source={{uri:global.userPicture}}/>
-                </TouchableOpacity>
-            );
-        } else {   
-            global.userName = "Nome usuário";
-            return (
-                <TouchableOpacity onPress={() => navigation.navigate("Editar Perfil")}>
+        return (
+            <View style={{flex:1}}>
+                {global.userPicture == undefined ?
                     <Image 
                         style={styles.profilePicture} 
                         source={require('../../assets/img/person-circle-white.png')}
                     />
-                </TouchableOpacity>
-            );
-        }
+                :
+                    <Image 
+                        style={styles.profilePicture} 
+                        source={{uri:global.userPicture}}
+                    />
+                }
+            </View>
+        )
     }
 
     return (
@@ -81,9 +79,11 @@ export default function VerBarco({navigation,route}) {
                                 onPress={() => navigation.navigate("Home")}
                             />
                             <Text style={styles.text}>Detalhes</Text>
-                            <View style={styles.profilePicContainer} onPress={() => navigation.navigate("Editar Perfil")}>
-                                {loadPicture()}
-                            </View>
+                            <TouchableOpacity onPress={() => navigation.navigate("Editar Perfil")} style={{flex:1}}>
+                                <View style={styles.profilePicContainer}>
+                                    {loadPicture()}
+                                </View>
+                            </TouchableOpacity>
                         </View>
 
                         <View style={styles.boatContainer}>

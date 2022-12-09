@@ -1,12 +1,9 @@
 // Utilidades
-import { View,Text,StyleSheet,BackHandler,TouchableOpacity,Image,FlatList } from 'react-native'
+import { View,Text,StyleSheet,BackHandler,TouchableOpacity,Image,FlatList,Alert } from 'react-native'
 import { useEffect,useContext } from 'react'
 
 // Variáveis globais
 import AppContext from '../components/AppContext'
-
-// Componentes
-import Boat from '../components/Boat'
 
 // Expo Icons
 import { Ionicons } from '@expo/vector-icons'
@@ -36,8 +33,23 @@ export default function NovaReserva({navigation}) {
     },[])
 
     useEffect(() => {
-        getBoats()
-    },[global.barcos])
+        if(global.modalOpen && global.dark){
+            global.openModal(false)
+            global.setDark(false)
+        }
+
+        if(global.barcos=[]){
+            getBoats()
+        }
+
+        if(global.barcoSelecionado != undefined){
+            console.log("Nome:",global.barcoSelecionado.nome)
+            Alert.alert("Barco selecionado", `${global.barcoSelecionado.nome}`, [
+                { text: "OK", onPress: () => navigation.navigate("Editar Reserva")}
+            ]);
+        }
+
+    },[global.barcoSelecionado])
 
         /**
      * 
@@ -45,7 +57,6 @@ export default function NovaReserva({navigation}) {
      */
     async function getBoats(){
         const response = await axios.get(global.baseURL + '/embarcacoes')
-        // console.log(response.data)
         global.setBarcos(response.data)
     }
 
@@ -60,12 +71,28 @@ export default function NovaReserva({navigation}) {
 
     // User
     function loadPicture() {
-        if (global.userPicture.includes('http')){
-            return (<Image style={styles.profilePicture} source={{uri:global.userPicture}}/>);
-        } else {   
-            global.userName = "Nome usuário";
-            return (<Image style={styles.profilePicture} source={require('../../assets/img/person-circle-white.png')}/>);
-        }
+        return (
+            <View style={{flex:1}}>
+                {global.userPicture == undefined ?
+                    <Image 
+                        style={styles.profilePicture} 
+                        source={require('../../assets/img/person-circle-white.png')}
+                        
+                    />
+                :
+                    <Image 
+                        style={styles.profilePicture} 
+                        source={{uri:global.userPicture}}
+                        
+                    />
+                }
+            </View>
+        )
+    }
+
+    function selecionarBarco(barco){
+        console.log(barco)
+        global.setBarcoSelecionado(barco)
     }
 
     return (
@@ -81,9 +108,11 @@ export default function NovaReserva({navigation}) {
                         onPress={() => navigation.navigate("Home")}
                     />
                     <Text style={styles.title}>Embarcacões</Text>
-                    <View style={styles.profilePicContainer}>
-                        {loadPicture()}
-                    </View>
+                    <TouchableOpacity style={{flex:0.25,paddingRight:5}} onPress={() => navigation.navigate("Editar Perfil")}>
+                        <View style={styles.profilePicContainer}>
+                            {loadPicture()}
+                        </View>
+                    </TouchableOpacity>
                 </View>
                 <View style={styles.flatListContainer}>
                     <FlatList
@@ -91,7 +120,7 @@ export default function NovaReserva({navigation}) {
                         data={global.barcos}
                         keyExtractor={(item) => item.idEmbarcacao}
                         renderItem={ ({item}) => (
-                            <TouchableOpacity>
+                            <TouchableOpacity onPress={() => selecionarBarco(item)}>
                                 <View style={styles.boatContainer}>
                                     <Image style={styles.foto} source={require('../../assets/img/Lancha.jpeg')}/>
                                     <View style={styles.textContainer}>
@@ -125,13 +154,12 @@ const styles = StyleSheet.create({
         height:'15%',
         alignItems:'center',
         alignSelf:'center',
-        justifyContent:'space-between'
+        justifyContent:'center'
     },
 
     icon: {
-        flex:0.5,
+        flex:0.25,
         paddingLeft:10
-
     },
 
     title: {
@@ -145,14 +173,18 @@ const styles = StyleSheet.create({
     },
 
     profilePicContainer: {
-        flex:0.5,
-        paddingRight:10
+        flex:1,
+        // borderWidth:2,
+        // borderColor:'red',
+        paddingTop:'40%',
+        paddingRight:5
     },
 
     profilePicture: {
-        height:50,
-        width:50,
-        alignSelf:'flex-end'
+        width: '100%',
+        height: undefined,
+        aspectRatio: 1,
+        alignSelf:'center'
     },
 
     flatListContainer: {

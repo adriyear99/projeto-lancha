@@ -20,9 +20,6 @@ export default function BoatList() {
     // Alterar tela
     const navigation = useNavigation()
 
-    // Funcionalidades
-    const [loading,setLoading] = useState(false)
-
     useEffect(() => {
         getBoats()
     },[global.barcos])
@@ -32,12 +29,23 @@ export default function BoatList() {
      * @returns Lista de barcos vindo da API
      */
     async function getBoats(){
-        if(loading) return
-        setLoading(true)
         const response = await axios.get(global.baseURL + '/embarcacoes')
         // console.log(response.data)
         global.setBarcos(response.data)
-        setLoading(false)
+    }
+
+    function imagemBarco(modeloBarco){ 
+        if(modeloBarco == 1){
+            return require('../../assets/img/barcos/barco1.jpg')
+        }else if(modeloBarco == 2){
+            return require('../../assets/img/barcos/barco2.jpg')
+        } else if(modeloBarco == 3){
+            return require('../../assets/img/barcos/barco3.jpg')
+        } else if(modeloBarco == 4){
+            return require('../../assets/img/barcos/barco4.jpg')
+        } else {
+            return require('../../assets/img/Lancha.jpeg')
+        }
     }
 
 
@@ -54,8 +62,17 @@ export default function BoatList() {
                         //     :
                         //     require('../../assets/img/Lancha.jpeg')
                         // } 
-                        image={require('../../assets/img/Lancha.jpeg')}
+                        // image={require('../../assets/img/Lancha.jpeg')}
                         // image={item.url_imagem} 
+                        // image={
+                        //     (item.idModelo == 1 ? require('../../assets/img/barcos/barco1.jpg')
+                        //     : item.idModelo == 2 ? require('../../assets/img/barcos/barco2.jpg')
+                        //     : item.idModelo == 3 ? require('../../assets/img/barcos/barco3.jpg')
+                        //     : item.idModelo == 4 ? require('../../assets/img/barcos/barco4.jpg')
+                        //     : item.idModelo == 5 ? require('../../assets/img/barcos/barco5.jpg')
+                        //     )
+                        // }
+                        image={imagemBarco(item.idModelo)} 
                         name={item.nome}
                         onPress={() => navigation.navigate("Ver Barco",{
                             screen:'Var Barco',

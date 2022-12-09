@@ -37,6 +37,7 @@ export default function App() {
   const [email, setEmail] = useState(undefined)
   const [userPicture, setUserPicture] = useState(undefined)
   const [barcos,setBarcos] = useState([])
+  const [barcoSelecionado,setBarcoSelecionado] = useState(undefined)
   const [reservas,setReservas] = useState([])
   const [modalOpen,openModal] = useState(false)
   const [dark,setDark] = useState(false)
@@ -62,6 +63,8 @@ export default function App() {
     setBarcos,
     reservas: reservas,
     setReservas,
+    barcoSelecionado,
+    setBarcoSelecionado,
     modalOpen,
     openModal,
     dark:dark,
@@ -77,7 +80,7 @@ export default function App() {
   return (
     <AppContext.Provider value={user}>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="Editar Reserva">
+        <Stack.Navigator initialRouteName="Home">
         <Stack.Screen name="Tela Inicial" component={TelaInicial} options={styles.hideHeader}/>
           <Stack.Screen name="Cadastro ou Login" component={CadastroLogin} options={styles.hideHeader}/>
           <Stack.Screen name="Pessoa ou Empresa" component={PessoaEmpresa} options={styles.hideLabel}/>

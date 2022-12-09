@@ -121,16 +121,18 @@ export default function EditarPerfil({ navigation }) {
     }
 
     function resetValores(){
-        global.setTemConta(null)
+        global.setTemConta(undefined)
         global.setTipoUsuario(undefined)
-        global.setUserName(null)
-        global.setEmail('lulinha@gmail.com')
-        global.setUserPicture('')
+        global.setUserName(undefined)
+        global.setEmail(undefined)
+        global.setUserPicture(undefined)
         global.setBarcos([])
         global.setReservas([])
+        global.setBarcoSelecionado(undefined)
         global.openModal(false)
         global.setDark(false)
         global.setUsuarioLogado(false)
+        global.barcoSelecionado(false)
         navigation.navigate("Tela Inicial")
     }
 
