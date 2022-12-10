@@ -1,5 +1,5 @@
 // Utilidades
-import { View,SafeAreaView,Text,StyleSheet,Image,TextInput,TouchableOpacity } from 'react-native'
+import { View,SafeAreaView,Text,StyleSheet,Image,TextInput,TouchableOpacity,Alert } from 'react-native'
 import { useState,useContext,useEffect } from 'react'
 import SwitchSelector from "react-native-switch-selector"
 
@@ -14,7 +14,7 @@ import AppContext from '../components/AppContext'
 import CustomButton from '../components/CustomButton'
 import TimeList from '../components/TimeList'
 
-export default function EditarReserva({navigation}) {
+export default function EditarReserva({navigation,route}) {
 
     // Switch
     const condutor = [
@@ -44,7 +44,10 @@ export default function EditarReserva({navigation}) {
     const [estadoBebidas,setEstadoBebidas] = useState(1)
     const [estadoConcierge,setEstadoConcierge] = useState(1)
     const [estadoOutraMarina,setEstadoOutraMarina] = useState(1)
-    const [numeroPessoas,setNumeroPessoas] = useState(undefined)
+    const [numeroPessoas,setNumeroPessoas] = useState(0)
+
+    const [reserva,setReserva] = useState(undefined)
+    const [reservaLoaded,loadReserva] = useState(false)
 
     // Variáveis e métodos globais
     const global = useContext(AppContext);
@@ -54,24 +57,34 @@ export default function EditarReserva({navigation}) {
     const [minuto,setMinuto] = useState(undefined)
 
     // Ativado toda vez que um estado mudar
+    // useEffect(() => {
+    //     loadPicture();
+    //     console.log("DADOS ATUALIZADOS")
+    //     console.log("Condutor? ", estadoCondutor==1 ? "Sim" : "Não")
+    //     console.log("Comidas? ", estadoComidas==1 ? "Sim" : "Não")
+    //     console.log("Bebidas? ", estadoBebidas==1 ? "Sim" : "Não")
+    //     console.log("Concierge? ", estadoConcierge==1 ? "Sim" : "Não")
+    //     console.log("Outra Marina? ", estadoOutraMarina==1 ? "Sim" : "Não")
+    //     console.log("Pessoas: ", numeroPessoas)
+    //     console.log("========================")
+    // },[
+    //     estadoCondutor,
+    //     estadoComidas,
+    //     estadoBebidas,
+    //     estadoConcierge,
+    //     estadoOutraMarina,
+    //     numeroPessoas
+    // ])
+
     useEffect(() => {
-        loadPicture();
-        console.log("DADOS ATUALIZADOS")
-        console.log("Condutor? ", estadoCondutor==1 ? "Sim" : "Não")
-        console.log("Comidas? ", estadoComidas==1 ? "Sim" : "Não")
-        console.log("Bebidas? ", estadoBebidas==1 ? "Sim" : "Não")
-        console.log("Concierge? ", estadoConcierge==1 ? "Sim" : "Não")
-        console.log("Outra Marina? ", estadoOutraMarina==1 ? "Sim" : "Não")
-        console.log("Pessoas: ", numeroPessoas)
-        console.log("========================")
-    },[
-        estadoCondutor,
-        estadoComidas,
-        estadoBebidas,
-        estadoConcierge,
-        estadoOutraMarina,
-        numeroPessoas
-    ])
+        console.log("====== RESERVA =======")
+        console.log(route.params.params.item)
+        setReserva(route.params.params.item)
+        if(reserva != undefined){
+            console.log(reserva)
+            loadReserva(true)
+        }
+    },[reserva])
 
     // Carregar fontes
     let [fontsLoaded] = useFonts({
@@ -112,8 +125,13 @@ export default function EditarReserva({navigation}) {
         console.log("Concierge? ", estadoConcierge==1 ? "Sim" : "Não")
         console.log("Outra Marina? ", estadoOutraMarina==1 ? "Sim" : "Não")
 
+        let numeroEditado
         // Formatar numero
-        let numeroEditado = numeroPessoas.toString()
+        if(numeroPessoas===undefined){
+            numeroEditado = '0'
+        }else{
+            numeroEditado = numeroPessoas.toString()
+        }
         if(numeroEditado[0] == '0'){
             numeroEditado = numeroEditado.replace('0','')
             console.log(numeroEditado)
@@ -124,6 +142,14 @@ export default function EditarReserva({navigation}) {
             console.log("Pessoas: ", numeroPessoas)
         }
         console.log("========================")
+        Alert.alert("Sucesso!", "Os dados da reserva foram atualizados", [
+            {
+                text: "OK",
+                onPress: () => navigation.navigate("Home"),
+                style: "cancel"
+            },
+        ]);
+
     }
 
     function verifyNumber(value){
@@ -135,28 +161,48 @@ export default function EditarReserva({navigation}) {
     }
 
     return (
-        <SafeAreaView style={styles.container}>
-            <View style={styles.header}>
-                <TouchableOpacity onPress={() => navigation.navigate("Home")} style={{flex:0.5}}>
-                    <Entypo
-                    name="arrow-with-circle-left"
-                    size={40}
-                    color="white"
-                    style={styles.voltar}
+        <View style={{flex:1}}>
+        {!reservaLoaded ?
+            <SafeAreaView style={{backgroundColor:'blue'}}>
+                <Text style={{fontSize:40,textAlign:'center'}}>Carregando Reserva</Text>
+            </SafeAreaView>
+        :
+            <SafeAreaView style={styles.container}>
+                <View style={styles.header}>
+                    <TouchableOpacity onPress={() => navigation.navigate("Home")} style={{flex:0.5}}>
+                        <Entypo
+                        name="arrow-with-circle-left"
+                        size={40}
+                        color="white"
+                        style={styles.voltar}
+                        />
+                    </TouchableOpacity>
+                    <Text style={styles.titulo}>Reserva</Text>
+                    <TouchableOpacity style={styles.profilePicContainer} onPress={() => navigation.navigate("Editar Perfil")}>
+                        <View style={{flex:1}}>
+                            {loadPicture()}
+                        </View>
+                    </TouchableOpacity>
+                </View>
+
+                <View style={styles.switchContainer}>
+                    <Text style={styles.textoOpcao}>Necessita condutor?</Text>
+                    <SwitchSelector
+                        options={condutor}
+                        initial={0}
+                        textColor={"#4B7E94"}
+                        selectedColor={"#4B7E94"}
+                        buttonColor={"lightgray"}
+                        borderColor={"lightgray"}
+                        hasPadding
+                        style={styles.switch}
+                        onPress={(value) => setEstadoCondutor(value)}
                     />
-                </TouchableOpacity>
-                <Text style={styles.titulo}>Reserva</Text>
-                <TouchableOpacity style={styles.profilePicContainer} onPress={() => navigation.navigate("Editar Perfil")}>
-                    <View style={{flex:1}}>
-                        {loadPicture()}
-                    </View>
-                </TouchableOpacity>
-            </View>
-
-            <View style={styles.switchContainer}>
-                <Text style={styles.textoOpcao}>Necessita condutor?</Text>
+                </View>
+                <View style={styles.switchContainer}>
+                <Text style={styles.textoOpcao}>Comidas</Text>
                 <SwitchSelector
-                    options={condutor}
+                    options={comidas}
                     initial={0}
                     textColor={"#4B7E94"}
                     selectedColor={"#4B7E94"}
@@ -164,100 +210,87 @@ export default function EditarReserva({navigation}) {
                     borderColor={"lightgray"}
                     hasPadding
                     style={styles.switch}
-                    onPress={(value) => setEstadoCondutor(value)}
+                    onPress={(value) => setEstadoComidas(value)}
                 />
-            </View>
-            <View style={styles.switchContainer}>
-            <Text style={styles.textoOpcao}>Comidas</Text>
-            <SwitchSelector
-                options={comidas}
-                initial={0}
-                textColor={"#4B7E94"}
-                selectedColor={"#4B7E94"}
-                buttonColor={"lightgray"}
-                borderColor={"lightgray"}
-                hasPadding
-                style={styles.switch}
-                onPress={(value) => setEstadoComidas(value)}
-            />
-            </View>
-            <View style={styles.switchContainer}>
-                <Text style={styles.textoOpcao}>Bebidas</Text>
-                <SwitchSelector
-                    options={bebidas}
-                    initial={0}
-                    textColor={"#4B7E94"}
-                    selectedColor={"#4B7E94"}
-                    buttonColor={"lightgray"}
-                    borderColor={"lightgray"}
-                    hasPadding
-                    style={styles.switch}
-                    onPress={(value) => setEstadoBebidas(value)}
-                />
-            </View>
-            <View style={styles.switchContainer}>
-                <Text style={styles.textoOpcao}>Concierge</Text>
-                <SwitchSelector
-                    options={concierge}
-                    initial={0}
-                    textColor={"#4B7E94"}
-                    selectedColor={"#4B7E94"}
-                    buttonColor={"lightgray"}
-                    borderColor={"lightgray"}
-                    hasPadding
-                    style={styles.switch}
-                    onPress={(value) => setEstadoConcierge(value)}
-                />
-            </View>
-            <View style={styles.switchContainer}>
-                <Text style={styles.textoOpcao}>Outra marina?</Text>
-                <SwitchSelector
-                    options={outraMarina}
-                    initial={0}
-                    textColor={"#4B7E94"}
-                    selectedColor={"#4B7E94"}
-                    buttonColor={"lightgray"}
-                    borderColor={"lightgray"}
-                    hasPadding
-                    style={styles.switch}
-                    onPress={(value) => setEstadoOutraMarina(value)}
-                />
-            </View>
-            <View style={styles.switchContainer}>
-                <Text style={styles.textoOpcao}>Número de pessoas</Text>
-                <TextInput
-                    keyboardType="numeric"
-                    editable
-                    maxLength={3}
-                    placeholder={numeroPessoas == 0 || numeroPessoas == null || numeroPessoas == undefined ? 
-                        "Qtd Pessoas" : numeroPessoas.toString()
-                    }
-                    placeholderTextColor="white"
-                    style={styles.input}
-                    onChangeText={(value) => verifyNumber(value)}
-                    value={numeroPessoas}
-                />
-            </View>
+                </View>
+                <View style={styles.switchContainer}>
+                    <Text style={styles.textoOpcao}>Bebidas</Text>
+                    <SwitchSelector
+                        options={bebidas}
+                        initial={0}
+                        textColor={"#4B7E94"}
+                        selectedColor={"#4B7E94"}
+                        buttonColor={"lightgray"}
+                        borderColor={"lightgray"}
+                        hasPadding
+                        style={styles.switch}
+                        onPress={(value) => setEstadoBebidas(value)}
+                    />
+                </View>
+                <View style={styles.switchContainer}>
+                    <Text style={styles.textoOpcao}>Concierge</Text>
+                    <SwitchSelector
+                        options={concierge}
+                        initial={0}
+                        textColor={"#4B7E94"}
+                        selectedColor={"#4B7E94"}
+                        buttonColor={"lightgray"}
+                        borderColor={"lightgray"}
+                        hasPadding
+                        style={styles.switch}
+                        onPress={(value) => setEstadoConcierge(value)}
+                    />
+                </View>
+                <View style={styles.switchContainer}>
+                    <Text style={styles.textoOpcao}>Outra marina?</Text>
+                    <SwitchSelector
+                        options={outraMarina}
+                        initial={0}
+                        textColor={"#4B7E94"}
+                        selectedColor={"#4B7E94"}
+                        buttonColor={"lightgray"}
+                        borderColor={"lightgray"}
+                        hasPadding
+                        style={styles.switch}
+                        onPress={(value) => setEstadoOutraMarina(value)}
+                    />
+                </View>
+                <View style={styles.switchContainer}>
+                    <Text style={styles.textoOpcao}>Número de pessoas</Text>
+                    <TextInput
+                        keyboardType="numeric"
+                        editable
+                        maxLength={3}
+                        placeholder={numeroPessoas == 0 || numeroPessoas == null || numeroPessoas == undefined ? 
+                            "Qtd Pessoas" : numeroPessoas.toString()
+                        }
+                        placeholderTextColor="white"
+                        style={styles.input}
+                        onChangeText={(value) => verifyNumber(value)}
+                        value={numeroPessoas}
+                    />
+                </View>
 
-            {/* Lista de horarios disponiveis */}
-            <View style={styles.timeContainer}>
-                <Text style={styles.textoHorario}>Horario da Reserva</Text>
-                <TimeList />
-            </View>
+                {/* Lista de horarios disponiveis */}
+                <View style={styles.timeContainer}>
+                    <Text style={styles.textoHorario}>Horario da Reserva</Text>
+                    <TimeList />
+                </View>
 
-            <CustomButton
-                text="Editar Reserva"
-                onPress={editarReserva}
-                style={{
-                    height: 60,
-                    width: 200,
-                    backgroundColor: "#4B7E94",
-                    marginTop:0,
-                    marginBottom: 10,
-                }}
-            />
-
-        </SafeAreaView>
+                <CustomButton
+                    text="Editar Reserva"
+                    onPress={editarReserva}
+                    style={{
+                        height: 60,
+                        width: 200,
+                        backgroundColor: "#4B7E94",
+                        marginTop:0,
+                        marginBottom: 10,
+                    }}
+                />
+            </SafeAreaView>
+    }
+    </View>
     );
 }
 

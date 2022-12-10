@@ -52,8 +52,11 @@ export default function Reservas() {
                 renderItem={ ({item}) => (
                     <Reserva 
                         key={item.idAgendamento} 
-                        name={item.tipo} 
-                        onPress={()=> navigation.navigate("Editar Reserva")}
+                        name={item.nome} 
+                        onPress={() => navigation.navigate("Editar Reserva",{
+                            screen:'Editar Reserva',
+                            params:{item}
+                        })}
                     />
                 )}
                 ListFooterComponent={

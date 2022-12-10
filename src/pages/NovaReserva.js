@@ -45,13 +45,13 @@ export default function NovaReserva({navigation}) {
         if(global.barcoSelecionado != undefined){
             console.log("Nome:",global.barcoSelecionado.nome)
             Alert.alert("Barco selecionado", `${global.barcoSelecionado.nome}`, [
-                { text: "OK", onPress: () => navigation.navigate("Editar Reserva")}
+                { text: "OK", onPress: () => navigation.navigate("Detalhes Reserva") }
             ]);
         }
 
     },[global.barcoSelecionado])
 
-        /**
+    /**
      * 
      * @returns Lista de barcos vindo da API
      */

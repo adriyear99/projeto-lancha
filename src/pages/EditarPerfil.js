@@ -127,7 +127,7 @@ export default function EditarPerfil({ navigation }) {
         global.openModal(false)
         global.setDark(false)
         global.setUsuarioLogado(false)
-        global.barcoSelecionado(false)
+        global.barcoSelecionado(undefined)
         navigation.navigate("Tela Inicial")
     }
 

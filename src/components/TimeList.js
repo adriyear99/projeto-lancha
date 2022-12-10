@@ -18,30 +18,6 @@ export default function TimeList() {
     const [horarios,setHorarios] = useState(undefined)
     const [horarioSelecionado,setHorarioSelecionado] = useState(undefined)
 
-    // Horarios (apagar quando pegar do servidor)
-    // const horarios = [
-    //     {
-    //         id:1,
-    //         horario:'9:00'
-    //     },
-    //     {
-    //         id:2,
-    //         horario:'9:30'   
-    //     },
-    //     {
-    //         id:3,
-    //         horario:'10:00'   
-    //     },
-    //     {
-    //         id:4,
-    //         horario:'10:30'   
-    //     },
-    //     {
-    //         id:5,
-    //         horario:'11:00'   
-    //     },
-    // ]
-
     // Variáveis e métodos globais
     const global = useContext(AppContext)
 

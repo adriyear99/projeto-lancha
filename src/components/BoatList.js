@@ -75,7 +75,7 @@ export default function BoatList() {
                         image={imagemBarco(item.idModelo)} 
                         name={item.nome}
                         onPress={() => navigation.navigate("Ver Barco",{
-                            screen:'Var Barco',
+                            screen:'Ver Barco',
                             params:{item}
                         })}
                         // onPress={() => console.log(route.params)}

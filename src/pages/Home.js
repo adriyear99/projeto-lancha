@@ -127,7 +127,7 @@ export default function Home({navigation}) {
         global.openModal(false)
         global.setDark(false)
         global.setUsuarioLogado(false)
-        global.barcoSelecionado(false)
+        global.barcoSelecionado(undefined)
         navigation.navigate("Tela Inicial")
     }
 
@@ -187,7 +187,9 @@ export default function Home({navigation}) {
                             {loadPicture()}
                         </TouchableOpacity>
                         <View style={styles.nameContainer}>
-                            <Text style={styles.nome}>{global.userName}</Text>
+                            <Text style={styles.nome}>
+                                {global.userName != undefined ? global.userName : "Nome Usuário"}
+                            </Text>
                         </View>
                     </View>
                 </TouchableWithoutFeedback>
@@ -270,25 +272,19 @@ const styles = StyleSheet.create({
     profilePicContainer: {
         width:'30%',
         alignSelf:'center',
-        padding:20,
         paddingTop:'20%',
         alignItems:'center',
         justifyContent:'center',
-        borderWidth:0,
         borderColor:'white',
         height:'30%',
         opacity: 1,
-        // borderColor:'green',
-        // borderWidth:4,
-        bottom:'20%'
+        bottom:'35%'
     },
 
     profilePicture: {
         width:150,
         height:150,
         borderRadius:75,
-        // textAlign:'center',
-        // margin:'auto'
         margin:'auto',
     },
 
@@ -311,7 +307,7 @@ const styles = StyleSheet.create({
         // borderWidth:4,
         justifyContent:'center',
         alignItems:'center',
-        bottom:'5%'
+        bottom:5
     },
 
     iconContainer: {
