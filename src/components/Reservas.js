@@ -22,20 +22,31 @@ export default function Reservas() {
     // Variáveis e métodos globais
     const global = useContext(AppContext);
 
+    // states
+    const [reservasLoaded,loadReservas] = useState(false)
+
     useEffect(() => {
-        getReservas()
-    },[global.reservas])
+        if(!reservasLoaded){
+            getReservas()
+        }
+    })
 
     /**
      * 
-     * @returns Lista de barcos vindo da API
+     * @returns Lista de reservas vindo da API
      */
-    async function getReservas(){
-        const response = await axios.get(global.baseURL + '/api/reservas', { 
-            params: { id_pessoa: 1 } 
+    function getReservas(){
+        axios.get(global.baseURL + '/api/reservas', { 
+            params: { id_pessoa: 1 }
         })
-        // console.log(response.data)
-        global.setReservas(response.data)
+        .then((response)=>{
+            console.log(response.data)
+            global.setReservas(response.data)
+            loadReservas(true)
+        })
+        .catch((error)=>{
+            console.log(error)
+        })
     }
 
     const novaReserva = () => {
@@ -51,7 +62,6 @@ export default function Reservas() {
                 keyExtractor={(item) => item.idAgendamento}
                 renderItem={ ({item}) => (
                     <Reserva 
-                        key={item.idAgendamento} 
                         name={item.nome} 
                         onPress={() => navigation.navigate("Editar Reserva",{
                             screen:'Editar Reserva',
