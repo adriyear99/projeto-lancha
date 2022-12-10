@@ -138,7 +138,6 @@ export default function DetalhesReserva({navigation,route}) {
         console.log('deu certo')
         console.log('Id Pessoa:', global.userId)
         console.log('Id Modelo:', route.params.params.idModelo)
-        // console.log("Data: ", `${global.dataSelecionada} ${global.horarioSelecionado}:00`)
         console.log("Data: ", `2022-12-10 ${global.horarioSelecionado}:00`)
 
         // axios.post(global.baseURL + '/api/cadastro_reserva',{
@@ -150,19 +149,28 @@ export default function DetalhesReserva({navigation,route}) {
         //     horario_final:`${global.dataSelecionada} ${global.horarioSelecionado}:00`,
         //     id_embarcacao: global.barcoSelecionado.idModelo
         // })
-        // .then(()=>{
-        //     console.log("Reserva cadastrada com sucesso!")
-        // })
-        // .catch(()=>{
-        //     Alert.alert("Erro!", "Dados inválidos ao cadastrar reserva", [
-        //         {
-        //             text: "OK",
-        //             onPress: () => null,
-        //             style: "cancel"
-        //         }
-        //     ]);
-        //     return true;
-        // })
+        axios.post(global.baseURL + '/api/cadastro_reserva',{
+            id_pessoa: 1,
+            data_agendamento:`$2022-12-10 ${global.horarioSelecionado}:00`,
+            horario_inicial:`$2022-12-10 ${global.horarioSelecionado}:00`,
+            tipo_reserva:'Locador',
+            detalhes:'',
+            horario_final:`$2022-12-10 ${global.horarioSelecionado}:00`,
+            id_embarcacao: route.params.params.idModelo
+        })
+        .then(()=>{
+            console.log("Reserva cadastrada com sucesso!")
+        })
+        .catch(()=>{
+            Alert.alert("Erro!", "Dados inválidos ao cadastrar reserva", [
+                {
+                    text: "OK",
+                    onPress: () => null,
+                    style: "cancel"
+                }
+            ]);
+            return true;
+        })
     }
 
     function verifyNumber(value){

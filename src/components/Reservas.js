@@ -1,5 +1,5 @@
 // Utilidades
-import { FlatList, StyleSheet,View,Text } from 'react-native'
+import { FlatList, StyleSheet,View,Alert } from 'react-native'
 import { useState,useEffect,useContext } from 'react'
 import { useNavigation } from '@react-navigation/native'
 
@@ -44,8 +44,14 @@ export default function Reservas() {
             global.setReservas(response.data)
             loadReservas(true)
         })
-        .catch((error)=>{
-            console.log(error)
+        .catch(()=>{
+            Alert.alert("Erro!", "Falha ao carregar reservas", [
+                {
+                    text: "OK",
+                    onPress: () => null,
+                    style: "cancel"
+                }
+            ]);
         })
     }
 

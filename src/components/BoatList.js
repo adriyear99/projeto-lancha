@@ -1,5 +1,5 @@
 // Utilidades
-import { FlatList,StyleSheet,View } from 'react-native'
+import { FlatList,StyleSheet,View,Alert } from 'react-native'
 import { useState,useEffect,useContext } from 'react'
 import { useNavigation } from '@react-navigation/native'
 
@@ -40,7 +40,13 @@ export default function BoatList() {
             loadBarcos(true)
         })
         .catch(() => {
-            console.log('Erro ao carregar barcos')
+            Alert.alert("Erro!", "Falha ao carregar barcos", [
+                {
+                    text: "OK",
+                    onPress: () => null,
+                    style: "cancel"
+                }
+            ]);
         })
     }
 
