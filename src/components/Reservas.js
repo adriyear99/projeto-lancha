@@ -23,10 +23,8 @@ export default function Reservas() {
     const global = useContext(AppContext);
 
     useEffect(() => {
-        if(global.reservas == []){
-            getReservas()
-        }
-    })
+        getReservas()
+    },[global.reservas])
 
     /**
      * 
@@ -36,7 +34,7 @@ export default function Reservas() {
         const response = await axios.get(global.baseURL + '/api/reservas', { 
             params: { id_pessoa: 1 } 
         })
-        console.log(response.data)
+        // console.log(response.data)
         global.setReservas(response.data)
     }
 

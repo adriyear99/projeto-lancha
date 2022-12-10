@@ -61,6 +61,20 @@ export default function VerBarco({navigation,route}) {
         )
     }
 
+    function imagemBarco(modeloBarco){ 
+        if(modeloBarco == 1){
+            return require('../../assets/img/barcos/barco1.jpg')
+        }else if(modeloBarco == 2){
+            return require('../../assets/img/barcos/barco2.jpg')
+        } else if(modeloBarco == 3){
+            return require('../../assets/img/barcos/barco3.jpg')
+        } else if(modeloBarco == 4){
+            return require('../../assets/img/barcos/barco4.jpg')
+        } else {
+            return require('../../assets/img/Lancha.jpeg')
+        }
+    }
+
     return (
         <View>
             {!boatLoaded ?
@@ -89,7 +103,7 @@ export default function VerBarco({navigation,route}) {
                         <View style={styles.boatContainer}>
                             <Image 
                                 style={styles.boatImage}
-                                source={require('../../assets/img/Lancha.jpeg')}
+                                source={imagemBarco(barco.idModelo)}
                                 // source={barco.url_imagem}
                             />
                             <Text style={styles.boatName}>{barco.nome} ({barco.nome_modelo})</Text>

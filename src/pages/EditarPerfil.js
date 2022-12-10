@@ -84,7 +84,7 @@ export default function EditarPerfil({ navigation }) {
      */
     async function getReservas(){
         const response = await axios.get(global.baseURL + '/api/reservas', { 
-            params: { id_user: 1 } 
+            params: { id_pessoa: 1 } 
         })
         console.log(response.data)
         global.setReservas(response.data)
