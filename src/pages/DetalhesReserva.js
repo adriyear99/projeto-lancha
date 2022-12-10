@@ -149,7 +149,7 @@ export default function DetalhesReserva({navigation,route}) {
         //     horario_final:`${global.dataSelecionada} ${global.horarioSelecionado}:00`,
         //     id_embarcacao: global.barcoSelecionado.idModelo
         // })
-        axios.post(global.baseURL + '/api/cadastro_reserva',{
+        axios.post(global.baseURL + '/api/cadastro_reserva',[{
             id_pessoa: 1,
             data_agendamento:`$2022-12-10 ${global.horarioSelecionado}:00`,
             horario_inicial:`$2022-12-10 ${global.horarioSelecionado}:00`,
@@ -157,7 +157,7 @@ export default function DetalhesReserva({navigation,route}) {
             detalhes:'',
             horario_final:`$2022-12-10 ${global.horarioSelecionado}:00`,
             id_embarcacao: route.params.params.idModelo
-        })
+        }])
         .then(()=>{
             console.log("Reserva cadastrada com sucesso!")
         })
