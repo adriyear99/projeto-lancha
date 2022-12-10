@@ -78,11 +78,6 @@ export default function EditarPerfil({ navigation }) {
         console.log(response.data)
     }
 
-    async function alterarSenha(){
-        const response = await axios.get(global.baseURL + '/barcos')
-        console.log(response.data)
-    }
-
         /**
      * 
      * @returns Lista de barcos vindo da API
@@ -144,11 +139,6 @@ export default function EditarPerfil({ navigation }) {
                     <CustomButton
                         text="Alterar nome de exibição"
                         onPress={showAlterarNome}
-                        style={{ height: 60, width: 300, backgroundColor: "#4B7E94" }}
-                    />
-                    <CustomButton
-                        text="Alterar senha"
-                        onPress={showAlterarSenha}
                         style={{ height: 60, width: 300, backgroundColor: "#4B7E94" }}
                     />
                     <CustomButton

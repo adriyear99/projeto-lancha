@@ -22,32 +22,27 @@ export default function Reservas() {
     // Variáveis e métodos globais
     const global = useContext(AppContext);
 
-    // Funcionalidades
-    const [loading,setLoading] = useState(false)
-
     useEffect(() => {
-        getReservas()
-    },[])
+        if(global.reservas == []){
+            getReservas()
+        }
+    })
 
     /**
      * 
      * @returns Lista de barcos vindo da API
      */
     async function getReservas(){
-        if(loading) return
-        setLoading(true)
         const response = await axios.get(global.baseURL + '/api/reservas', { 
-            params: { id_user: 1 } 
+            params: { id_pessoa: 1 } 
         })
         console.log(response.data)
         global.setReservas(response.data)
-        setLoading(false)
     }
 
     const novaReserva = () => {
         global.openModal(true)
         global.setDark(true)
-        // navigation.navigate("Nova Reserva")
     }
 
     return (
