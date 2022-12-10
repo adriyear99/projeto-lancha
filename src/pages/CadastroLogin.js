@@ -46,6 +46,7 @@ export default function CadastroLogin({navigation}) {
         // verifica se tem conta
         if(global.temConta == true){
             //set id
+            getUserId()
             navigation.navigate("Home")
         } 
         
@@ -55,12 +56,13 @@ export default function CadastroLogin({navigation}) {
         }
         if(sucessoRequisicao == true && global.email != undefined){
             //set user id
+            getUserId()
             navigation.navigate("Pessoa ou Empresa")
         }
         if(checkUser == true){
             userExists();
         }
-    }, [global.temConta, global.email, global.userName, sucessoRequisicao, checkUser]);
+    }, [global.temConta, global.email, global.userName, sucessoRequisicao, checkUser, global.user_id]);
 
     // Carregar fontes
     let [fontsLoaded] = useFonts({
@@ -111,18 +113,33 @@ export default function CadastroLogin({navigation}) {
 
     
     function getUserId(){
-        console.log('get user id ------------------------------------------------------------------------------')
+        
         const email_user = global.email;
-        const url =global.baseURL + '/api/email_usuario'
+        console.log('---------------' + email_user + '-----------------------')
+        /*const url =global.baseURL + '/api/email_usuario'
         let data = JSON.stringify({
             email: email_user
         })
-        data = "[" + data + "]";
-
+        data = "[" + data + "]";*/
+        axios.get(global.baseURL + '/api/email_usuario', {
+            params: {email: email_user}
+        })
+        .then((response)=>{
+            console.log('**********************************aqui*************************************')
+            console.log(response.data)
+            console.log(response.data[0].idPessoa)
+            global.setUserId(response.data[0].idPessoa)
+            setSucessoGetIdPessoa(true)
+        })
+        .catch(() => {
+            console.log('erro id usuario')
+        })
+        /*
         axios.get(url, data)
         .then(response => {
-            console.log(response)
-            let user_id = JSON.response(response.idPessoa);
+            console.log('**********************************aqui*************************************')
+            console.log(response.data)
+            let user_id = response.idPessoa;
             console.log(user_id)
             global.setUserId(user_id)
             setSucessoGetIdPessoa(true)
@@ -130,35 +147,10 @@ export default function CadastroLogin({navigation}) {
         .catch(error => {
             console.log(error + 'deu erro no get user id!!!!!!!!!!!!!!!!!!!!!!!!!!!');            
         });
-        
+        */
     }
     
-    function insereDadosLogin(){
-        console.log('insere dados login *************************************************************')
-        const url =global.baseURL + '/api/cadastro_login'
-        const username = global.userName
-        const email = global.email
-        const idPessoa = global.idPessoa
-        let data = JSON.stringify({
-            usuario: username,
-            email: email,
-            senha: "senha",
-            idPessoa: idPessoa
-        })
-        data = "[" + data + "]";
-        console.log('///////////////////////')
-        console.log(data)
-        console.log('///////////////////////')
-        axios.post(url, data,{headers:{"Content-Type" : "application/json"}})
-        .then(response => {
-            console.log('login criado !!!!!!!!!');
-            sucessoAdicionarUser(true);
-        })
-        .catch(error => {
-            console.log(error.response.data + 'deu erro no post de criacao de login!!!!!!!!!!!!!!!!!!!!!!!!!!!');            
-        });
-        
-    }
+    
 
     async function handleSignIn(){
         const CLIENT_ID = '192988181548-gf4n6icnpf32c5a3ibqdiociu15pq8qv.apps.googleusercontent.com';

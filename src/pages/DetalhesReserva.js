@@ -135,11 +135,11 @@ export default function DetalhesReserva({navigation,route}) {
     }
 
     function requestReserva(){
-        /*console.log('deu certo')
+        console.log('Detalhes Reserva ----------------------------------------------')
         console.log('Id Pessoa:', global.userId)
         console.log('Id Modelo:', route.params.params.idModelo)
         console.log("Data: ", `2022-12-10 ${global.horarioSelecionado}:00`)
-        */
+        
         // axios.post(global.baseURL + '/api/cadastro_reserva',{
         //     id_pessoa: global.userId,
         //     data_agendamento:`${global.dataSelecionada} ${global.horarioSelecionado}:00`,
@@ -151,7 +151,7 @@ export default function DetalhesReserva({navigation,route}) {
         // })
 
         let data = JSON.stringify({ 
-            id_pessoa: 1,
+            id_pessoa: global.userId,
             data_agendamento:'2022-12-10 ' + global.horarioSelecionado + ':00',
             horario_inicial:'2022-12-10 ' + global.horarioSelecionado + ':00',
             tipo_reserva:'Locador',
