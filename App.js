@@ -87,7 +87,7 @@ export default function App() {
   return (
     <AppContext.Provider value={user}>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="Tela Inicial">
+        <Stack.Navigator initialRouteName="Agendar">
         <Stack.Screen name="Tela Inicial" component={TelaInicial} options={styles.hideHeader}/>
           <Stack.Screen name="Cadastro ou Login" component={CadastroLogin} options={styles.hideHeader}/>
           <Stack.Screen name="Pessoa ou Empresa" component={PessoaEmpresa} options={styles.hideLabel}/>

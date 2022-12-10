@@ -37,7 +37,7 @@ export default function Reservas() {
      */
     function getReservas(){
         axios.get(global.baseURL + '/api/reservas', { 
-            params: { id_pessoa: 1 }
+            params: { id_pessoa: global.userId }
         })
         .then((response)=>{
             console.log('Reservas carregadas com sucesso')
