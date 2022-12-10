@@ -48,13 +48,10 @@ export default function VerReservas({navigation}) {
             params: { id_pessoa: 1 }
         })
         .then((response)=>{
-            console.log('entrou no certo')
-            console.log(response.data)
             global.setReservas(response.data)
             loadReservas(true)
         })
         .catch((error)=>{
-            console.log('entrou no errado')
             console.log(error)
         })
     }
@@ -117,7 +114,9 @@ export default function VerReservas({navigation}) {
                     data={global.reservas}
                     keyExtractor={(item) => item.idAgendamento}
                     renderItem={({ item }) => (
-                        <TouchableOpacity onPress={() => selecionarBarco(item)}>
+                        <TouchableOpacity onPress={() => navigation.navigate("Editar Reserva",{
+                            screen:'Editar Reserva', params:{item}})}
+                        >
                             <View style={styles.reservaContainer}>
                                 <Image
                                     style={styles.foto}

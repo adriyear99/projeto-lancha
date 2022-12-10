@@ -1,51 +1,61 @@
 // Utilidades
-import {View,Text,StyleSheet,BackHandler,TouchableOpacity,Image,FlatList,Alert} from "react-native";
-import { useEffect, useContext } from "react";
+import {View,Text,StyleSheet,BackHandler,TouchableOpacity,Image,FlatList,Alert,Platform} from "react-native"
+import { useEffect, useContext,useState } from "react"
 
 // Variáveis globais
-import AppContext from "../components/AppContext";
+import AppContext from "../components/AppContext"
 
 // Expo Icons
-import { Ionicons } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons"
 
 // API
-import axios from "axios";
+import axios from "axios"
 
 // Fontes
-import { useFonts } from "@expo-google-fonts/montserrat";
+import { useFonts } from "@expo-google-fonts/montserrat"
 
 export default function NovaReserva({ navigation }) {
     // Variáveis e métodos globais
     const global = useContext(AppContext);
 
+    // states
+    const [barcosLoaded,loadBarcos] = useState(false)
+
     // Hardware
     useEffect(() => {
         const backAction = () => {
-        navigation.navigate("Home");
-        return true;
+            navigation.navigate("Home");
+            return true;
         };
         const backHandler = BackHandler.addEventListener(
-        "hardwareBackPress",
-        backAction
+            "hardwareBackPress",
+            backAction
         );
         return () => backHandler.remove();
     }, []);
 
     useEffect(() => {
         if (global.modalOpen && global.dark) {
-        global.openModal(false);
-        global.setDark(false);
+            global.openModal(false)
+            global.setDark(false)
         }
 
-        if ((global.barcos = [])) {
-        getBoats();
+        if (!barcosLoaded) {
+            getBoats();
         }
 
         if (global.barcoSelecionado != undefined) {
-        console.log("Nome:", global.barcoSelecionado.nome);
-        Alert.alert("Barco selecionado", `${global.barcoSelecionado.nome}`, [
-            { text: "OK", onPress: () => navigation.navigate("Detalhes Reserva") },
-        ]);
+            console.log("Nome:", global.barcoSelecionado.nome);
+            if(Platform.OS === 'web'){
+                navigation.navigate("Detalhes Reserva")
+            }else{
+                Alert.alert("Barco selecionado", `${global.barcoSelecionado.nome}`, [
+                    { text: "OK", onPress: () => navigation.navigate("Detalhes Reserva",{
+                        screen:"Detalhes Reserva",
+                        params:global.barcoSelecionado
+                    }) },
+                ]);
+            }
         }
     }, [global.barcoSelecionado]);
 
@@ -53,9 +63,15 @@ export default function NovaReserva({ navigation }) {
      *
      * @returns Lista de barcos vindo da API
      */
-    async function getBoats() {
-        const response = await axios.get(global.baseURL + "/embarcacoes");
-        global.setBarcos(response.data);
+    function getBoats(){
+        axios.get(global.baseURL + '/embarcacoes')
+        .then((response)=>{
+            global.setBarcos(response.data)
+            loadBarcos(true)
+        })
+        .catch(() => {
+            console.log('Erro ao carregar barcos')
+        })
     }
 
     // Carregar fontes
@@ -87,7 +103,6 @@ export default function NovaReserva({ navigation }) {
     }
 
     function selecionarBarco(barco) {
-        console.log(barco);
         global.setBarcoSelecionado(barco);
     }
 

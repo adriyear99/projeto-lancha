@@ -42,6 +42,8 @@ export default function App() {
   const [reservas,setReservas] = useState([])
   const [modalOpen,openModal] = useState(false)
   const [dark,setDark] = useState(false)
+  const [horarioSelecionado,setHorarioSelecionado] = useState(undefined)
+  const [dataSelecionada,setDataSelecionada] = useState(undefined)
   const [baseURL,setBaseURL] = useState('http://54.84.178.96:3000')
 
   // Dados do usuário logado
@@ -70,6 +72,10 @@ export default function App() {
     openModal,
     dark:dark,
     setDark,
+    horarioSelecionado,
+    setHorarioSelecionado,
+    dataSelecionada,
+    setDataSelecionada,
     baseURL,
     setBaseURL
   }

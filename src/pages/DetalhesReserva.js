@@ -6,6 +6,9 @@ import SwitchSelector from "react-native-switch-selector"
 // Expo Icons
 import { Entypo } from '@expo/vector-icons'
 
+// API
+import axios from 'axios'
+
 // Fontes
 import { useFonts } from '@expo-google-fonts/montserrat'
 
@@ -14,7 +17,7 @@ import AppContext from '../components/AppContext'
 import CustomButton from '../components/CustomButton'
 import TimeList from '../components/TimeList'
 
-export default function DetalhesReserva({navigation}) {
+export default function DetalhesReserva({navigation,route}) {
 
     // Switch
     const condutor = [
@@ -49,21 +52,17 @@ export default function DetalhesReserva({navigation}) {
     // Variáveis e métodos globais
     const global = useContext(AppContext);
 
-    // Data
-    const [hora,setHora] = useState(undefined)
-    const [minuto,setMinuto] = useState(undefined)
-
     // Ativado toda vez que um estado mudar
-    useEffect(() => {
-        console.log("DADOS ATUALIZADOS")
-        console.log("Condutor? ", estadoCondutor==1 ? "Sim" : "Não")
-        console.log("Comidas? ", estadoComidas==1 ? "Sim" : "Não")
-        console.log("Bebidas? ", estadoBebidas==1 ? "Sim" : "Não")
-        console.log("Concierge? ", estadoConcierge==1 ? "Sim" : "Não")
-        console.log("Outra Marina? ", estadoOutraMarina==1 ? "Sim" : "Não")
-        console.log("Pessoas: ", numeroPessoas)
-        console.log("========================")
-    },[estadoCondutor,estadoComidas,estadoBebidas,estadoConcierge,estadoOutraMarina,numeroPessoas])
+    // useEffect(() => {
+    //     console.log("DADOS ATUALIZADOS")
+    //     console.log("Condutor? ", estadoCondutor==1 ? "Sim" : "Não")
+    //     console.log("Comidas? ", estadoComidas==1 ? "Sim" : "Não")
+    //     console.log("Bebidas? ", estadoBebidas==1 ? "Sim" : "Não")
+    //     console.log("Concierge? ", estadoConcierge==1 ? "Sim" : "Não")
+    //     console.log("Outra Marina? ", estadoOutraMarina==1 ? "Sim" : "Não")
+    //     console.log("Pessoas: ", numeroPessoas)
+    //     console.log("========================")
+    // },[estadoCondutor,estadoComidas,estadoBebidas,estadoConcierge,estadoOutraMarina,numeroPessoas])
 
     // Carregar fontes
     let [fontsLoaded] = useFonts({
@@ -96,13 +95,14 @@ export default function DetalhesReserva({navigation}) {
     /**
      * Atualiza os dados da reserva
      */
-    function editarReserva(){
+    function fazerReserva(){
         console.log("DADOS DO PEDIDO")
         console.log("Condutor? ", estadoCondutor==1 ? "Sim" : "Não")
         console.log("Comidas? ", estadoComidas==1 ? "Sim" : "Não")
         console.log("Bebidas? ", estadoBebidas==1 ? "Sim" : "Não")
         console.log("Concierge? ", estadoConcierge==1 ? "Sim" : "Não")
         console.log("Outra Marina? ", estadoOutraMarina==1 ? "Sim" : "Não")
+        console.log("Pessoas: ", numeroPessoas)
 
         let numeroEditado
         // Formatar numero
@@ -116,19 +116,53 @@ export default function DetalhesReserva({navigation}) {
             console.log(numeroEditado)
             console.log(numeroEditado)
             setNumeroPessoas(+numeroEditado)
-            console.log("Pessoas: ", numeroPessoas)
+            // console.log("Pessoas: ", numeroPessoas)
         } else {
-            console.log("Pessoas: ", numeroPessoas)
+            setNumeroPessoas(+numeroEditado)
+            // console.log("Pessoas: ", numeroPessoas)
         }
         console.log("========================")
-        Alert.alert("Sucesso!", "Os dados da reserva foram atualizados", [
+
+        Alert.alert("Finalizar Reserva", "Tem certeza que deseja confirmar?", [
             {
-                text: "OK",
-                onPress: () => navigation.navigate("Home"),
+                text: "Cancelar",
+                onPress: () => null,
                 style: "cancel"
             },
+            { text: "SIM", onPress: () => requestReserva() }
         ]);
+        return true;
+    }
 
+    function requestReserva(){
+        console.log('deu certo')
+        console.log('Id Pessoa:', global.userId)
+        console.log('Id Modelo:', route.params.params.idModelo)
+        // console.log("Data: ", `${global.dataSelecionada} ${global.horarioSelecionado}:00`)
+        console.log("Data: ", `2022-12-10 ${global.horarioSelecionado}:00`)
+
+        // axios.post(global.baseURL + '/api/cadastro_reserva',{
+        //     id_pessoa: global.userId,
+        //     data_agendamento:`${global.dataSelecionada} ${global.horarioSelecionado}:00`,
+        //     horario_inicial:`${global.dataSelecionada} ${global.horarioSelecionado}:00`,
+        //     tipo_reserva:'Locador',
+        //     detalhes:'',
+        //     horario_final:`${global.dataSelecionada} ${global.horarioSelecionado}:00`,
+        //     id_embarcacao: global.barcoSelecionado.idModelo
+        // })
+        // .then(()=>{
+        //     console.log("Reserva cadastrada com sucesso!")
+        // })
+        // .catch(()=>{
+        //     Alert.alert("Erro!", "Dados inválidos ao cadastrar reserva", [
+        //         {
+        //             text: "OK",
+        //             onPress: () => null,
+        //             style: "cancel"
+        //         }
+        //     ]);
+        //     return true;
+        // })
     }
 
     function verifyNumber(value){
@@ -248,8 +282,8 @@ export default function DetalhesReserva({navigation}) {
             </View>
 
             <CustomButton
-                text="Editar Reserva"
-                onPress={editarReserva}
+                text="Fazer Reserva"
+                onPress={fazerReserva}
                 style={{
                     height: 60,
                     width: 200,

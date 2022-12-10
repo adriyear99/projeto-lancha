@@ -16,24 +16,30 @@ export default function TimeList() {
 
     // Estados
     const [horarios,setHorarios] = useState(undefined)
-    const [horarioSelecionado,setHorarioSelecionado] = useState(undefined)
+
+    // Data
+    const [idSelecionado,setIdSelecionado] = useState(undefined)
 
     // Variáveis e métodos globais
     const global = useContext(AppContext)
-
-    // Alterar tela
-    const navigation = useNavigation()
 
     useEffect(() => {
         if(horarios==undefined){
             preencherHorarios()
         }
 
-        if(horarioSelecionado!=undefined && horarios!=undefined){
-            console.log("Horario selecionado: ", horarios[horarioSelecionado-1].horario)
+        if(idSelecionado!=undefined && horarios!=undefined){
+            global.setHorarioSelecionado(horarios[idSelecionado-1].horario)
         }
 
-    },[horarioSelecionado])
+    },[idSelecionado])
+
+    useEffect(() => {
+        if(global.horarioSelecionado != undefined){
+            console.log("Horario selecionado: ",global.horarioSelecionado)
+        }
+
+    },[global.horarioSelecionado])
 
     // Carregar fontes
     let [fontsLoaded] = useFonts({
@@ -80,34 +86,34 @@ export default function TimeList() {
                 data={horarios}
                 keyExtractor={(item) => item.id}
                 renderItem={ ({item}) => (
-                    <TouchableOpacity onPress={() => setHorarioSelecionado(item.id)}>
-                        <View style={[styles.horarioContainer, {backgroundColor:(horarioSelecionado == item.id ? 'green' : '#E8E8E8')} ]}>
+                    <TouchableOpacity onPress={() => setIdSelecionado(item.id)}>
+                        <View style={[styles.horarioContainer, {backgroundColor:(idSelecionado == item.id ? 'green' : '#E8E8E8')} ]}>
                             {(Number(item.horario.substring(0,2)) < 10 && item.horario.substring(2,5) == ":00") &&
-                                <Text style={[styles.textoHorario,{color:(horarioSelecionado == item.id ? 'white' : 'black')}]}>
+                                <Text style={[styles.textoHorario,{color:(idSelecionado == item.id ? 'white' : 'black')}]}>
                                     {item.horario} - {item.horario.replace(":00",":30")}
                                 </Text>
                             }
 
                             {(Number(item.horario.substring(0,2)) >= 10 && item.horario.substring(2,5) == ":00") &&
-                                <Text style={[styles.textoHorario,{color:(horarioSelecionado == item.id ? 'white' : 'black')}]}>
+                                <Text style={[styles.textoHorario,{color:(idSelecionado == item.id ? 'white' : 'black')}]}>
                                     {item.horario} - {item.horario.replace(":00",":30")}
                                 </Text>
                             }
 
                             {(Number(item.horario.substring(0,2)) < 9 && item.horario.substring(2,5) == ":30") &&
-                                    <Text style={[styles.textoHorario,{color:(horarioSelecionado == item.id ? 'white' : 'black')}]}>
+                                    <Text style={[styles.textoHorario,{color:(idSelecionado == item.id ? 'white' : 'black')}]}>
                                         {`0${Number(item.horario.substring(1,2))}:30`} - {`0${Number(item.horario.substring(0,2))+1}:00`}
                                     </Text>
                             }
 
                             {(Number(item.horario.substring(0,2)) == 9 && item.horario.substring(2,5) == ":30") &&
-                                    <Text style={[styles.textoHorario,{color:(horarioSelecionado == item.id ? 'white' : 'black')}]}>
+                                    <Text style={[styles.textoHorario,{color:(idSelecionado == item.id ? 'white' : 'black')}]}>
                                         {`0${Number(item.horario.substring(1,2))}:30`} - {`${Number(item.horario.substring(0,2))+1}:00`}
                                     </Text>
                             }
 
                             {(Number(item.horario.substring(0,2)) >= 10 && Number(item.horario.substring(0,2)) < 23 && item.horario.substring(2,5) == ":30") &&
-                                    <Text style={[styles.textoHorario,{color:(horarioSelecionado == item.id ? 'white' : 'black')}]}>
+                                    <Text style={[styles.textoHorario,{color:(idSelecionado == item.id ? 'white' : 'black')}]}>
                                         {item.horario} - {`${Number(item.horario.substring(0,2))+1}:00`}
                                     </Text>
                             }
