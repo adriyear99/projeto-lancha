@@ -45,6 +45,7 @@ export default function CadastroLogin({navigation}) {
     useEffect(() => {
         // verifica se tem conta
         if(global.temConta == true){
+            //set id
             navigation.navigate("Home")
         } 
         
@@ -53,6 +54,7 @@ export default function CadastroLogin({navigation}) {
             
         }
         if(sucessoRequisicao == true && global.email != undefined){
+            //set user id
             navigation.navigate("Pessoa ou Empresa")
         }
         if(checkUser == true){
@@ -159,54 +161,25 @@ export default function CadastroLogin({navigation}) {
     }
 
     async function handleSignIn(){
-
-        console.log('aqui PRIMEIRO ----------------------------------------------')
-        console.log(global.email)
-        console.log('aqui ----------------------------------------------')
         const CLIENT_ID = '192988181548-gf4n6icnpf32c5a3ibqdiociu15pq8qv.apps.googleusercontent.com';
         const REDIRECT_URI = 'https://auth.expo.io/@fabiotepe/projetolancha';
         const RESPONSE_TYPE = 'token';
-        //const SCOPE = encondeURI(`profile email`);
-
         const authUrl = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=${RESPONSE_TYPE}&scope=profile%20email`;
         const response = await AuthSession.startAsync({authUrl});
-        //console.log(response);
-
         if (response?.type === 'success') {
-            console.log('response---------------');
-            console.log(response);
-            //const { authentication } = response;
-            //console.log(authentication?.accessToken);
             const params = response?.params;
-            console.log('param---------------');
-            console.log(params);
             const authentication = params?.access_token;
-            console.log('authentication---------------');
-            console.log(authentication);
             const token = authentication;
-            console.log('token---------------');
-            console.log(token);
             const data_01 = await fetch(`https://www.googleapis.com/oauth2/v2/userinfo?alt=json&access_token=${token}`);
             const userInfo = await data_01.json();
-            console.log('---------------');
-            console.log('###User data###');
-            console.log(userInfo);
-            
+
             local_nome = userInfo?.given_name;
             local_picture = userInfo?.picture;
             local_email = userInfo?.email;
-
+            console.log(userInfo)
             global.setUserName(userInfo?.given_name);
             global.setUserPicture(userInfo?.picture);
             global.setEmail(userInfo?.email);
-            /*if(local_email != undefined && local_nome != undefined && local_picture != undefined)
-            {   
-                console.log('aqui ----------------------------------------------')
-                console.log(local_email)
-                userExists(true);
-            }
-            */
-            //navigation.navigate("HandleSignIn")
             setCheckUser(true);
 
 

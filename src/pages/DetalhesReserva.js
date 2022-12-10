@@ -135,11 +135,11 @@ export default function DetalhesReserva({navigation,route}) {
     }
 
     function requestReserva(){
-        console.log('deu certo')
+        /*console.log('deu certo')
         console.log('Id Pessoa:', global.userId)
         console.log('Id Modelo:', route.params.params.idModelo)
         console.log("Data: ", `2022-12-10 ${global.horarioSelecionado}:00`)
-
+        */
         // axios.post(global.baseURL + '/api/cadastro_reserva',{
         //     id_pessoa: global.userId,
         //     data_agendamento:`${global.dataSelecionada} ${global.horarioSelecionado}:00`,
@@ -149,17 +149,29 @@ export default function DetalhesReserva({navigation,route}) {
         //     horario_final:`${global.dataSelecionada} ${global.horarioSelecionado}:00`,
         //     id_embarcacao: global.barcoSelecionado.idModelo
         // })
-        axios.post(global.baseURL + '/api/cadastro_reserva',[{
+
+        let data = JSON.stringify({ 
             id_pessoa: 1,
-            data_agendamento:`$2022-12-10 ${global.horarioSelecionado}:00`,
-            horario_inicial:`$2022-12-10 ${global.horarioSelecionado}:00`,
+            data_agendamento:'2022-12-10 ' + global.horarioSelecionado + ':00',
+            horario_inicial:'2022-12-10 ' + global.horarioSelecionado + ':00',
             tipo_reserva:'Locador',
             detalhes:'',
-            horario_final:`$2022-12-10 ${global.horarioSelecionado}:00`,
+            horario_final:'2022-12-10 ' + global.horarioSelecionado + ':00',
             id_embarcacao: route.params.params.idModelo
-        }])
+        })
+        data = "[" + data + "]";
+        console.log(data);
+        const url =global.baseURL + '/api/cadastro_reserva' 
+        console.log(url);
+        axios.post(url, data,{headers:{"Content-Type" : "application/json"}})
         .then(()=>{
-            console.log("Reserva cadastrada com sucesso!")
+            Alert.alert("Sucesso!", "Reserva Cadastrada com sucesso", [
+                {
+                    text: "OK",
+                    onPress: () => null,
+                    style: "cancel"
+                }
+            ]);
         })
         .catch(()=>{
             Alert.alert("Erro!", "Dados inválidos ao cadastrar reserva", [

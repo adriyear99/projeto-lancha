@@ -178,6 +178,7 @@ const styles = StyleSheet.create({
         // borderColor:'red',
         paddingTop: "40%",
         paddingRight: 5,
+        borderRadius: 30
     },
 
     profilePicture: {
@@ -185,6 +186,7 @@ const styles = StyleSheet.create({
         height: undefined,
         aspectRatio: 1,
         alignSelf: "center",
+        borderRadius: 30
     },
 
     flatListContainer: {

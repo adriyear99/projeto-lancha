@@ -128,6 +128,8 @@ export default function Home({navigation}) {
         global.setDark(false)
         global.setUsuarioLogado(false)
         global.barcoSelecionado(undefined)
+        global.horarioSelecionado(undefined)
+        global.dataSelecionada(undefined)
         navigation.navigate("Tela Inicial")
     }
 

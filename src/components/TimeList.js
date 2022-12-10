@@ -119,7 +119,7 @@ export default function TimeList() {
                             }
 
                             {item.horario == '23:30' &&
-                                    <Text style={[styles.textoHorario,{color:(horarioSelecionado == item.id ? 'white' : 'black')}]}>
+                                    <Text style={[styles.textoHorario,{color:(idSelecionado == item.id ? 'white' : 'black')}]}>
                                         {item.horario} - {'00:00'}
                                     </Text>
                             }
