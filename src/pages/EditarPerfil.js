@@ -73,9 +73,38 @@ export default function EditarPerfil({ navigation }) {
     }
 
     // Chamadas de API
-    async function alterarNome(){
-        const response = await axios.get(global.baseURL + '/barcos')
-        console.log(response.data)
+    function alterarNome(){
+        console.log(nomeUsuario)
+        console.log(global.userId)
+        let data = JSON.stringify({ 
+            nome: nomeUsuario,
+            id_pessoa: global.userId
+        })
+        data = "[" + data + "]";
+        console.log(data)
+        console.log(global.baseURL + '/api/nome')
+        axios.put(global.baseURL + '/api/nome', data, {headers:{"Content-Type" : "application/json"}})
+        .then((response) => {
+            global.setUserName(nomeUsuario)
+            Alert.alert("Sucesso!", "Seu nome foi atualizado para: " + nomeUsuario, [
+                {
+                    text: "OK",
+                    onPress: () => null,
+                    style: "cancel"
+                }
+            ]);
+        })
+        .catch(() => {
+            Alert.alert("Erro!", "Falha ao atualizar nome", [
+                {
+                    text: "OK",
+                    onPress: () => null,
+                    style: "cancel"
+                }
+            ]);
+        })
+
+        
     }
 
         /**

@@ -1,4 +1,4 @@
-package com.projetolancha.newarchitecture.modules;
+package com.fabiotepe.projetolancha.newarchitecture.modules;
 
 import com.facebook.jni.HybridData;
 import com.facebook.react.ReactPackage;

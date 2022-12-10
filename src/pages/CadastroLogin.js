@@ -129,6 +129,8 @@ export default function CadastroLogin({navigation}) {
             console.log(response.data)
             console.log(response.data[0].idPessoa)
             global.setUserId(response.data[0].idPessoa)
+            global.setUserName(response.data[0].nome)
+            global.setUserPicture(response.data[0].url_img_perfil)
             setSucessoGetIdPessoa(true)
         })
         .catch(() => {

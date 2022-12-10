@@ -6,6 +6,9 @@ import SwitchSelector from "react-native-switch-selector"
 // Expo Icons
 import { Entypo } from '@expo/vector-icons'
 
+// API
+import axios from 'axios'
+
 // Fontes
 import { useFonts } from '@expo-google-fonts/montserrat'
 
@@ -114,6 +117,39 @@ export default function EditarReserva({navigation,route}) {
         )
     }
 
+    function requestAtualizarReserva(){
+        let data = JSON.stringify({ 
+            id_reserva: reserva.idAgendamento,
+            data: '2022-12-10 ' + global.horarioSelecionado + ':00',
+            horario_inicial: '2022-12-10 ' + global.horarioSelecionado + ':00',
+            tipo: 'locador',
+            detalhes: '',
+            horario_termino: '2022-12-10 ' + global.horarioSelecionado + ':00'
+        })
+        data = "[" + data + "]";
+        console.log(data)
+        console.log(global.baseURL + '/api/reserva')
+        axios.put(global.baseURL + '/api/reserva', data, {headers:{"Content-Type" : "application/json"}})
+        .then((response) => {
+            Alert.alert("Sucesso!", "Sua reserva foi atualizada", [
+                {
+                    text: "OK",
+                    onPress: () => null,
+                    style: "cancel"
+                }
+            ]);
+        })
+        .catch(() => {
+            Alert.alert("Erro!", "Falha ao atualizar reserva", [
+                {
+                    text: "OK",
+                    onPress: () => null,
+                    style: "cancel"
+                }
+            ]);
+        })
+    }
+
     /**
      * Atualiza os dados da reserva
      */
@@ -142,14 +178,7 @@ export default function EditarReserva({navigation,route}) {
             console.log("Pessoas: ", numeroPessoas)
         }
         console.log("========================")
-        Alert.alert("Sucesso!", "Os dados da reserva foram atualizados", [
-            {
-                text: "OK",
-                onPress: () => navigation.navigate("Home"),
-                style: "cancel"
-            },
-        ]);
-
+        requestAtualizarReserva()
     }
 
     function verifyNumber(value){

@@ -1,4 +1,4 @@
-package com.projetolancha;
+package com.fabiotepe.projetolancha;
 
 import android.os.Build;
 import android.os.Bundle;
