@@ -19,10 +19,6 @@ export default function Agendar({navigation,route}) {
   const global = useContext(AppContext)
 
   useEffect(() => {
-    if(global.barcoSelecionado != undefined){
-      console.log('entrou aqui')
-      console.log(global.barcoSelecionado)
-    }
     if (global.dataSelecionada != undefined && global.barcoSelecionado != undefined) {
       console.log("Data selecionada: ", global.dataSelecionada)
       navigation.navigate("Detalhes Reserva",{
@@ -30,18 +26,20 @@ export default function Agendar({navigation,route}) {
         params:global.barcoSelecionado
       })
     }
-  }, [global.dataSelecionada,global.barcoSelecionado])
+  }, [global.dataSelecionada])
 
+
+  // executado apenas quando renderizar
   useEffect(() => {
-
+    console.log("Barco:",route.params.params)
     if (dataAtual == undefined) {
       setDataAtual(new Date())
     }
-
-    if(global.barcoSelecionado==undefined){
+    if(global.barcoSelecionado == undefined){
       global.setBarcoSelecionado(route.params.params)
     }
-  })
+  },[])
+
 
   // Hardware
   useEffect(() => {

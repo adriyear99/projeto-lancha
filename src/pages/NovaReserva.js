@@ -43,20 +43,18 @@ export default function NovaReserva({ navigation }) {
         if (!barcosLoaded) {
             getBoats();
         }
-
         
-    });
+    },[]);
 
     useEffect(() => {
         if (global.barcoSelecionado != undefined) {
-            console.log("Nome:", global.barcoSelecionado.nome);
+            // console.log("Nome:", global.barcoSelecionado.nome);
             if(Platform.OS === 'web'){
-                navigation.navigate("Detalhes Reserva")
-            }else{
+                navigation.navigate("Agendar",{screen:"Agendar",params:global.barcoSelecionado})
+            } else{
                 Alert.alert("Barco selecionado", `${global.barcoSelecionado.nome}`, [
                     { text: "OK", onPress: () => navigation.navigate("Agendar",{
-                        screen:"Agendar",
-                        params:global.barcoSelecionado
+                        screen:"Agendar",params:global.barcoSelecionado
                     })},
                 ]);
             }
