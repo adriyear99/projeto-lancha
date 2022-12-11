@@ -55,7 +55,7 @@ export default function NovaReserva({ navigation }) {
                 Alert.alert("Barco selecionado", `${global.barcoSelecionado.nome}`, [
                     { text: "OK", onPress: () => navigation.navigate("Agendar",{
                         screen:"Agendar",params:global.barcoSelecionado
-                    })},
+                    }),style: "cancel"},
                 ]);
             }
         }

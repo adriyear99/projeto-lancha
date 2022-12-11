@@ -70,7 +70,7 @@ export default function Home({navigation}) {
     // onInit
     useEffect(() => {
         resetSelecao()
-    })
+    },[])
 
     // Carregar fontes
     let [fontsLoaded] = useFonts({

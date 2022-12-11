@@ -1,5 +1,5 @@
 // Utilidades
-import { StyleSheet,SafeAreaView,Button,BackHandler,Alert } from 'react-native'
+import { StyleSheet,SafeAreaView,BackHandler,Alert } from 'react-native'
 import { useState,useEffect,useContext } from "react"
 import DateTimePickerModal from "react-native-modal-datetime-picker"
 
@@ -23,7 +23,7 @@ export default function Agendar({navigation,route}) {
       console.log("Data selecionada: ", global.dataSelecionada)
       navigation.navigate("Detalhes Reserva",{
         screen:"Detalhes Reserva",
-        params:global.barcoSelecionado
+        params:route.params.params
       })
     }
   }, [global.dataSelecionada])
@@ -35,9 +35,10 @@ export default function Agendar({navigation,route}) {
     if (dataAtual == undefined) {
       setDataAtual(new Date())
     }
-    if(global.barcoSelecionado == undefined){
-      global.setBarcoSelecionado(route.params.params)
-    }
+
+    console.log('entrou aqui')
+    global.setBarcoSelecionado(route.params.params)
+  
   },[])
 
 
