@@ -37,10 +37,10 @@ const styles = StyleSheet.create({
     buttonContainer: {
         marginTop: 20,
         width: '80%',
-        height: 60,
+        height: 100,
         padding: 10,
         flexDirection: 'row',
-        borderRadius: 3
+        borderRadius: 20
     },
 
     iconWrapper: {

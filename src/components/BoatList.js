@@ -1,16 +1,87 @@
 // Utilidades
-import { StyleSheet,Text,View } from 'react-native'
+import { FlatList,StyleSheet,View,Alert } from 'react-native'
+import { useState,useEffect,useContext } from 'react'
+import { useNavigation } from '@react-navigation/native'
+
+// API
+import axios from 'axios'
 
 // Componentes
+import Boat from './Boat'
 
-// Expo Icons
+// Variáveis globais
+import AppContext from '../components/AppContext'
 
+export default function BoatList() {
 
-export default function BoatList({navigation}) {
+    // Variáveis e métodos globais
+    const global = useContext(AppContext)
+
+    // states
+    const [barcosLoaded,loadBarcos] = useState(false)
+
+    // Alterar tela
+    const navigation = useNavigation()
+
+    useEffect(() => {
+        if(!barcosLoaded){
+            getBoats()
+        }
+    })
+
+    /**
+     * 
+     * @returns Lista de barcos vindo da API
+     */
+    function getBoats(){
+        axios.get(global.baseURL + '/embarcacoes')
+        .then((response)=>{
+            global.setBarcos(response.data)
+            loadBarcos(true)
+        })
+        .catch(() => {
+            Alert.alert("Erro!", "Falha ao carregar barcos", [
+                {
+                    text: "OK",
+                    onPress: () => null,
+                    style: "cancel"
+                }
+            ]);
+        })
+    }
+
+    function imagemBarco(modeloBarco){ 
+        if(modeloBarco == 1){
+            return require('../../assets/img/barcos/barco1.jpg')
+        }else if(modeloBarco == 2){
+            return require('../../assets/img/barcos/barco2.jpg')
+        } else if(modeloBarco == 3){
+            return require('../../assets/img/barcos/barco3.jpg')
+        } else if(modeloBarco == 4){
+            return require('../../assets/img/barcos/barco4.jpg')
+        } else {
+            return require('../../assets/img/Lancha.jpeg')
+        }
+    }
+
 
     return (
         <View style={styles.container}>
-            <Text>Lista de Barcos</Text>
+            <FlatList
+                horizontal={false}
+                data={global.barcos}
+                keyExtractor={(item) => item.idEmbarcacao}
+                renderItem={ ({item}) => (
+                    <Boat 
+                        image={imagemBarco(item.idModelo)} 
+                        name={item.nome}
+                        onPress={() => navigation.navigate("Ver Barco",{
+                            screen:'Ver Barco',
+                            params:{item}
+                        })}
+                    />
+                )}
+            />      
         </View>
     )
 }
@@ -18,12 +89,15 @@ export default function BoatList({navigation}) {
 const styles = StyleSheet.create({
 
     container: {
-        flex: 1,
-        backgroundColor:'#fff',
-        padding:20,
-        // alignItems:'center',
-        // justifyContent:'center',
+        flex:1,
+        paddingHorizontal:'5%',
+        marginTop:20,
+        marginHorizontal:20,
+        marginBottom:40,
+        borderWidth:2,
+        borderColor:'#f6f6f6',
+        borderRadius:10,
+        backgroundColor:'#f6f6f6'
     },
 
 })
-

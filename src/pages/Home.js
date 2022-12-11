@@ -1,7 +1,18 @@
 // Utilidades
-import { StyleSheet,Text,TouchableOpacity,View,Image } from 'react-native'
-import { useState,useContext } from 'react'
-import SwitchSelector from "react-native-switch-selector";
+import { 
+    StyleSheet,
+    Text,
+    TouchableOpacity,
+    View,
+    Image,
+    StatusBar,
+    TouchableWithoutFeedback,
+    BackHandler,
+    Alert,
+    Platform
+} from 'react-native'
+import { useState,useContext,useEffect } from 'react'
+import SwitchSelector from "react-native-switch-selector"
 
 // Expo Icons
 import { EvilIcons } from '@expo/vector-icons'
@@ -11,23 +22,19 @@ import { AntDesign } from '@expo/vector-icons'
 // Variáveis globais
 import AppContext from '../components/AppContext'
 
-// Componentes Customizados
-import BoatList from '../components/BoatList';
+// Fontes
+import { useFonts } from '@expo-google-fonts/montserrat'
 
+// Componentes Customizados
+import BoatList from '../components/BoatList'
+import Reservas from '../components/Reservas'
+import CustomButton from '../components/CustomButton'
+import { SafeAreaView } from 'react-native-safe-area-context'
 
 export default function Home({navigation}) {
 
     // Variáveis e métodos globais
     const global = useContext(AppContext);
-
-    // Set State
-    const [username,setUsername] = useState("")
-    const [password,setPassword] = useState("")
-    
-    const [invalidUsername,setInvalidUsername] = useState(false)
-    const [invalidPassword,setInvalidPassword] = useState(false)
-    
-    const [usuarios,setUsuarios] = useState([])
 
     // Switch
     const options = [
@@ -35,169 +42,336 @@ export default function Home({navigation}) {
         { label: "Reservas", value: 2 }
     ];
 
+    // Set State
+    const [selector,setSelector] = useState(1)
+
+    // Hardware
+    useEffect(() => {
+        const backAction = () => {
+            Alert.alert("Espere um pouco!", "Tem certeza que deseja sair?", [
+            {
+                text: "Cancelar",
+                onPress: () => null,
+                style: "cancel"
+            },
+            { text: "SIM", onPress: () => BackHandler.exitApp() }
+            ]);
+            return true;
+        };
+    
+        const backHandler = BackHandler.addEventListener(
+            "hardwareBackPress",
+            backAction
+        );
+    
+        return () => backHandler.remove();
+    }, []);
+
+    // onInit
+    useEffect(() => {
+        resetSelecao()
+    },[])
+
+    // Carregar fontes
+    let [fontsLoaded] = useFonts({
+        "Montserrat_Regular": require('../../assets/fonts/Montserrat-Regular.ttf'),
+        "Montserrat_Bold": require('../../assets/fonts/Montserrat-Bold.ttf')
+    })
+    if(!fontsLoaded){
+        return null
+    }
+
+    // User
+    function loadPicture() {
+        return (
+            <View style={{flex:1}}>
+                {global.userPicture == undefined ?
+                    <Image 
+                        style={styles.profilePicture} 
+                        source={require('../../assets/img/person-circle-white.png')}
+                    />
+                :
+                    <Image 
+                        style={styles.profilePicture} 
+                        source={{uri:global.userPicture}}
+                    />
+                }
+            </View>
+        )
+    }
+
+    function logout() {
+        if(Platform.OS === 'web'){
+            resetValores()
+        } else {
+            Alert.alert("Espere um pouco!", "Tem certeza que deseja sair?", [
+                {
+                    text: "Cancelar",
+                    onPress: () => null,
+                    style: "cancel"
+                },
+                { text: "SIM", onPress: resetValores }
+            ]);
+        }
+    }
+
+    function resetValores(){
+        global.setTemConta(undefined)
+        global.setTipoUsuario(undefined)
+        global.setUserName(undefined)
+        global.setEmail(undefined)
+        global.setUserPicture(undefined)
+        global.setBarcos([])
+        global.setReservas([])
+        global.setBarcoSelecionado(undefined)
+        global.openModal(false)
+        global.setDark(false)
+        global.setUsuarioLogado(false)
+        global.setBarcoSelecionado(undefined)
+        global.setHorarioSelecionado(undefined)
+        global.setDataSelecionada(undefined)
+        navigation.navigate("Tela Inicial")
+    }
+
+    function resetSelecao(){
+        global.setBarcoSelecionado(undefined)
+        global.setDataSelecionada(undefined)
+        global.setHorarioSelecionado(undefined)
+    }
+
+    // Modal
+    function fecharModal(){
+        if(global.modalOpen){
+            global.setDark(false)
+            global.openModal(false)
+        }
+    }
+
     return (
-        <View style={styles.container}>
-            <View style={styles.blueContainer}>
+        <SafeAreaView contentContainerStyle={styles.container}>
+            <View 
+                showsVerticalScrollIndicator={false} 
+                style={[
+                    styles.scrollView, 
+                    global.modalOpen ? {opacity:0.3} : {opacity:1} 
+                ]}
+            >
+                <TouchableWithoutFeedback onPress={fecharModal}>
+                    <View style={styles.blueContainer}>
+                        {/* Header */}
+                        <View style={styles.flexContainer}>
+                            <TouchableOpacity activeOpacity={0.5} style={styles.icon} onPress={() => navigation.navigate("Configurações")}>
+                                <EvilIcons name="gear" size={60} color="white"/>
+                            </TouchableOpacity>
+                            <Text style={styles.title}>Meu Perfil</Text>
+                            <TouchableOpacity activeOpacity={0.5} style={styles.icon} onPress={logout}>
+                                <Text style={styles.link}>Logout</Text>
+                            </TouchableOpacity>
+                        </View>
+                        {/* Icones */}
+                        <View style={styles.iconContainer}>
+                            <TouchableOpacity activeOpacity={0.5} style={styles.calendar} onPress={() => navigation.navigate("Ver Reservas")}>
+                                <AntDesign name="calendar" size={60} color="white"/>
+                            </TouchableOpacity>
+                            
+                            <TouchableOpacity 
+                                activeOpacity={0.5} 
+                                style={global.tipoUsuario == "empresa" ? styles.bubbleEmpresa : styles.bubble} 
+                                onPress={() => navigation.navigate("Ver Reservas")}
+                            >
+                                <Ionicons 
+                                    name="chatbubble-ellipses-outline" 
+                                    size={60} 
+                                    color="white" 
+                                />
+                            </TouchableOpacity>
+                        </View>
+                        <TouchableOpacity onPress={() => navigation.navigate("Editar Perfil")} style={styles.profilePicContainer}>
+                            {loadPicture()}
+                        </TouchableOpacity>
+                        <View style={styles.nameContainer}>
+                            <Text style={styles.nome}>
+                                {global.userName != undefined ? global.userName : "Nome Usuário"}
+                            </Text>
+                        </View>
+                    </View>
+                </TouchableWithoutFeedback>
 
-                {/* Header */}
-                <View style={styles.flexContainer}>
-                    <TouchableOpacity activeOpacity={0.5} style={styles.icon} onPress={() => navigation.navigate("Configurações")}>
-                        <EvilIcons name="gear" size={60} color="white"/>
-                    </TouchableOpacity>
-                    <Text style={styles.title}>Meu Perfil</Text>
-                    <TouchableOpacity activeOpacity={0.5} style={styles.icon} onPress={() => navigation.navigate("Tela Inicial")}>
-                        <Text style={styles.link}>logout</Text>
-                    </TouchableOpacity>
-                </View>
-                {/* Icones */}
-                <View style={styles.iconContainer}>
-                    {/* {global.tipoUsuario == "empresa" && */}
-                    <TouchableOpacity activeOpacity={0.5} style={styles.calendar} onPress={() => navigation.navigate("Agendar")}>
-                        <AntDesign 
-                            name="calendar" 
-                            size={100} 
-                            color="white" 
-                        />
-                    </TouchableOpacity>
-                    <TouchableOpacity activeOpacity={0.5} style={styles.bubble} onPress={() => navigation.navigate("Agendar")}>
-                        <Ionicons 
-                            name="chatbubble-ellipses-outline" 
-                            style={styles.bubble} 
-                            size={100} 
-                            color="white" 
-                        />
-                    </TouchableOpacity>
-                </View>
-                {/* Foto */}
-                <View style={styles.profilePicContainer}>
-                    <Image style={styles.profilePicture} source={require('../../assets/img/foto-de-perfil.jpg')}/>
-                    
+                <View style={styles.whiteContainer}>
+                    <SwitchSelector
+                        options={options}
+                        initial={0}
+                        textColor={'#4B7E94'}
+                        selectedColor={'#4B7E94'}
+                        buttonColor={'lightgray'}
+                        borderColor={'lightgray'}
+                        hasPadding
+                        style={styles.switch}
+                        onPress={value => setSelector(value)}
+                    />
+
+                    {selector == 1 ? 
+                        // Renderiza componente de embarcações
+                        <BoatList/>
+                        :
+                        // Renderiza componente de reservas
+                        <Reservas/>
+                    }
                 </View>
             </View>
-
-            <View style={styles.whiteContainer}>
-                <SwitchSelector
-                    options={options}
-                    initial={1}
-                    textColor={'#4B7E94'}
-                    selectedColor={'#4B7E94'}
-                    buttonColor={'lightgray'}
-                    borderColor={'lightgray'}
-                    hasPadding
-                    style={styles.switch}
-                    onPress={value => console.log(`Call onPress with value: ${value}`)}
-                />
-
-                <View style={styles.boatContainer}>
-                    <BoatList/>
-
+            {global.modalOpen &&
+                <View style={styles.modal}>
+                    <Text style={styles.texto}>Tipo de Busca</Text>
+                    <CustomButton 
+                        text="Por Data"
+                        onPress={() => navigation.navigate("Nova Reserva")}
+                        style={{ height:60, width:200, backgroundColor:'#4B7E94' }}
+                    />
+                    <CustomButton 
+                        text="Por Embarcação"
+                        onPress={() => navigation.navigate("Nova Reserva")}
+                        style={{ height:60, width:200, backgroundColor:'#4B7E94' }}
+                    />
                 </View>
-
-
-            </View>
-        </View>
+            }
+        </SafeAreaView>
 
     )
 }
 
+
 const styles = StyleSheet.create({
 
-    blueContainer: {
+    container: {
+        flex: 1,
+        paddingTop: StatusBar.currentHeight,
+        borderWidth:4,
+        borderColor:'blue'
+    },
+
+    scrollView: {
         width:'100%',
-        height:'60%',
-        backgroundColor:'#4B7E94'
+        height:'100%',
+        alignSelf:'center',
+        // borderColor:'green',
+        // borderWidth:2
+    },
+
+    blueContainer: {
+        flex:1,
+        width:'100%',
+        height:'50%',
+        backgroundColor:'#4B7E94',
+        // borderWidth:2,
+        // borderColor:'yellow'
     },
 
     whiteContainer: {
         width:'100%',
-        height:'70%',
-        backgroundColor:'#fff'
-    },
-
-    container: {
-        flex: 1,
-        backgroundColor:'#4B7E94',
-        height:'30%',
-        alignItems:'center',
+        height:'50%',
+        backgroundColor:'#fff',
     },
 
     profilePicContainer: {
-        width:'undefined',
+        width:'30%',
         alignSelf:'center',
-        padding:20,
+        paddingTop:'20%',
         alignItems:'center',
         justifyContent:'center',
-        borderWidth:2,
-        borderColor:'green',
-        height:'undefined',
+        borderColor:'white',
+        height:'30%',
+        opacity: 1,
+        bottom:'35%'
     },
 
     profilePicture: {
-        width:300,
-        height:300,
-        borderRadius:150,
-        // textAlign:'center',
-        // margin:'auto'
+        width:150,
+        height:150,
+        borderRadius:75,
         margin:'auto',
     },
 
     flexContainer: {
+        flex:1,
         flexDirection:'row',
-        width:'90%',
+        width:'100%',
         alignItems:'center',
         alignSelf:'center',
         justifyContent:'space-between',
-        marginBottom:10,
-        // borderWidth:2,
-        // borderColor:'red',
+        marginBottom:16,
+        // borderColor:'blue',
+        // borderWidth:4,
+        paddingHorizontal:10
+    },
+
+    nameContainer: {
+        flex:1,
+        // borderColor:'yellow',
+        // borderWidth:4,
+        justifyContent:'center',
+        alignItems:'center',
+        bottom:5
     },
 
     iconContainer: {
+        flex:1,
         flexDirection:'row',
-        width:'80%',
-        height:120,
+        width:'90%',
+        height:100,
         alignSelf:'center',
-        justifyContent:'space-between',
-        marginBottom:10,
-        borderWidth:2,
-        borderColor:'red'
+        justifyContent:'center',
+        alignItems:'center'
+    },
+
+    iconContainer2: {
+        flex:0
     },
 
     bubble: {
-        alignSelf:'flex-start',
+        alignSelf:'flex-end',
+        // justifyContent:'flex-start',
+        flex:0,
+        // borderWidth:2,
+        // borderColor:'red'
+    },
 
+    bubbleEmpresa: {
+        alignSelf:'center',
+        flex:0,
+        // borderWidth:2,
+        // borderColor:'green'
     },
 
     calendar: {
-        alignSelf:'flex-start',
-
+        alignSelf:'center',
+        flex:2,
+        // borderWidth:2,
+        // borderColor:'green'
     },
 
     title: {
-        fontSize:40,
+        fontSize:34,
         marginBottom:34,
-        color:'#121212',
+        color:'#EFF4F8',
         fontWeight:'bold',
         justifyContent:'center',
         marginBottom:0
     },
 
+    nome: {
+        fontSize:40,
+        color:'#EFF4F8',
+    },
+
     link: {
         fontSize:18,
         color: 'blue',
-        alignSelf:'center'
+        flex:0
     },
 
     icon: {
-        // alignSelf:'center',
-        // textAlign:'left'
-        alignItems:'left'
+        alignItems:'center'
     },
-
-    // center: {
-    //     textAlign:'center',
-    //     margin:'auto'
-    // },
 
     input: {
         width:'60%',
@@ -232,9 +406,9 @@ const styles = StyleSheet.create({
     },
 
     switch: {
-        width:'50%',
+        width:'80%',
         alignSelf:'center',
-        marginTop:100
+        marginTop:10
     },
 
     boatContainer: {
@@ -244,7 +418,35 @@ const styles = StyleSheet.create({
         alignSelf:'center',
         backgroundColor:'lightgray',
         marginTop:10,
-        borderWidth:2,
-        borderColor:'red'
+        borderWidth:0,
+        borderColor:'white',
+        opacity: 1,
+    },
+
+    boxContainer: {
+        borderWidth: 4,
+        borderRadius: 4,
+        borderColor: 'lightgray',
+        width: '50%',
+        height: '10%',
+        alignSelf: 'center'
+    },
+
+    modal: {
+        position:'absolute',
+        bottom:0,
+        alignSelf:'center',
+        width:'90%',
+        height:'30%',
+        backgroundColor:'#fff',
+        borderTopLeftRadius:10,
+        borderTopRightRadius:10,
+        justifyContent:'center',
+        alignItems:'center'
+    },
+
+    texto: {
+        fontFamily:'Montserrat_Bold'
     }
+
 })
