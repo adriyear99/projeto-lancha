@@ -76,7 +76,7 @@ export default function NovaReserva({ navigation }) {
             loadBarcos(true)
         })
         .catch(() => {
-            console.log('Erro ao carregar barcos')
+            // console.log('Erro ao carregar barcos')
         })
     }
 

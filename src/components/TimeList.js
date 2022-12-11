@@ -34,12 +34,12 @@ export default function TimeList() {
 
     },[idSelecionado])
 
-    useEffect(() => {
-        if(global.horarioSelecionado != undefined){
-            console.log("Horario selecionado: ",global.horarioSelecionado)
-        }
+    // useEffect(() => {
+    //     if(global.horarioSelecionado != undefined){
+    //         console.log("Horario selecionado: ",global.horarioSelecionado)
+    //     }
 
-    },[global.horarioSelecionado])
+    // },[global.horarioSelecionado])
 
     // Carregar fontes
     let [fontsLoaded] = useFonts({

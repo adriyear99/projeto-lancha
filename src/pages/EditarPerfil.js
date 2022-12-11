@@ -57,15 +57,15 @@ export default function EditarPerfil({ navigation }) {
 
     // Chamadas de API
     function alterarNome(){
-        console.log(nomeUsuario)
-        console.log(global.userId)
+        // console.log(nomeUsuario)
+        // console.log(global.userId)
         let data = JSON.stringify({ 
             nome: nomeUsuario,
             id_pessoa: global.userId
         })
         data = "[" + data + "]";
-        console.log(data)
-        console.log(global.baseURL + '/api/nome')
+        // console.log(data)
+        // console.log(global.baseURL + '/api/nome')
         axios.put(global.baseURL + '/api/nome', data, {headers:{"Content-Type" : "application/json"}})
         .then((response) => {
             global.setUserName(nomeUsuario)
@@ -98,7 +98,7 @@ export default function EditarPerfil({ navigation }) {
         const response = await axios.get(global.baseURL + '/api/reservas', { 
             params: { id_pessoa: global.userId } 
         })
-        console.log(response.data)
+        // console.log(response.data)
         global.setReservas(response.data)
     }
 

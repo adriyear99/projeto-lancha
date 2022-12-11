@@ -110,13 +110,13 @@ export default function DetalhesReserva({navigation,route}) {
      * Atualiza os dados da reserva
      */
     function fazerReserva(){
-        console.log("DADOS DO PEDIDO")
-        console.log("Condutor? ", estadoCondutor==1 ? "Sim" : "Não")
-        console.log("Comidas? ", estadoComidas==1 ? "Sim" : "Não")
-        console.log("Bebidas? ", estadoBebidas==1 ? "Sim" : "Não")
-        console.log("Concierge? ", estadoConcierge==1 ? "Sim" : "Não")
-        console.log("Outra Marina? ", estadoOutraMarina==1 ? "Sim" : "Não")
-        console.log("Pessoas: ", numeroPessoas)
+        // console.log("DADOS DO PEDIDO")
+        // console.log("Condutor? ", estadoCondutor==1 ? "Sim" : "Não")
+        // console.log("Comidas? ", estadoComidas==1 ? "Sim" : "Não")
+        // console.log("Bebidas? ", estadoBebidas==1 ? "Sim" : "Não")
+        // console.log("Concierge? ", estadoConcierge==1 ? "Sim" : "Não")
+        // console.log("Outra Marina? ", estadoOutraMarina==1 ? "Sim" : "Não")
+        // console.log("Pessoas: ", numeroPessoas)
 
         let numeroEditado
         // Formatar numero
@@ -127,15 +127,14 @@ export default function DetalhesReserva({navigation,route}) {
         }
         if(numeroEditado[0] == '0'){
             numeroEditado = numeroEditado.replace('0','')
-            console.log(numeroEditado)
-            console.log(numeroEditado)
+            // console.log(numeroEditado)
             setNumeroPessoas(+numeroEditado)
             // console.log("Pessoas: ", numeroPessoas)
         } else {
             setNumeroPessoas(+numeroEditado)
             // console.log("Pessoas: ", numeroPessoas)
         }
-        console.log("========================")
+        // console.log("========================")
 
         Alert.alert("Finalizar Reserva", "Tem certeza que deseja confirmar?", [
             {
@@ -149,12 +148,12 @@ export default function DetalhesReserva({navigation,route}) {
     }
 
     function requestReserva(){
-        console.log('Detalhes Reserva ----------------------------------------------')
-        console.log('Id Pessoa:', global.userId)
-        console.log('Id Modelo:', route.params.params.idModelo)
+        // console.log('Detalhes Reserva ----------------------------------------------')
+        // console.log('Id Pessoa:', global.userId)
+        // console.log('Id Modelo:', route.params.params.idModelo)
         let dataFormatada = JSON.stringify(global.dataSelecionada)
         dataFormatada = dataFormatada.substring(1,11).trim()
-        console.log("Data Formatada:", dataFormatada)
+        // console.log("Data Formatada:", dataFormatada)
 
         // console.log("Data: ", `${global.dataSelecionada.substring(0,10)} ${global.horarioSelecionado}:00`)
         
@@ -178,9 +177,9 @@ export default function DetalhesReserva({navigation,route}) {
             id_embarcacao: route.params.params.idModelo
         })
         data = "[" + data + "]";
-        console.log(data);
+        // console.log(data);
         const url =global.baseURL + '/api/cadastro_reserva' 
-        console.log(url);
+        // console.log(url);
         axios.post(url, data,{headers:{"Content-Type" : "application/json"}})
         .then(()=>{
             Alert.alert("Sucesso!", "Reserva Cadastrada com sucesso", [

@@ -20,10 +20,10 @@ export default function VerBarco({navigation,route}) {
     const [boatLoaded,loadBoat] = useState(false)
 
     useEffect(() => {
-        console.log("====== BARCO =======")
+        // console.log("====== BARCO =======")
         setBarco(route.params.params.item)
         if(barco != undefined){
-            console.log(barco)
+            // console.log(barco)
             loadBoat(true)
         }
     },[barco])

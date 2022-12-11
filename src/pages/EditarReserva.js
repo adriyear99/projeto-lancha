@@ -80,11 +80,11 @@ export default function EditarReserva({navigation,route}) {
     // ])
 
     useEffect(() => {
-        console.log("====== RESERVA =======")
-        console.log(route.params.params.item)
+        // console.log("====== RESERVA =======")
+        // console.log(route.params.params.item)
         setReserva(route.params.params.item)
         if(reserva != undefined){
-            console.log(reserva)
+            // console.log(reserva)
             loadReserva(true)
         }
     },[reserva])
@@ -127,8 +127,8 @@ export default function EditarReserva({navigation,route}) {
             horario_termino: '2022-12-10 ' + global.horarioSelecionado + ':00'
         })
         data = "[" + data + "]";
-        console.log(data)
-        console.log(global.baseURL + '/api/reserva')
+        // console.log(data)
+        // console.log(global.baseURL + '/api/reserva')
         axios.put(global.baseURL + '/api/reserva', data, {headers:{"Content-Type" : "application/json"}})
         .then((response) => {
             Alert.alert("Sucesso!", "Sua reserva foi atualizada", [
@@ -154,12 +154,12 @@ export default function EditarReserva({navigation,route}) {
      * Atualiza os dados da reserva
      */
     function editarReserva(){
-        console.log("DADOS DO PEDIDO")
-        console.log("Condutor? ", estadoCondutor==1 ? "Sim" : "Não")
-        console.log("Comidas? ", estadoComidas==1 ? "Sim" : "Não")
-        console.log("Bebidas? ", estadoBebidas==1 ? "Sim" : "Não")
-        console.log("Concierge? ", estadoConcierge==1 ? "Sim" : "Não")
-        console.log("Outra Marina? ", estadoOutraMarina==1 ? "Sim" : "Não")
+        // console.log("DADOS DO PEDIDO")
+        // console.log("Condutor? ", estadoCondutor==1 ? "Sim" : "Não")
+        // console.log("Comidas? ", estadoComidas==1 ? "Sim" : "Não")
+        // console.log("Bebidas? ", estadoBebidas==1 ? "Sim" : "Não")
+        // console.log("Concierge? ", estadoConcierge==1 ? "Sim" : "Não")
+        // console.log("Outra Marina? ", estadoOutraMarina==1 ? "Sim" : "Não")
 
         let numeroEditado
         // Formatar numero
@@ -170,14 +170,14 @@ export default function EditarReserva({navigation,route}) {
         }
         if(numeroEditado[0] == '0'){
             numeroEditado = numeroEditado.replace('0','')
-            console.log(numeroEditado)
-            console.log(numeroEditado)
+            // console.log(numeroEditado)
+            // console.log(numeroEditado)
             setNumeroPessoas(+numeroEditado)
-            console.log("Pessoas: ", numeroPessoas)
+            // console.log("Pessoas: ", numeroPessoas)
         } else {
-            console.log("Pessoas: ", numeroPessoas)
+            // console.log("Pessoas: ", numeroPessoas)
         }
-        console.log("========================")
+        // console.log("========================")
         requestAtualizarReserva()
     }
 

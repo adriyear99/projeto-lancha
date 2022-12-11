@@ -83,14 +83,14 @@ export default function CadastroLogin({navigation}) {
             global.setUsuarioLogado(global.temConta)
         })
         .catch(error => {
-            console.log(error);
+            // console.log(error);
         })
         
     }
 
     function cadastrarUsuario(){
-        console.log('$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$')
-        console.log(global.userName + '***' + global.userPicture);
+        // console.log('$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$')
+        // console.log(global.userName + '***' + global.userPicture);
 
         let data = JSON.stringify({ 
             usuario: global.userName,
@@ -98,16 +98,16 @@ export default function CadastroLogin({navigation}) {
             url_imagem_perfil: global.userPicture
         })
         data = "[" + data + "]";
-        console.log(data);
+        // console.log(data);
         const url =global.baseURL + '/api/cadastro_usuario' 
-        console.log(url);
+        // console.log(url);
         axios.post(url, data,{headers:{"Content-Type" : "application/json"}})
-        .then(response => {
+        .then(() => {
             setSucessoRequisicao(true);
-            console.log('deu certo mais ou menos !!!!!!!!!');
+            // console.log('deu certo mais ou menos !!!!!!!!!');
         })
         .catch(error => {
-            console.log(error + '***deu erro no post!!!!!!!!!!!!!!!!!!!!!!!!!!!');            
+            // console.log(error + '***deu erro no post!!!!!!!!!!!!!!!!!!!!!!!!!!!');            
         });
     }
 
@@ -115,7 +115,7 @@ export default function CadastroLogin({navigation}) {
     function getUserId(){
         
         const email_user = global.email;
-        console.log('---------------' + email_user + '-----------------------')
+        // console.log('---------------' + email_user + '-----------------------')
         /*const url =global.baseURL + '/api/email_usuario'
         let data = JSON.stringify({
             email: email_user
@@ -125,16 +125,16 @@ export default function CadastroLogin({navigation}) {
             params: {email: email_user}
         })
         .then((response)=>{
-            console.log('**********************************aqui*************************************')
-            console.log(response.data)
-            console.log(response.data[0].idPessoa)
+            // console.log('**********************************aqui*************************************')
+            // console.log(response.data)
+            // console.log(response.data[0].idPessoa)
             global.setUserId(response.data[0].idPessoa)
             global.setUserName(response.data[0].nome)
             global.setUserPicture(response.data[0].url_img_perfil)
             setSucessoGetIdPessoa(true)
         })
         .catch(() => {
-            console.log('erro id usuario')
+            // console.log('erro id usuario')
         })
         /*
         axios.get(url, data)
@@ -170,7 +170,7 @@ export default function CadastroLogin({navigation}) {
             local_nome = userInfo?.given_name;
             local_picture = userInfo?.picture;
             local_email = userInfo?.email;
-            console.log(userInfo)
+            // console.log(userInfo)
             global.setUserName(userInfo?.given_name);
             global.setUserPicture(userInfo?.picture);
             global.setEmail(userInfo?.email);

@@ -20,7 +20,7 @@ export default function Agendar({navigation,route}) {
 
   useEffect(() => {
     if (global.dataSelecionada != undefined && global.barcoSelecionado != undefined) {
-      console.log("Data selecionada: ", global.dataSelecionada)
+      // console.log("Data selecionada: ", global.dataSelecionada)
       navigation.navigate("Detalhes Reserva",{
         screen:"Detalhes Reserva",
         params:route.params.params
@@ -31,7 +31,7 @@ export default function Agendar({navigation,route}) {
 
   // executado apenas quando renderizar
   useEffect(() => {
-    console.log("Barco:",route.params.params)
+    // console.log("Barco:",route.params.params)
     if (dataAtual == undefined) {
       setDataAtual(new Date())
     }

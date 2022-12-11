@@ -52,7 +52,7 @@ export default function VerReservas({navigation}) {
             loadReservas(true)
         })
         .catch((error)=>{
-            console.log(error)
+            // console.log(error)
         })
     }
 

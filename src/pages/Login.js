@@ -58,25 +58,25 @@ export default function Login({ navigation }) {
         //console.log(response);
 
         if (response?.type === 'success') {
-            console.log('response---------------');
-            console.log(response);
+            // console.log('response---------------');
+            // console.log(response);
             //const { authentication } = response;
             //console.log(authentication?.accessToken);
             const params = response?.params;
-            console.log('param---------------');
-            console.log(params);
+            // console.log('param---------------');
+            // console.log(params);
             //navigation.navigate("Configurações");
             const authentication = params?.access_token;
-            console.log('authentication---------------');
-            console.log(authentication);
+            // console.log('authentication---------------');
+            // console.log(authentication);
             const token = authentication;
-            console.log('token---------------');
-            console.log(token);
+            // console.log('token---------------');
+            // console.log(token);
             const data_01 = await fetch(`https://www.googleapis.com/oauth2/v2/userinfo?alt=json&access_token=${token}`);
             const userInfo = await data_01.json();
-            console.log('---------------');
-            console.log('###User data###');
-            console.log(userInfo);
+            // console.log('---------------');
+            // console.log('###User data###');
+            // console.log(userInfo);
             
             global.setUserName(userInfo?.given_name);
             global.setUserPicture(userInfo?.picture);
@@ -86,7 +86,7 @@ export default function Login({ navigation }) {
             navigation.navigate("Home")
         }
         else {
-            console.log('Falha');
+            // console.log('Falha');
         }
     }
 /*
