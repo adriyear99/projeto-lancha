@@ -23,14 +23,9 @@ export default function EditarPerfil({ navigation }) {
     const global = useContext(AppContext)
 
     // States
-    const [nomeUsuario, setNomeUsuario] = useState("")
-    const [senhaUsuario, setSenhaUsuario] = useState("")
-
-    // Flags
     const [mostrarOpcoes, setMostrarOpcoes] = useState(true)
     const [mostrarAlterarNome, setAlterarNome] = useState(false)
-    const [mostrarAlterarSenha, setAlterarSenha] = useState(false)
-    const [verReservas, setVerReservas] = useState(false)
+    const [nomeUsuario, setNomeUsuario] = useState("")
 
     // Hardware
     useEffect(() => {
@@ -55,21 +50,9 @@ export default function EditarPerfil({ navigation }) {
         setMostrarOpcoes(false)
     }
 
-    function showAlterarSenha(){
-        setAlterarSenha(true)
-        setMostrarOpcoes(false)
-    }
-
-    function showVerReservas(){
-        setVerReservas(true)
-        setMostrarOpcoes(false)
-    }
-
     function voltar(){
         setMostrarOpcoes(true)
         setAlterarNome(false)
-        setAlterarSenha(false)
-        setVerReservas(false)
     }
 
     // Chamadas de API
@@ -113,7 +96,7 @@ export default function EditarPerfil({ navigation }) {
      */
     async function getReservas(){
         const response = await axios.get(global.baseURL + '/api/reservas', { 
-            params: { id_pessoa: 1 } 
+            params: { id_pessoa: global.userId } 
         })
         console.log(response.data)
         global.setReservas(response.data)
@@ -174,7 +157,7 @@ export default function EditarPerfil({ navigation }) {
                     />
                     <CustomButton
                         text="Ver Reservas"
-                        onPress={showVerReservas}
+                        onPress={()=>navigation.navigate("Ver Reservas")}
                         style={{ height: 60, width: 300, backgroundColor: "#4B7E94" }}
                     />
                     <CustomButton
@@ -198,7 +181,6 @@ export default function EditarPerfil({ navigation }) {
                         </TouchableOpacity>
                         <Text style={styles.texto}>
                             {mostrarAlterarNome && "Alterar nome de exibição"}
-                            {mostrarAlterarSenha && "Alterar senha"}
                         </Text>
                     </View>
 
@@ -225,56 +207,6 @@ export default function EditarPerfil({ navigation }) {
                             }}
                         />
                     </View>
-                    }
-
-                    {/* Mostrar tela de alterar senha */}
-                    {mostrarAlterarSenha && 
-                    <View style={styles.alignInput}>
-                        <TextInput
-                            onChangeText={setSenhaUsuario}
-                            value={senhaUsuario}
-                            style={styles.input}
-                            placeholder="Senha atual"
-                        />
-                        <TextInput
-                            onChangeText={setSenhaUsuario}
-                            value={senhaUsuario}
-                            style={styles.input}
-                            placeholder="Nova senha"
-                        />
-                        <TextInput
-                            onChangeText={setSenhaUsuario}
-                            value={senhaUsuario}
-                            style={styles.input}
-                            placeholder="Confirme a nova senha"
-                        />
-                        <CustomButton
-                            text="Confirmar Alteração"
-                            onPress={alterarSenha}
-                            style={{ 
-                                height:60, 
-                                width:300, 
-                                backgroundColor:"#4B7E94",
-                                alignSelf:'center'
-                            }}
-                        />
-                    </View>
-                    }
-
-                    {/* Mostrar tela de ver reservas */}
-                    {verReservas && 
-                        <FlatList
-                            horizontal={false}
-                            data={global.reservas}
-                            keyExtractor={(item) => item.idAgendamento}
-                            renderItem={ ({item}) => (
-                                <Reserva 
-                                    key={item.idAgendamento} 
-                                    name={item.tipo} 
-                                    onPress={()=> navigation.navigate("Editar Reserva")}
-                                />
-                            )}
-                        />
                     }
                 </View>
             }

@@ -45,7 +45,7 @@ export default function VerReservas({navigation}) {
      */
     function getReservas(){
         axios.get(global.baseURL + '/api/reservas', { 
-            params: { id_pessoa: 1 }
+            params: { id_pessoa: global.userId }
         })
         .then((response)=>{
             global.setReservas(response.data)

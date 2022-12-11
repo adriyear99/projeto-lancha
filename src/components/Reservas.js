@@ -40,7 +40,6 @@ export default function Reservas() {
             params: { id_pessoa: global.userId }
         })
         .then((response)=>{
-            console.log('Reservas carregadas com sucesso')
             global.setReservas(response.data)
             loadReservas(true)
         })

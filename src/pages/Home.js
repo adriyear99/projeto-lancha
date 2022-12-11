@@ -175,7 +175,7 @@ export default function Home({navigation}) {
                             <TouchableOpacity 
                                 activeOpacity={0.5} 
                                 style={global.tipoUsuario == "empresa" ? styles.bubbleEmpresa : styles.bubble} 
-                                onPress={() => navigation.navigate("Agendar")}
+                                onPress={() => navigation.navigate("Ver Reservas")}
                             >
                                 <Ionicons 
                                     name="chatbubble-ellipses-outline" 
