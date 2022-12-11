@@ -1,5 +1,5 @@
 // Utilidades
-import { View,SafeAreaView,Text,StyleSheet,Image,TextInput,TouchableOpacity,Alert } from 'react-native'
+import { View,SafeAreaView,Text,StyleSheet,Image,TextInput,TouchableOpacity,Alert,BackHandler } from 'react-native'
 import { useState,useContext,useEffect } from 'react'
 import SwitchSelector from "react-native-switch-selector"
 
@@ -63,6 +63,19 @@ export default function DetalhesReserva({navigation,route}) {
     //     console.log("Pessoas: ", numeroPessoas)
     //     console.log("========================")
     // },[estadoCondutor,estadoComidas,estadoBebidas,estadoConcierge,estadoOutraMarina,numeroPessoas])
+
+    // Hardware
+    useEffect(() => {
+        const backAction = () => {
+            navigation.navigate("Home");
+            return true;
+        };
+        const backHandler = BackHandler.addEventListener(
+            "hardwareBackPress",
+            backAction
+        );
+        return () => backHandler.remove();
+    }, []);
 
     // Carregar fontes
     let [fontsLoaded] = useFonts({
@@ -138,7 +151,11 @@ export default function DetalhesReserva({navigation,route}) {
         console.log('Detalhes Reserva ----------------------------------------------')
         console.log('Id Pessoa:', global.userId)
         console.log('Id Modelo:', route.params.params.idModelo)
-        console.log("Data: ", `2022-12-10 ${global.horarioSelecionado}:00`)
+        let dataFormatada = JSON.stringify(global.dataSelecionada)
+        dataFormatada = dataFormatada.substring(1,11).trim()
+        console.log("Data Formatada:", dataFormatada)
+
+        // console.log("Data: ", `${global.dataSelecionada.substring(0,10)} ${global.horarioSelecionado}:00`)
         
         // axios.post(global.baseURL + '/api/cadastro_reserva',{
         //     id_pessoa: global.userId,
@@ -152,11 +169,11 @@ export default function DetalhesReserva({navigation,route}) {
 
         let data = JSON.stringify({ 
             id_pessoa: global.userId,
-            data_agendamento:'2022-12-10 ' + global.horarioSelecionado + ':00',
-            horario_inicial:'2022-12-10 ' + global.horarioSelecionado + ':00',
+            data_agendamento: dataFormatada + ' ' + global.horarioSelecionado + ':00',
+            horario_inicial: dataFormatada + ' ' + global.horarioSelecionado + ':00',
             tipo_reserva:'Locador',
             detalhes:'',
-            horario_final:'2022-12-10 ' + global.horarioSelecionado + ':00',
+            horario_final: (dataFormatada + ' ' + global.horarioSelecionado + ':00'),
             id_embarcacao: route.params.params.idModelo
         })
         data = "[" + data + "]";

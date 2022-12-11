@@ -96,7 +96,7 @@ export default function App() {
           <Stack.Screen name="Cadastro" component={Cadastro} options={styles.hideHeader}/>
           <Stack.Screen name="Esqueci minha senha" component={EsqueciMinhaSenha}/>
           <Stack.Screen name="Configurações" component={Settings}/>
-          <Stack.Screen name="Agendar" component={Agendar}/>
+          <Stack.Screen name="Agendar" initialParams={null} component={Agendar}/>
           <Stack.Screen name="Ver Barco" initialParams={null} component={VerBarco} options={styles.hideHeader}/>
           <Stack.Screen name="Ver Reservas" component={VerReservas}/>
           <Stack.Screen name="Editar Reserva" initialParams={null} component={EditarReserva}/>

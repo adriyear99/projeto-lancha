@@ -50,7 +50,10 @@ export default function NovaReserva({ navigation }) {
                 navigation.navigate("Detalhes Reserva")
             }else{
                 Alert.alert("Barco selecionado", `${global.barcoSelecionado.nome}`, [
-                    { text: "OK", onPress: () => navigation.navigate("Agendar") },
+                    { text: "OK", onPress: () => navigation.navigate("Agendar",{
+                        screen:"Agendar",
+                        params:global.barcoSelecionado
+                    })},
                 ]);
             }
         }

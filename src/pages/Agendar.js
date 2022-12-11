@@ -6,33 +6,43 @@ import DateTimePickerModal from "react-native-modal-datetime-picker"
 // Variáveis globais
 import AppContext from '../components/AppContext'
 
+// Componentes
+import CustomButton from '../components/CustomButton'
 
-export default function Agendar({navigation}) {
+
+export default function Agendar({navigation,route}) {
+
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false)
-  const [data, setData] = useState(undefined)
   const [dataAtual, setDataAtual] = useState(undefined)
 
   // Variáveis e métodos globais
   const global = useContext(AppContext)
 
   useEffect(() => {
+    if (global.dataSelecionada != undefined && global.barcoSelecionado != undefined) {
+      console.log("Data selecionada: ", global.dataSelecionada)
+      navigation.navigate("Detalhes Reserva",{
+        screen:"Detalhes Reserva",
+        params:global.barcoSelecionado
+      })
+    }
+  }, [global.dataSelecionada,global.barcoSelecionado])
+
+  useEffect(() => {
+
     if (dataAtual == undefined) {
       setDataAtual(new Date())
     }
 
-    if (data != undefined) {
-      console.log("Data selecionada: ", data)
-      navigation.navigate("Detalhes Reserva",{
-        screen:"Detalhes Reserva",
-        params:global.barcoSelecionado
-    })
-
+    if(global.barcoSelecionado==undefined){
+      global.setBarcoSelecionado(route.params.params)
     }
-  }, [data])
+  })
 
   // Hardware
   useEffect(() => {
     const backAction = () => {
+      setDatePickerVisibility(false)
       navigation.navigate("Home")
       return true;
     };
@@ -46,8 +56,8 @@ export default function Agendar({navigation}) {
   }, []);
 
   const showDatePicker = () => {
-    console.log(isDatePickerVisible)
-    setDatePickerVisibility(true);
+    isDatePickerVisible ? setDatePickerVisibility(false) : setDatePickerVisibility(true)
+
   };
 
   const hideDatePicker = () => {
@@ -56,19 +66,27 @@ export default function Agendar({navigation}) {
 
   const handleConfirm = (date) => {
     if (date < dataAtual) {
-      console.log("erroooooooooooo")
+      Alert.alert("Erro!","Data selecionada deve ser maior que a atual", [
+        {
+          text: "OK",
+          onPress: () => null,
+          style: "cancel"
+        }
+      ]);
+      setDatePickerVisibility(false);
+
     } else {
-      console.log("sucessooooo")
-      setData(date);
+      global.setDataSelecionada(date)
+      setDatePickerVisibility(false);
     }
   };
 
   return (
     <SafeAreaView style={styles.container}>
-      <Button
-        style={styles.botao}
-        title="Show Date Picker"
+      <CustomButton
+        text="Escolher Data"
         onPress={showDatePicker}
+        style={{ height: 100, width: 300, backgroundColor: "#4B7E94" }}
       />
       <DateTimePickerModal
         isVisible={isDatePickerVisible}
@@ -87,14 +105,8 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor:'#fff',
-        padding:20,
         alignItems:'center',
         justifyContent:'center'
-    },
-
-    botao: {
-      width:'80%',
-      borderRadius:50
     }
 
 })
