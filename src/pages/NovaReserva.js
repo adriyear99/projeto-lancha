@@ -35,6 +35,10 @@ export default function NovaReserva({ navigation }) {
     }, []);
 
     useEffect(() => {
+        if(global.barcoSelecionado != undefined){
+            global.setBarcoSelecionado(undefined)
+        }
+
         if (global.modalOpen && global.dark) {
             global.openModal(false)
             global.setDark(false)

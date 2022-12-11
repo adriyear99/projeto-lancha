@@ -137,7 +137,6 @@ export default function Home({navigation}) {
         global.setBarcoSelecionado(undefined)
         global.setDataSelecionada(undefined)
         global.setHorarioSelecionado(undefined)
-
     }
 
     // Modal

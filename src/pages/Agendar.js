@@ -36,8 +36,9 @@ export default function Agendar({navigation,route}) {
       setDataAtual(new Date())
     }
 
-    console.log('entrou aqui')
-    global.setBarcoSelecionado(route.params.params)
+    if(global.barcoSelecionado == undefined) {
+      global.setBarcoSelecionado(route.params.params)
+    }
   
   },[])
 

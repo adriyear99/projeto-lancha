@@ -67,6 +67,7 @@ export default function DetalhesReserva({navigation,route}) {
     // Hardware
     useEffect(() => {
         const backAction = () => {
+            resetSelecao()
             navigation.navigate("Home");
             return true;
         };
@@ -185,7 +186,10 @@ export default function DetalhesReserva({navigation,route}) {
             Alert.alert("Sucesso!", "Reserva Cadastrada com sucesso", [
                 {
                     text: "OK",
-                    onPress: () => null,
+                    onPress: () => {
+                        resetSelecao()
+                        navigation.navigate("Home")
+                    },
                     style: "cancel"
                 }
             ]);
@@ -208,6 +212,12 @@ export default function DetalhesReserva({navigation,route}) {
         } else {
             setNumeroPessoas(value)
         }
+    }
+
+    function resetSelecao(){
+        global.setBarcoSelecionado(undefined)
+        global.setDataSelecionada(undefined)
+        global.setHorarioSelecionado(undefined)
     }
 
     return (
