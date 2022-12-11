@@ -44,6 +44,10 @@ export default function NovaReserva({ navigation }) {
             getBoats();
         }
 
+        
+    });
+
+    useEffect(() => {
         if (global.barcoSelecionado != undefined) {
             console.log("Nome:", global.barcoSelecionado.nome);
             if(Platform.OS === 'web'){
@@ -57,7 +61,7 @@ export default function NovaReserva({ navigation }) {
                 ]);
             }
         }
-    }, [global.barcoSelecionado]);
+    }, [global.barcoSelecionado])
 
     /**
      *

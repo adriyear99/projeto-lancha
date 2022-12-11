@@ -69,24 +69,24 @@ export default function Settings({navigation}) {
      * Envia a request para deletar conta pelo Axios e abre o modal de sucesso
      */
     function enviarRequest(){
-        axios.delete(global.baseURL + '/http://54.84.178.96:3000/api/deluser',{
-            id_user:global.id
-        })
-        .then(response => {
-            console.log(response)
+        axios.delete(global.baseURL + '/api/deluser',{
+            id_user:global.userId
         })
         .then(
             Alert.alert("Que pena!", "Conta deletada com sucesso", [
-                { text: "SIM", onPress: () => null, style: "cancel" }
+                { text: "Ok", onPress: () => null, style: "cancel" }
             ])
         )
         .then(
             setTimeout(() => {
                 resetValores()
+                navigation.navigate("Tela Inicial")
             }, 2000)
         )
-        .catch(error => {
-            console.log(error)
+        .catch(() => {
+            Alert.alert("Erro!", "Aconteceu algum problema", [
+                { text: "Ok", onPress: () => null, style: "cancel" }
+            ])
         })
 
     }

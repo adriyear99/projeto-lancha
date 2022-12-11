@@ -19,6 +19,10 @@ export default function Agendar({navigation,route}) {
   const global = useContext(AppContext)
 
   useEffect(() => {
+    if(global.barcoSelecionado != undefined){
+      console.log('entrou aqui')
+      console.log(global.barcoSelecionado)
+    }
     if (global.dataSelecionada != undefined && global.barcoSelecionado != undefined) {
       console.log("Data selecionada: ", global.dataSelecionada)
       navigation.navigate("Detalhes Reserva",{

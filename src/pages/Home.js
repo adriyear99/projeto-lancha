@@ -69,7 +69,7 @@ export default function Home({navigation}) {
 
     // onInit
     useEffect(() => {
-        global.setBarcoSelecionado(undefined)
+        resetSelecao()
     })
 
     // Carregar fontes
@@ -134,7 +134,10 @@ export default function Home({navigation}) {
     }
 
     function resetSelecao(){
-        global.barcoSelecionado(false)
+        global.setBarcoSelecionado(undefined)
+        global.setDataSelecionada(undefined)
+        global.setHorarioSelecionado(undefined)
+
     }
 
     // Modal
