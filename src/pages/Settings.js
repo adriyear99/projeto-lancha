@@ -59,9 +59,9 @@ export default function Settings({navigation}) {
         global.openModal(false)
         global.setDark(false)
         global.setUsuarioLogado(false)
-        global.barcoSelecionado(undefined)
-        global.horarioSelecionado(undefined)
-        global.dataSelecionada(undefined)
+        global.setBarcoSelecionado(undefined)
+        global.setHorarioSelecionado(undefined)
+        global.setDataSelecionada(undefined)
         navigation.navigate("Tela Inicial")
     }
 
