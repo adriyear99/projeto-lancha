@@ -1,3 +1,4 @@
+import * as GoogleSignIn from 'expo-google-sign-in';
 // Utilidades
 import { StatusBar } from 'expo-status-bar'
 import { useState } from 'react'
@@ -17,6 +18,11 @@ import Home from './src/pages/Home'
 import EsqueciMinhaSenha from './src/pages/EsqueciMinhaSenha'
 import Settings from './src/pages/Settings'
 import Agendar from './src/pages/Agendar'
+
+
+
+
+
 
 
 export default function App() {

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">MyApp</string>
+    <string name="welcome_message">Welcome to MyApp!</string>
+    <string name="client_id" translatable="false">729914515049-vcsn1dnolf35o0bnabkbqvu3mjdfnfls.apps.googleusercontent.com</string>
+
+</resources>

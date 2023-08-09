@@ -1,3 +1,4 @@
+import * as GoogleSignIn from 'expo-google-sign-in';
 // Utilidades
 import { StyleSheet,Text,TouchableOpacity,View,Image } from 'react-native'
 import { useState,useContext } from 'react'

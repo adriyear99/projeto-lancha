@@ -1,0 +1,25 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 30
+    buildToolsVersion "30.0.3"
+
+    defaultConfig {
+        applicationId "com.projetolancha" // Replace com.yourpackagename with your app's package name
+        minSdkVersion 21
+        targetSdkVersion 30
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            // Add release-specific configurations if needed
+        }
+    }
+}
+
+dependencies {
+    implementation platform('com.facebook.react:react-native:0.64.2') // Replace the version with your desired React Native version
+    implementation fileTree(dir: "libs", include: ["*.jar"])
+    // Add other dependencies as needed
+}
